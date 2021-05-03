@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "multihotbar",
+  "version": "${version}",
+  "name": "Hotbars+",
+  "description": "Get more use out of your saved hotbars!",
+  "authors": ["videogamesm12"],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/multihotbar/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "me.videogamesm12.multihotbar.client.MultiHotbarClient"
+    ],
+    "main": [
+      "me.videogamesm12.multihotbar.MultiHotbar"
+    ]
+  },
+  "mixins": [
+    "MultiHotbar.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.10.1+build.209",
+    "fabric": "*",
+    "minecraft": ">=1.16.2"
+  }
+}

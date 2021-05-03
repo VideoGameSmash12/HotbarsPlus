@@ -1,0 +1,28 @@
+{
+  "category.multihotbar.navigation": "Hotbars+ - Navigation",
+
+  "command.multihotbars.backup_failed": "Backup failed: %s",
+  "command.multihotbars.backup_success": "Backup completed: %s",
+  "command.multihotbars.cant_backup_empty_hotbar_pages": "Empty hotbar pages can't be backed up.",
+  "command.multihotbars.goto_invalid_number": "Invalid page: %d",
+  "command.multihotbars.reached_maximum_number": "You have reached the maximum number of hotbar pages allowed.",
+
+  "key.multihotbar.backup": "Backup Current Hotbar",
+  "key.multihotbar.next": "Load Next Hotbar",
+  "key.multihotbar.previous": "Load Previous Hotbar",
+
+  "overlay.hotbar_is_empty": "Empty hotbar pages can't be backed up",
+  "overlay.hotbar_backup_completed": "Hotbar backed up: %s",
+  "overlay.hotbar_selected": "Hotbar selected: %s",
+
+  "popup.migrate_legacy_location.title": "Migrate old hotbars?",
+  "popup.migrate_legacy_location.prompt": "Some old hotbar pages were detected in your main game directory. Would you like Hotbars+ to migrate these pages for you?",
+
+  "text.autoconfig.multihotbar.title": "Hotbars+ Settings",
+
+  "tooltip.previous_page_button": "Previous",
+  "tooltip.next_page_button": "Next",
+  "tooltip.backup_hotbar_button": "Backup this page",
+  "tooltip.hotbar_is_empty": "Empty hotbar pages can't be backed up",
+  "tooltip.backup_in_progress": "A backup is already in progress"
+}
