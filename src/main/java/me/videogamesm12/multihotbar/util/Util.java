@@ -1,3 +1,20 @@
+/*
+ * Copyright (c) 2021 Video
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+ * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+ * Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
 package me.videogamesm12.multihotbar.util;
 
 import me.videogamesm12.multihotbar.mixin.accessors.HotbarStorageAccessor;
@@ -5,10 +22,15 @@ import me.videogamesm12.multihotbar.mixin.accessors.MinecraftClientAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.options.HotbarStorage;
 import net.minecraft.text.TranslatableText;
+import org.apache.commons.io.FileUtils;
 
 import java.io.*;
 import java.util.Date;
 
+/**
+ * Util - Miscellaneous methods used by Hotbars+.
+ * @author Video
+ */
 public class Util
 {
 	private static int page = 0;
@@ -37,7 +59,7 @@ public class Util
 					return;
 				}
 				//
-				copyFile(file, copy);
+				FileUtils.copyFile(file, copy);
 				//
 				MinecraftClient.getInstance().inGameHud.setOverlayMessage(new TranslatableText("overlay.hotbar_backup_completed", getHotbarName()), false);
 			}
@@ -160,29 +182,5 @@ public class Util
 		((MinecraftClientAccessor) MinecraftClient.getInstance()).setCreativeHotbarStorage(storage);
 		//
 		MinecraftClient.getInstance().inGameHud.setOverlayMessage(new TranslatableText("overlay.hotbar_selected", getHotbarName()), false);
-	}
-
-	public static void copyFile(File source, File destination) throws IOException
-	{
-		InputStream inputStream = null;
-		OutputStream outputStream = null;
-
-		try
-		{
-			inputStream = new FileInputStream(source);
-			outputStream = new FileOutputStream(destination);
-			//
-			byte[] buffer = new byte[1024];
-			int length;
-			while ((length = inputStream.read(buffer)) > 0)
-			{
-				outputStream.write(buffer, 0, length);
-			}
-		}
-		finally
-		{
-			inputStream.close();
-			outputStream.close();
-		}
 	}
 }

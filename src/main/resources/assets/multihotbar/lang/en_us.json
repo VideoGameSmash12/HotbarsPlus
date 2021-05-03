@@ -15,9 +15,6 @@
   "overlay.hotbar_backup_completed": "Hotbar backed up: %s",
   "overlay.hotbar_selected": "Hotbar selected: %s",
 
-  "popup.migrate_legacy_location.title": "Migrate old hotbars?",
-  "popup.migrate_legacy_location.prompt": "Some old hotbar pages were detected in your main game directory. Would you like Hotbars+ to migrate these pages for you?",
-
   "text.autoconfig.multihotbar.title": "Hotbars+ Settings",
 
   "tooltip.previous_page_button": "Previous",

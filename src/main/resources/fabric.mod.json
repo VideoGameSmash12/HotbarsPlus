@@ -5,7 +5,10 @@
   "name": "Hotbars+",
   "description": "Get more use out of your saved hotbars!",
   "authors": ["videogamesm12"],
-  "contact": {},
+  "contact": {
+    "issues": "https://github.com/VideoGameSmash12/HotbarsPlus/issues",
+    "sources": "https://github.com/VideoGameSmash12/HotbarsPlus"
+  },
   "license": "MIT",
   "icon": "assets/multihotbar/icon.png",
   "environment": "*",
@@ -21,8 +24,11 @@
     "MultiHotbar.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.10.1+build.209",
-    "fabric": "*",
-    "minecraft": ">=1.16.2"
+    "fabricloader": ">=0.11.2",
+    "fabric": ">=0.31.0+1.16",
+    "minecraft": ">=1.16.5"
+  },
+  "breaks": {
+    "moretoolbars": "*"
   }
 }
