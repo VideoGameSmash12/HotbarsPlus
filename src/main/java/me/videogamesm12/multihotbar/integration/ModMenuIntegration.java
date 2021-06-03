@@ -15,35 +15,25 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package me.videogamesm12.multihotbar.commands;
+package me.videogamesm12.multihotbar.integration;
 
-import com.mojang.brigadier.Command;
-import com.mojang.brigadier.context.CommandContext;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import me.videogamesm12.multihotbar.util.Util;
+import com.terraformersmc.modmenu.api.ConfigScreenFactory;
+import com.terraformersmc.modmenu.api.ModMenuApi;
+import me.shedaniel.autoconfig.AutoConfig;
+import me.videogamesm12.multihotbar.config.ClothConfiguration;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.command.v1.FabricClientCommandSource;
-import net.minecraft.text.TranslatableText;
-import net.minecraft.util.Formatting;
 
 /**
- * PreviousCommand - Subcommand for going a page back.
+ * ModMenuIntegration - Mod Menu support for Hotbars+.
  * @author Video
  */
 @Environment(EnvType.CLIENT)
-public class PreviousCommand implements Command<FabricClientCommandSource>
+public class ModMenuIntegration implements ModMenuApi
 {
-	@Override
-	public int run(CommandContext<FabricClientCommandSource> context) throws CommandSyntaxException
-	{
-		if (Util.getPage() <= 0)
-		{
-			context.getSource().sendFeedback(new TranslatableText("command.multihotbars.previous_back").formatted(Formatting.RED));
-			return 2;
-		}
-
-		Util.previousPage();
-		return 1;
-	}
+    @Override
+    public ConfigScreenFactory<?> getModConfigScreenFactory()
+    {
+        return parent -> AutoConfig.getConfigScreen(ClothConfiguration.class, parent).get();
+    }
 }

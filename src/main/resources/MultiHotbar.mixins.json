@@ -9,7 +9,8 @@
     "accessors.HotbarStorageAccessor",
     "accessors.MinecraftClientAccessor",
     "injectors.CreativeInventoryScreenInjector",
-    "injectors.HotbarStorageInjector"
+    "injectors.HotbarStorageInjector",
+    "injectors.MinecraftClientInjector"
   ],
   "client": [
   ],

@@ -15,35 +15,34 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package me.videogamesm12.multihotbar.commands;
+package me.videogamesm12.multihotbar.callbacks;
 
-import com.mojang.brigadier.Command;
-import com.mojang.brigadier.context.CommandContext;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import me.videogamesm12.multihotbar.util.Util;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.command.v1.FabricClientCommandSource;
-import net.minecraft.text.TranslatableText;
-import net.minecraft.util.Formatting;
+import net.fabricmc.fabric.api.event.Event;
+import net.fabricmc.fabric.api.event.EventFactory;
+import net.minecraft.util.ActionResult;
 
 /**
- * PreviousCommand - Subcommand for going a page back.
+ * ClientInitCallback - Events that occur when the game initializes and reaches the title screen.
  * @author Video
  */
-@Environment(EnvType.CLIENT)
-public class PreviousCommand implements Command<FabricClientCommandSource>
+public interface ClientInitCallback
 {
-	@Override
-	public int run(CommandContext<FabricClientCommandSource> context) throws CommandSyntaxException
-	{
-		if (Util.getPage() <= 0)
-		{
-			context.getSource().sendFeedback(new TranslatableText("command.multihotbars.previous_back").formatted(Formatting.RED));
-			return 2;
-		}
+    Event<ClientInitCallback> EVENT = EventFactory.createArrayBacked(ClientInitCallback.class,
+        (listeners) -> () ->
+            {
+                for (ClientInitCallback listener : listeners)
+                {
+                    ActionResult result = listener.onInitialize();
 
-		Util.previousPage();
-		return 1;
-	}
+                    if (result != ActionResult.PASS)
+                    {
+                        return result;
+                    }
+                }
+
+                return ActionResult.SUCCESS;
+            }
+    );
+
+    ActionResult onInitialize();
 }

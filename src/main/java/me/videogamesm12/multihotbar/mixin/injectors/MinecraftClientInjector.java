@@ -15,35 +15,29 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package me.videogamesm12.multihotbar.commands;
+package me.videogamesm12.multihotbar.mixin.injectors;
 
-import com.mojang.brigadier.Command;
-import com.mojang.brigadier.context.CommandContext;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import me.videogamesm12.multihotbar.util.Util;
+import me.videogamesm12.multihotbar.callbacks.ClientInitCallback;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.command.v1.FabricClientCommandSource;
-import net.minecraft.text.TranslatableText;
-import net.minecraft.util.Formatting;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.RunArgs;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * PreviousCommand - Subcommand for going a page back.
+ * MinecraftClientInjector - Calls an event when the Minecraft client finishes initializing.
  * @author Video
  */
 @Environment(EnvType.CLIENT)
-public class PreviousCommand implements Command<FabricClientCommandSource>
+@Mixin(MinecraftClient.class)
+public class MinecraftClientInjector
 {
-	@Override
-	public int run(CommandContext<FabricClientCommandSource> context) throws CommandSyntaxException
-	{
-		if (Util.getPage() <= 0)
-		{
-			context.getSource().sendFeedback(new TranslatableText("command.multihotbars.previous_back").formatted(Formatting.RED));
-			return 2;
-		}
-
-		Util.previousPage();
-		return 1;
-	}
+    @Inject(method = "<init>", at = @At("RETURN"))
+    public void injectInit(RunArgs args, CallbackInfo ci)
+    {
+        ClientInitCallback.EVENT.invoker().onInitialize();
+    }
 }

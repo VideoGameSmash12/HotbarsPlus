@@ -20,6 +20,8 @@ package me.videogamesm12.multihotbar.mixin.injectors;
 import me.videogamesm12.multihotbar.mixin.accessors.CreativeInventoryScreenAccessor;
 import me.videogamesm12.multihotbar.mixin.accessors.HandledScreenAccessor;
 import me.videogamesm12.multihotbar.util.Util;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screen.ingame.AbstractInventoryScreen;
 import net.minecraft.client.gui.screen.ingame.CreativeInventoryScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -31,7 +33,6 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -40,11 +41,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * CreativeInventoryScreenInjector - Adds a few buttons to the CreativeInventoryScreen.
  * @author Video
  */
+@Environment(EnvType.CLIENT)
 @Mixin(CreativeInventoryScreen.class)
-public abstract class CreativeInventoryScreenInjector extends AbstractInventoryScreen<CreativeInventoryScreen.CreativeScreenHandler>
+public abstract class CreativeInventoryScreenInjector extends AbstractInventoryScreen<CreativeInventoryScreen.CreativeScreenHandler> implements CreativeInventoryScreenAccessor, HandledScreenAccessor
 {
-    @Shadow protected abstract void setSelectedTab(ItemGroup group);
-
     ButtonWidget button;
     ButtonWidget backupButton;
     ButtonWidget nextButton;
@@ -57,14 +57,13 @@ public abstract class CreativeInventoryScreenInjector extends AbstractInventoryS
     @Inject(method = "init", at = @At("RETURN"))
     public void injectInit(CallbackInfo ci)
     {
-        //int x = ((HandledScreenAccessor) this).getX() + 138;
-        int x = ((HandledScreenAccessor) this).getX() + 159;
-        int y = ((HandledScreenAccessor) this).getY() + 4;
+        int x = this.getX() + 159;
+        int y = this.getY() + 4;
         //
         button = new ButtonWidget(x - 16, y, 16, 12, new LiteralText("←"), (buttonWidget) ->
         {
             Util.previousPage();
-            setSelectedTab(ItemGroup.HOTBAR);
+            invokeSetSelectedTab(ItemGroup.HOTBAR);
         });
         // One of these would be a good icon, but I'm not sure which - 💾 ⚙ ✍
         backupButton = new ButtonWidget(x, y, 16, 12, new LiteralText("✍"), (buttonWidget) ->
@@ -77,7 +76,7 @@ public abstract class CreativeInventoryScreenInjector extends AbstractInventoryS
         nextButton = new ButtonWidget(x + 16, y, 16, 12, new LiteralText("→"), (buttonWidget) ->
         {
             Util.nextPage();
-            setSelectedTab(ItemGroup.HOTBAR);
+            invokeSetSelectedTab(ItemGroup.HOTBAR);
         });
         //
         button.visible = false;
@@ -92,7 +91,7 @@ public abstract class CreativeInventoryScreenInjector extends AbstractInventoryS
     @Inject(method = "render", at = @At("HEAD"))
     public void injectRenderHead(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci)
     {
-        if (((CreativeInventoryScreenAccessor) this).getSelectedTab() == ItemGroup.HOTBAR.getIndex())
+        if (this.getSelectedTab() == ItemGroup.HOTBAR.getIndex())
         {
             button.active = Util.getPage() > 0;
             backupButton.active = Util.hotbarFileExists() && !Util.backupInProgress;
@@ -120,7 +119,7 @@ public abstract class CreativeInventoryScreenInjector extends AbstractInventoryS
     // is it works, and that's all I care about.
     public void renderButtonToolTips(MatrixStack matrices, int mouseX, int mouseY)
     {
-        if (!(((CreativeInventoryScreenAccessor) this).getSelectedTab() == ItemGroup.HOTBAR.getIndex()))
+        if (!(this.getSelectedTab() == ItemGroup.HOTBAR.getIndex()))
         {
             return;
         }

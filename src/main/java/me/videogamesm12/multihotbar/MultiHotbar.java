@@ -19,12 +19,16 @@ package me.videogamesm12.multihotbar;
 
 import net.fabricmc.api.ModInitializer;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 /**
  * MultiHotbar - Main class for Hotbars+.
  * @author Video
  */
 public class MultiHotbar implements ModInitializer
 {
+    public static final Logger logger = LogManager.getLogger();
+
     @Override
     public void onInitialize()
     {

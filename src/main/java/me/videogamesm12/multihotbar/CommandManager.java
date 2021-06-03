@@ -22,17 +22,19 @@ import me.videogamesm12.multihotbar.commands.BackupCommand;
 import me.videogamesm12.multihotbar.commands.NextCommand;
 import me.videogamesm12.multihotbar.commands.PageCommand;
 import me.videogamesm12.multihotbar.commands.PreviousCommand;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.command.v1.ClientCommandManager;
 
 /**
  * CommandManager - Registers client-side commands in-game.
  * @author Video
  */
+@Environment(EnvType.CLIENT)
 public class CommandManager
 {
 	public void register()
 	{
-		System.out.println("Registering commands");
 		ClientCommandManager.DISPATCHER.register(
 			ClientCommandManager.literal("hotbars+").then(
 				ClientCommandManager.literal("backup").executes(new BackupCommand())
@@ -46,6 +48,5 @@ public class CommandManager
 				)
 			)
 		);
-		System.out.println("Commands registered");
 	}
 }

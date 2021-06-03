@@ -21,6 +21,8 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import me.videogamesm12.multihotbar.util.Util;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.command.v1.FabricClientCommandSource;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
@@ -29,6 +31,7 @@ import net.minecraft.util.Formatting;
  * BackupCommand - Subcommand for making a backup of the current hotbar page.
  * @author Video
  */
+@Environment(EnvType.CLIENT)
 public class BackupCommand implements Command<FabricClientCommandSource>
 {
 	@Override

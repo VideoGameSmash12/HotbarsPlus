@@ -18,6 +18,8 @@
 package me.videogamesm12.multihotbar.mixin.injectors;
 
 import me.videogamesm12.multihotbar.util.Util;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.options.HotbarStorage;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -28,6 +30,7 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
  * HotbarStorageInjector - Intercepts the Hotbar file used by Minecraft to save to other files.
  * @author Video
  */
+@Environment(EnvType.CLIENT)
 @Mixin(HotbarStorage.class)
 public class HotbarStorageInjector
 {

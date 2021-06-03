@@ -18,12 +18,17 @@
 package me.videogamesm12.multihotbar.client;
 
 import me.videogamesm12.multihotbar.CommandManager;
-import me.videogamesm12.multihotbar.util.Util;
+import me.videogamesm12.multihotbar.ConfigurationManager;
+import me.videogamesm12.multihotbar.MultiHotbar;
+import me.videogamesm12.multihotbar.callbacks.ClientInitCallback;
+import me.videogamesm12.multihotbar.events.ClientInitializeListener;
+import me.videogamesm12.multihotbar.events.ClientTickListener;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import org.lwjgl.glfw.GLFW;
@@ -36,9 +41,10 @@ import org.lwjgl.glfw.GLFW;
 public class MultiHotbarClient implements ClientModInitializer
 {
     public static final CommandManager commandManager = new CommandManager();
+    public static final ConfigurationManager configManager = new ConfigurationManager();
     //
-    private static KeyBinding next_binding;
-    private static KeyBinding previous_binding;
+    public static KeyBinding next_binding;
+    public static KeyBinding previous_binding;
 
     @Override
     public void onInitializeClient()
@@ -57,21 +63,65 @@ public class MultiHotbarClient implements ClientModInitializer
                 "category.multihotbar.navigation"
         ));
 
-        ClientTickEvents.END_CLIENT_TICK.register(client ->
+        if (configManager.getConfig().main.useCommands)
         {
-            while (next_binding.wasPressed())
+            MultiHotbar.logger.info("Registering commands");
+            try
             {
-                Util.nextPage();
-                //client.player.sendMessage(new LiteralText("next page " + MultiHotbar.getPage()), false);
+                commandManager.register();
             }
-
-            while (previous_binding.wasPressed())
+            catch (Exception ex)
             {
-                Util.previousPage();
-                //client.player.sendMessage(new LiteralText("previous page " + MultiHotbar.getPage()), false);
+                MultiHotbar.logger.error("Failed to register commands");
+                MultiHotbar.logger.error(ex);
             }
-        });
+            finally
+            {
+                MultiHotbar.logger.info("Commands registered");
+            }
+        }
 
-        commandManager.register();
+        MultiHotbar.logger.info("Initializing listeners");
+        try
+        {
+            initListeners();
+        }
+        catch (Exception ex)
+        {
+            MultiHotbar.logger.error("Failed to initialize listeners");
+            MultiHotbar.logger.error(ex);
+        }
+        finally
+        {
+            MultiHotbar.logger.info("Listeners initialized");
+        }
+
+        if (configManager.getConfig().main.warnIfUsingUnsupportedSetup)
+        {
+            warnIfUsingUnsupportedSetup();
+        }
+    }
+
+    public void initListeners()
+    {
+        ClientInitCallback.EVENT.register(new ClientInitializeListener());
+        ClientTickEvents.END_CLIENT_TICK.register(new ClientTickListener());
+    }
+
+    public void warnIfUsingUnsupportedSetup()
+    {
+        /* While More Toolbars does technically work with Hotbars+, there have been reports of conflicts between the two
+           causing unexpected and unwanted behavior. */
+        if (FabricLoader.getInstance().isModLoaded("moretoolbars"))
+        {
+            MultiHotbar.logger.warn("****** ATTENTION *******");
+            MultiHotbar.logger.warn("We have detected that you are using More Toolbars in addition to Hotbars+. "
+                    + "This setup is not recommended as the mods could conflict and cause unexpected behavior.");
+            MultiHotbar.logger.warn("It is strongly recommended that you make a backup of your hotbar files before "
+                    + "proceeding in the event they get corrupted.");
+            MultiHotbar.logger.warn("Messages like this can be disabled in the configuration under the "
+                    + "\"Warn About Unsupported Setups\" option.");
+            MultiHotbar.logger.warn("************************");
+        }
     }
 }

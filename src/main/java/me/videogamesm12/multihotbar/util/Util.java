@@ -17,15 +17,23 @@
 
 package me.videogamesm12.multihotbar.util;
 
+import me.videogamesm12.multihotbar.MultiHotbar;
+import me.videogamesm12.multihotbar.client.MultiHotbarClient;
 import me.videogamesm12.multihotbar.mixin.accessors.HotbarStorageAccessor;
 import me.videogamesm12.multihotbar.mixin.accessors.MinecraftClientAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.options.HotbarStorage;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import org.apache.commons.io.FileUtils;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.*;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Util - Miscellaneous methods used by Hotbars+.
@@ -33,8 +41,10 @@ import java.util.Date;
  */
 public class Util
 {
-	private static int page = 0;
+	private static int page = MultiHotbarClient.configManager.getConfig().main.page;
 	public static boolean backupInProgress = false;
+	public static Thread thread;
+	public static HotbarToast toast;
 
 	public static boolean backupCurrentHotbar()
 	{
@@ -45,7 +55,9 @@ public class Util
 
 		backupInProgress = true;
 
-		Thread thread = new Thread(() ->
+		showToastMessage(HotbarToast.Type.BACKUP, new TranslatableText("toast.backup.in_progress"), new TranslatableText("toast.backup.file", getHotbarName()), true);
+
+		thread = new Thread(() ->
 		{
 			try
 			{
@@ -55,25 +67,54 @@ public class Util
 				//
 				if (!hotbarFileExists())
 				{
-					MinecraftClient.getInstance().inGameHud.setOverlayMessage(new TranslatableText("overlay.hotbar_is_empty"), false);
+					showToastMessage(HotbarToast.Type.BACKUP, new TranslatableText("toast.backup.failed"), new TranslatableText("toast.backup.empty"), true);
+					showOverlayMessage(new TranslatableText("overlay.hotbar_is_empty"));
+					backupInProgress = false;
 					return;
 				}
 				//
 				FileUtils.copyFile(file, copy);
 				//
-				MinecraftClient.getInstance().inGameHud.setOverlayMessage(new TranslatableText("overlay.hotbar_backup_completed", getHotbarName()), false);
+				showToastMessage(HotbarToast.Type.BACKUP, new TranslatableText("toast.backup.success"), new TranslatableText("toast.backup.saved", getHotbarName()), true);
+				showOverlayMessage(new TranslatableText("overlay.hotbar_backup_completed", getHotbarName()));
 			}
 			catch (Exception ex)
 			{
 				ex.printStackTrace();
 			}
 
+			toast = null;
 			backupInProgress = false;
 		});
 
 		thread.start();
 
 		return true;
+	}
+
+	public static void showToastMessage(HotbarToast.Type type, Text title, @Nullable Text description, boolean updateExisting)
+	{
+		if (MultiHotbarClient.configManager.getConfig().notifs.toastNotifications)
+		{
+			if (updateExisting && MinecraftClient.getInstance().getToastManager().getToast(HotbarToast.class, type) != null)
+			{
+				HotbarToast toast = MinecraftClient.getInstance().getToastManager().getToast(HotbarToast.class, type);
+				toast.change(title, description);
+			}
+			else
+			{
+				toast = new HotbarToast(type, title, description);
+				MinecraftClient.getInstance().getToastManager().add(toast);
+			}
+		}
+	}
+
+	public static void showOverlayMessage(Text text)
+	{
+		if (MultiHotbarClient.configManager.getConfig().notifs.overlayNotifications)
+		{
+			MinecraftClient.getInstance().inGameHud.setOverlayMessage(text, false);
+		}
 	}
 
 	public static boolean hotbarFileExists()
@@ -181,6 +222,8 @@ public class Util
 		HotbarStorage storage = new HotbarStorage(MinecraftClient.getInstance().runDirectory, MinecraftClient.getInstance().getDataFixer());
 		((MinecraftClientAccessor) MinecraftClient.getInstance()).setCreativeHotbarStorage(storage);
 		//
-		MinecraftClient.getInstance().inGameHud.setOverlayMessage(new TranslatableText("overlay.hotbar_selected", getHotbarName()), false);
+		MultiHotbar.logger.info("Hotbar selected: " + getHotbarName());
+		showOverlayMessage(new TranslatableText("overlay.hotbar_selected", getHotbarName()));
+		showToastMessage(HotbarToast.Type.SELECTION, new TranslatableText("toast.selected.title"), new LiteralText(getHotbarName()), true);
 	}
 }

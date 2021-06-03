@@ -7,17 +7,21 @@
   "authors": ["videogamesm12"],
   "contact": {
     "issues": "https://github.com/VideoGameSmash12/HotbarsPlus/issues",
+    "homepage": "https://github.com/VideoGameSmash12/HotbarsPlus",
     "sources": "https://github.com/VideoGameSmash12/HotbarsPlus"
   },
   "license": "MIT",
   "icon": "assets/multihotbar/icon.png",
-  "environment": "*",
+  "environment": "client",
   "entrypoints": {
     "client": [
       "me.videogamesm12.multihotbar.client.MultiHotbarClient"
     ],
     "main": [
       "me.videogamesm12.multihotbar.MultiHotbar"
+    ],
+    "modmenu":[
+      "me.videogamesm12.multihotbar.integration.ModMenuIntegration"
     ]
   },
   "mixins": [
@@ -26,9 +30,10 @@
   "depends": {
     "fabricloader": ">=0.11.2",
     "fabric": ">=0.31.0+1.16",
-    "minecraft": ">=1.16.5"
+    "minecraft": ">=1.16.5",
+    "cloth-config2": ">=4.11.18"
   },
-  "breaks": {
-    "moretoolbars": "*"
+  "suggests": {
+    "modmenu": ">=1.16.8"
   }
 }

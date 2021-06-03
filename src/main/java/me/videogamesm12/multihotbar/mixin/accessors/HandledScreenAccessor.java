@@ -17,6 +17,8 @@
 
 package me.videogamesm12.multihotbar.mixin.accessors;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
@@ -25,6 +27,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
  * HandledScreenAccessor - Accesses certain variables in HandledScreen.
  * @author Video
  */
+@Environment(EnvType.CLIENT)
 @Mixin(HandledScreen.class)
 public interface HandledScreenAccessor
 {
