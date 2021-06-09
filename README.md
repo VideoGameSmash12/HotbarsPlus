@@ -29,7 +29,7 @@ Backups are stored in the `backups` folder, also in the root of the Minecraft cl
 | - | :-----------: | :------: | :--:
 | Increased Hotbar Capacity  | :heavy_check_mark: | :heavy_check_mark:          | :heavy_check_mark:
 | Backup Feature             | :x:                | :heavy_check_mark:          | :heavy_check_mark:
-| Increased Row Count        | :heavy_check_mark: | :x:                         | :heavy_check_mark
+| Increased Row Count        | :heavy_check_mark: | :x:                         | :heavy_check_mark:
 | Quick and Easy Hotswapping | :x:                | :heavy_check_mark:          | :heavy_check_mark:
 | Client-side Commands       | :x:                | :heavy_check_mark:          | :heavy_check_mark:
 | Actively Maintained        | :x:                | :heavy_check_mark:          | :grey_question:
@@ -37,6 +37,7 @@ Backups are stored in the `backups` folder, also in the root of the Minecraft cl
 | Total Page Capacity*       | 1                  | 9,223,372,036,854,775,808   | 9,223,372,036,854,775,808
 | Total Row Capacity*        | 27                 | 83,010,348,331,692,982,272  | 249,031,044,995,078,946,816
 | Total Item Capacity*       | 243                | 747,093,134,985,236,840,448 | 2,241,279,404,955,710,521,344
+
 *\*=These numbers may not be entirely accurate as they were calculated mathematically.*
 
 While it is theoretically possible to run the two mods together, it's not recommended as they could conflict and cause unexpected behavior.
