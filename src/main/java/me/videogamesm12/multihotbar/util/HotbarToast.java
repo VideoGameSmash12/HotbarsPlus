@@ -60,6 +60,9 @@ public class HotbarToast implements Toast
         this(Type.MISC, title, description);
     }
 
+    /**
+     * Hides the toast entirely.
+     */
     public void hideToast()
     {
         this.toastVisibility = Visibility.HIDE;
@@ -68,6 +71,7 @@ public class HotbarToast implements Toast
     @Override
     public Visibility draw(MatrixStack matrices, ToastManager manager, long startTime)
     {
+        // Resets the 5-second timer if the toast has been updated.
         if (update)
         {
             this.time = startTime;
@@ -92,6 +96,7 @@ public class HotbarToast implements Toast
             MinecraftClient.getInstance().textRenderer.draw(matrices, title, 18, 12, 0xFFFF00);
         }
 
+        // Waits 5 seconds before hiding the toast
         if (startTime - this.time > 5000L)
         {
             hideToast();
@@ -100,6 +105,11 @@ public class HotbarToast implements Toast
         return this.toastVisibility;
     }
 
+    /**
+     * Changes the text in the toast and updates it
+     * @param title Text
+     * @param description Text
+     */
     public void change(Text title, @Nullable Text description)
     {
         this.title = title;
@@ -107,6 +117,10 @@ public class HotbarToast implements Toast
         this.update = true;
     }
 
+    /**
+     * Gets the type of message the toast is for.
+     * @return Type
+     */
     public Type getType()
     {
         return this.type;
@@ -115,7 +129,7 @@ public class HotbarToast implements Toast
     public enum Type
     {
         BACKUP,     // Toasts used for backups
-        MIGRATION,  // Toasts used for migrations
+        FAILED,     // Toasts used for failures
         MISC,       // Toasts used for miscellaneous things
         SELECTION   // Toasts used for selections
     }

@@ -45,27 +45,33 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(CreativeInventoryScreen.class)
 public abstract class CreativeInventoryScreenInjector extends AbstractInventoryScreen<CreativeInventoryScreen.CreativeScreenHandler> implements CreativeInventoryScreenAccessor, HandledScreenAccessor
 {
-    ButtonWidget button;
-    ButtonWidget backupButton;
-    ButtonWidget nextButton;
+    public ButtonWidget backupButton;
+    public ButtonWidget nextButton;
+    public ButtonWidget prevButton;
 
     public CreativeInventoryScreenInjector(CreativeInventoryScreen.CreativeScreenHandler screenHandler, PlayerInventory playerInventory, Text text)
     {
         super(screenHandler, playerInventory, text);
     }
 
+    /**
+     * Adds the hotbar buttons to the menu.
+     * @param ci CallbackInfo
+     */
     @Inject(method = "init", at = @At("RETURN"))
     public void injectInit(CallbackInfo ci)
     {
         int x = this.getX() + 159;
         int y = this.getY() + 4;
         //
-        button = new ButtonWidget(x - 16, y, 16, 12, new LiteralText("←"), (buttonWidget) ->
+        prevButton = new ButtonWidget(x - 16, y, 16, 12, new LiteralText("←"), (buttonWidget) ->
         {
             Util.previousPage();
             invokeSetSelectedTab(ItemGroup.HOTBAR);
         });
-        // One of these would be a good icon, but I'm not sure which - 💾 ⚙ ✍
+        //
+        // TODO: Figure out how to get custom text fonts to display correctly and replace this button's icon with a
+        //  floppy disk (namely, this one: 💾) so that the button icon is more accurate
         backupButton = new ButtonWidget(x, y, 16, 12, new LiteralText("✍"), (buttonWidget) ->
         {
             if (!Util.backupInProgress)
@@ -79,44 +85,64 @@ public abstract class CreativeInventoryScreenInjector extends AbstractInventoryS
             invokeSetSelectedTab(ItemGroup.HOTBAR);
         });
         //
-        button.visible = false;
+        prevButton.visible = false;
         backupButton.visible = false;
         nextButton.visible = false;
         //
-        addButton(button);
+        addButton(prevButton);
         addButton(backupButton);
         addButton(nextButton);
     }
 
+    /**
+     * Rendering Injection Part 1 - Displays, hides, and disables the hotbar buttons depending on certain conditions.
+     * @param matrices MatrixStack
+     * @param mouseX int
+     * @param mouseY int
+     * @param delta float
+     * @param ci CallbackInfo
+     */
     @Inject(method = "render", at = @At("HEAD"))
     public void injectRenderHead(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci)
     {
         if (this.getSelectedTab() == ItemGroup.HOTBAR.getIndex())
         {
-            button.active = Util.getPage() > 0;
+            prevButton.active = Util.getPage() > 0;
             backupButton.active = Util.hotbarFileExists() && !Util.backupInProgress;
-            nextButton.active = Util.getPage() != 2147483647;
+            nextButton.active = Util.getPage() != 9223372036854775807L;
             //
-            button.visible = true;
+            prevButton.visible = true;
             backupButton.visible = true;
             nextButton.visible = true;
         }
         else
         {
-            button.visible = false;
+            prevButton.visible = false;
             backupButton.visible = false;
             nextButton.visible = false;
         }
     }
 
+    /**
+     * Rendering Injection Part 2 - Calls `renderButtonToolTips` to render the tooltips for the hotbar buttons.
+     * @param matrices MatrixStack
+     * @param mouseX int
+     * @param mouseY int
+     * @param delta float
+     * @param ci CallbackInfo
+     */
     @Inject(method = "render", at = @At("RETURN"))
     public void injectRenderReturn(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci)
     {
         renderButtonToolTips(matrices, mouseX, mouseY);
     }
 
-    // I don't care if this looks like shit. Hell, I don't even care if it's a hackish solution. The fact of the matter
-    // is it works, and that's all I care about.
+    /**
+     * Renders the button tooltips.
+     * @param matrices MatrixStack
+     * @param mouseX int
+     * @param mouseY int
+     */
     public void renderButtonToolTips(MatrixStack matrices, int mouseX, int mouseY)
     {
         if (!(this.getSelectedTab() == ItemGroup.HOTBAR.getIndex()))
@@ -124,7 +150,7 @@ public abstract class CreativeInventoryScreenInjector extends AbstractInventoryS
             return;
         }
 
-        if (button.isMouseOver(mouseX, mouseY))
+        if (prevButton.isMouseOver(mouseX, mouseY))
         {
             this.renderTooltip(matrices, new TranslatableText("tooltip.previous_page_button"), mouseX, mouseY);
         }

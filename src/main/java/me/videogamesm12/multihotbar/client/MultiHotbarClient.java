@@ -21,8 +21,11 @@ import me.videogamesm12.multihotbar.CommandManager;
 import me.videogamesm12.multihotbar.ConfigurationManager;
 import me.videogamesm12.multihotbar.MultiHotbar;
 import me.videogamesm12.multihotbar.callbacks.ClientInitCallback;
+import me.videogamesm12.multihotbar.callbacks.HotbarLoadFailCallback;
+import me.videogamesm12.multihotbar.callbacks.HotbarSaveFailCallback;
 import me.videogamesm12.multihotbar.events.ClientInitializeListener;
 import me.videogamesm12.multihotbar.events.ClientTickListener;
+import me.videogamesm12.multihotbar.events.HotbarFailListener;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -102,12 +105,20 @@ public class MultiHotbarClient implements ClientModInitializer
         }
     }
 
+    /**
+     * Initializes the event listeners.
+     */
     public void initListeners()
     {
         ClientInitCallback.EVENT.register(new ClientInitializeListener());
         ClientTickEvents.END_CLIENT_TICK.register(new ClientTickListener());
+        HotbarLoadFailCallback.EVENT.register(new HotbarFailListener());
+        HotbarSaveFailCallback.EVENT.register(new HotbarFailListener());
     }
 
+    /**
+     * Checks for anything that would be considered an "unsupported" setup and warn the user in the logs accordingly.
+     */
     public void warnIfUsingUnsupportedSetup()
     {
         /* While More Toolbars does technically work with Hotbars+, there have been reports of conflicts between the two

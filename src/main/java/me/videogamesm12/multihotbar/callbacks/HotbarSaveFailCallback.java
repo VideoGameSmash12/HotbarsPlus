@@ -15,40 +15,34 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package me.videogamesm12.multihotbar;
+package me.videogamesm12.multihotbar.callbacks;
 
-import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
-import me.videogamesm12.multihotbar.config.ClothConfiguration;
+import net.fabricmc.fabric.api.event.Event;
+import net.fabricmc.fabric.api.event.EventFactory;
+import net.minecraft.util.ActionResult;
 
 /**
- * ConfigurationManager - Manages the configuration for Hotbars+.
+ * HotbarSaveFailCallback - Called when the client fails to save a hotbar file.
  * @author Video
  */
-public class ConfigurationManager
+public interface HotbarSaveFailCallback
 {
-    ClothConfiguration config;
+    Event<HotbarSaveFailCallback> EVENT = EventFactory.createArrayBacked(HotbarSaveFailCallback.class,
+            (listeners) -> () ->
+            {
+                for (HotbarSaveFailCallback listener : listeners)
+                {
+                    ActionResult result = listener.onHotbarSaveFail();
 
-    public ConfigurationManager()
-    {
-        setupConfig();
-    }
+                    if (result != ActionResult.PASS)
+                    {
+                        return result;
+                    }
+                }
 
-    /**
-     * Sets up the configuration for later use.
-     */
-    public void setupConfig()
-    {
-        this.config = new ClothConfiguration();
-        AutoConfig.register(ClothConfiguration.class, GsonConfigSerializer::new);
-    }
+                return ActionResult.SUCCESS;
+            }
+    );
 
-    /**
-     * Gets the current configuration.
-     * @return ClothConfiguration
-     */
-    public ClothConfiguration getConfig()
-    {
-        return AutoConfig.getConfigHolder(this.config.getClass()).getConfig();
-    }
+    ActionResult onHotbarSaveFail();
 }

@@ -39,7 +39,7 @@ public class ClothConfiguration implements ConfigData
 
     public static class Main
     {
-        public int page = 0;
+        public long page = 0;
 
         @ConfigEntry.Gui.Tooltip(count = 3)
         public boolean useCommands = true;

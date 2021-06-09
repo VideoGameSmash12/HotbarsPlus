@@ -6,6 +6,8 @@
   "command.multihotbars.cant_backup_empty_hotbar_pages": "Empty hotbar pages can't be backed up.",
   "command.multihotbars.goto_invalid_number": "Invalid page: %d",
   "command.multihotbars.reached_maximum_number": "You have reached the maximum number of hotbar pages allowed.",
+  "command.multihotbars.stats.current_file": "Current file: %s",
+  "command.multihotbars.stats.version": "Version: %s",
 
   "key.multihotbar.next": "Load Next Hotbar",
   "key.multihotbar.previous": "Load Previous Hotbar",
@@ -16,6 +18,8 @@
   "overlay.hotbar_is_empty": "Empty hotbar pages can't be backed up",
   "overlay.hotbar_backup_completed": "Hotbar backed up: %s",
   "overlay.hotbar_selected": "Hotbar selected: %s",
+  "overlay.hotbar_load_failed": "Failed to load hotbar: %s",
+  "overlay.hotbar_save_failed": "Failed to save hotbar: %s",
 
   "screen.configure_hotbarsplus": "Configure Hotbars+",
 
@@ -46,6 +50,8 @@
   "toast.backup.saved": "%s",
   "toast.backup.success": "Backup completed",
   "toast.backup.in_progress": "Backing up hotbar...",
+  "toast.failed.load": "Hotbar load failed",
+  "toast.failed.save": "Hotbar save failed",
   "toast.migration.migrating": "Migrating files...",
   "toast.migration.completed": "Migration completed",
   "toast.migration.count": "%d files were moved",

@@ -17,13 +17,17 @@
 
 package me.videogamesm12.multihotbar.mixin.injectors;
 
+import me.videogamesm12.multihotbar.callbacks.HotbarLoadFailCallback;
+import me.videogamesm12.multihotbar.callbacks.HotbarSaveFailCallback;
 import me.videogamesm12.multihotbar.util.Util;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.options.HotbarStorage;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArgs;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 /**
@@ -39,5 +43,25 @@ public class HotbarStorageInjector
     {
         args.set(0, Util.getHotbarFolder());
         args.set(1, Util.getHotbarName());
+    }
+
+    /**
+     * Loading Injection - Calls the HotbarLoadFailCallback if the client fails to load the hotbar file.
+     * @param ci CallbackInfo
+     */
+    @Inject(method = "load", at = @At(value = "INVOKE", target = "Lorg/apache/logging/log4j/Logger;error(Ljava/lang/String;Ljava/lang/Throwable;)V", shift = At.Shift.AFTER))
+    public void injectLoad(CallbackInfo ci)
+    {
+        HotbarLoadFailCallback.EVENT.invoker().onHotbarLoadFail();
+    }
+
+    /**
+     * Saving Injection - Calls the HotbarSaveFailCallback if the client fails to save the hotbar file.
+     * @param ci CallbackInfo
+     */
+    @Inject(method = "save", at = @At(value = "INVOKE", target = "Lorg/apache/logging/log4j/Logger;error(Ljava/lang/String;Ljava/lang/Throwable;)V", shift = At.Shift.AFTER))
+    public void injectSave(CallbackInfo ci)
+    {
+        HotbarSaveFailCallback.EVENT.invoker().onHotbarSaveFail();
     }
 }

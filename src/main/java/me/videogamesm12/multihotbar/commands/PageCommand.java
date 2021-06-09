@@ -37,7 +37,7 @@ public class PageCommand implements Command<FabricClientCommandSource>
 	@Override
 	public int run(CommandContext<FabricClientCommandSource> context) throws CommandSyntaxException
 	{
-		Integer page = context.getArgument("page", Integer.class);
+		Long page = context.getArgument("page", Long.class);
 
 		// Prevents the player from going into the negative pages.
 		// TODO: Make this a bit cleaner by using command exceptions instead. Consider removing this check in the future

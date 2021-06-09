@@ -17,7 +17,8 @@
 
 package me.videogamesm12.multihotbar;
 
-import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.arguments.LongArgumentType;
+import com.mojang.brigadier.tree.LiteralCommandNode;
 import me.videogamesm12.multihotbar.commands.BackupCommand;
 import me.videogamesm12.multihotbar.commands.NextCommand;
 import me.videogamesm12.multihotbar.commands.PageCommand;
@@ -25,6 +26,7 @@ import me.videogamesm12.multihotbar.commands.PreviousCommand;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.command.v1.ClientCommandManager;
+import net.fabricmc.fabric.api.client.command.v1.FabricClientCommandSource;
 
 /**
  * CommandManager - Registers client-side commands in-game.
@@ -33,20 +35,34 @@ import net.fabricmc.fabric.api.client.command.v1.ClientCommandManager;
 @Environment(EnvType.CLIENT)
 public class CommandManager
 {
+	private LiteralCommandNode<FabricClientCommandSource> hotbarsPlusCommand;
+
+	/**
+	 * Registers the mod's client-side commands.
+	 */
 	public void register()
 	{
-		ClientCommandManager.DISPATCHER.register(
+		hotbarsPlusCommand = ClientCommandManager.DISPATCHER.register(
 			ClientCommandManager.literal("hotbars+").then(
-				ClientCommandManager.literal("backup").executes(new BackupCommand())
-			).then(
-				ClientCommandManager.literal("next").executes(new NextCommand())
-			).then(
-				ClientCommandManager.literal("previous").executes(new PreviousCommand())
-			).then(
-				ClientCommandManager.literal("goto").then(
-					ClientCommandManager.argument("page", IntegerArgumentType.integer()).executes(new PageCommand())
+					ClientCommandManager.literal("backup").executes(new BackupCommand())
+				).then(
+					ClientCommandManager.literal("next").executes(new NextCommand())
+				).then(
+					ClientCommandManager.literal("previous").executes(new PreviousCommand())
+				).then(
+					ClientCommandManager.literal("goto").then(
+						ClientCommandManager.argument("page", LongArgumentType.longArg()).executes(new PageCommand())
+					)
 				)
-			)
 		);
+	}
+
+	/**
+	 * Gets the command node that registers on start-up.
+	 * @return LiteralCommandNode<FabricClientCommandSource>
+	 */
+	public LiteralCommandNode<FabricClientCommandSource> getCommandNode()
+	{
+		return hotbarsPlusCommand;
 	}
 }

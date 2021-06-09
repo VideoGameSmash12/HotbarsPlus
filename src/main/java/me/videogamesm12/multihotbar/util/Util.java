@@ -30,10 +30,7 @@ import org.apache.commons.io.FileUtils;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.*;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Util - Miscellaneous methods used by Hotbars+.
@@ -41,20 +38,28 @@ import java.util.List;
  */
 public class Util
 {
-	private static int page = MultiHotbarClient.configManager.getConfig().main.page;
+	private static long page = MultiHotbarClient.configManager.getConfig().main.page;
 	public static boolean backupInProgress = false;
 	public static Thread thread;
 	public static HotbarToast toast;
 
+	/**
+	 * Backs up the currently loaded hotbar file.
+	 * Does not do anything if a backup is currently ongoing.
+	 * @return Boolean
+	 */
 	public static boolean backupCurrentHotbar()
 	{
+		// Don't do anything if a backup is currently ongoing.
 		if (backupInProgress)
 		{
 			return false;
 		}
 
+		// Prevents any further backups from occurring in the meantime.
 		backupInProgress = true;
 
+		// Sends a toast message noting that the backup was in progress.
 		showToastMessage(HotbarToast.Type.BACKUP, new TranslatableText("toast.backup.in_progress"), new TranslatableText("toast.backup.file", getHotbarName()), true);
 
 		thread = new Thread(() ->
@@ -92,6 +97,13 @@ public class Util
 		return true;
 	}
 
+	/**
+	 * Shows a toast message if the player has toast notifications enabled.
+	 * @param type Type
+	 * @param title Text
+	 * @param description Text
+	 * @param updateExisting Boolean
+	 */
 	public static void showToastMessage(HotbarToast.Type type, Text title, @Nullable Text description, boolean updateExisting)
 	{
 		if (MultiHotbarClient.configManager.getConfig().notifs.toastNotifications)
@@ -109,6 +121,10 @@ public class Util
 		}
 	}
 
+	/**
+	 * Shows an overlay message if the player has overlay notifications enabled.
+	 * @param text Text
+	 */
 	public static void showOverlayMessage(Text text)
 	{
 		if (MultiHotbarClient.configManager.getConfig().notifs.overlayNotifications)
@@ -117,6 +133,10 @@ public class Util
 		}
 	}
 
+	/**
+	 * Checks whether or not the current hotbar file actually exists and returns the value accordingly.
+	 * @return Boolean
+	 */
 	public static boolean hotbarFileExists()
 	{
 		HotbarStorage storage = MinecraftClient.getInstance().getCreativeHotbarStorage();
@@ -125,6 +145,10 @@ public class Util
 		return file.exists();
 	}
 
+	/**
+	 * Gets the `hotbars` directory and automatically creates it if the directory doesn't already exist..
+	 * @return File
+	 */
 	public static File getStorageFolder()
 	{
 		File dir = new File(MinecraftClient.getInstance().runDirectory, "hotbars");
@@ -137,6 +161,10 @@ public class Util
 		return dir;
 	}
 
+	/**
+	 * Gets the `backups` directory and automatically creates it if the directory doesn't already exist.
+	 * @return File
+	 */
 	public static File getBackupFolder()
 	{
 		File dir = new File(MinecraftClient.getInstance().runDirectory, "backups");
@@ -149,6 +177,11 @@ public class Util
 		return dir;
 	}
 
+	/**
+	 * Gets the folder in which the current hotbar page is located.
+	 * If the page is 0, it will be the game's root directory. Otherwise, it will be the `hotbars` directory.
+	 * @return File
+	 */
 	public static File getHotbarFolder()
 	{
 		if (page != 0)
@@ -161,6 +194,10 @@ public class Util
 		}
 	}
 
+	/**
+	 * Gets the file name of the current hotbar page.
+	 * @return Stirng
+	 */
 	public static String getHotbarName()
 	{
 		if (page > 0)
@@ -173,12 +210,21 @@ public class Util
 		}
 	}
 
-	public static int getPage()
+	/**
+	 * Gets the current hotbar page.
+	 * @return long
+	 */
+	public static long getPage()
 	{
 		return page;
 	}
 
-	public static void goToPage(int newPage)
+	/**
+	 * Sets the current page to the one given.
+	 * Does not do anything if the one given is less than 0.
+	 * @param newPage long
+	 */
+	public static void goToPage(long newPage)
 	{
 		if (newPage < 0)
 		{
@@ -189,9 +235,13 @@ public class Util
 		refreshHotbar();
 	}
 
+	/**
+	 * Increase the current hotbar page.
+	 * Does not do anything when the maximum of 9,223,372,036,854,775,807 is reached.
+	 */
 	public static void nextPage()
 	{
-		if (page == 2147483647)
+		if (page == 9223372036854775807L)
 		{
 			return;
 		}
@@ -208,6 +258,10 @@ public class Util
 		refreshHotbar();
 	}
 
+	/**
+	 * Go back a hotbar page.
+	 * Does not do anything when the page is less than or equal to 0.
+	 */
 	public static void previousPage()
 	{
 		if (page > 0)
@@ -217,6 +271,10 @@ public class Util
 		}
 	}
 
+	/**
+	 * Reloads the current hotbar page.
+	 * Usually called when changing the currently loaded page.
+	 */
 	public static void refreshHotbar()
 	{
 		HotbarStorage storage = new HotbarStorage(MinecraftClient.getInstance().runDirectory, MinecraftClient.getInstance().getDataFixer());

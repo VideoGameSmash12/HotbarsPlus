@@ -29,13 +29,8 @@ import net.minecraft.client.MinecraftClient;
  * @author Video
  */
 @Environment(EnvType.CLIENT)
-public class ClientTickListener implements ClientTickEvents.StartTick, ClientTickEvents.EndTick
+public class ClientTickListener implements ClientTickEvents.EndTick
 {
-    @Override
-    public void onStartTick(MinecraftClient client)
-    {
-    }
-
     @Override
     public void onEndTick(MinecraftClient client)
     {
