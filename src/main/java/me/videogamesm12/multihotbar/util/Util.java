@@ -241,7 +241,7 @@ public class Util
 	 */
 	public static void nextPage()
 	{
-		if (page == 9223372036854775807L)
+		if (page == Long.MAX_VALUE)
 		{
 			return;
 		}

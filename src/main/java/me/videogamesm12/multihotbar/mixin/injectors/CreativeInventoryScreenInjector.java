@@ -109,7 +109,7 @@ public abstract class CreativeInventoryScreenInjector extends AbstractInventoryS
         {
             prevButton.active = Util.getPage() > 0;
             backupButton.active = Util.hotbarFileExists() && !Util.backupInProgress;
-            nextButton.active = Util.getPage() != 9223372036854775807L;
+            nextButton.active = Util.getPage() != Long.MAX_VALUE;
             //
             prevButton.visible = true;
             backupButton.visible = true;

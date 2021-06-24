@@ -39,7 +39,7 @@ public class NextCommand implements Command<FabricClientCommandSource>
 	{
 		// This prevents the page from going any higher than 9,223,372,036,854,775,807.
 		// Prevents issues caused by the number looping back to –9,223,372,036,854,775,808.
-		if (Util.getPage() == 9223372036854775807L)
+		if (Util.getPage() == Long.MAX_VALUE)
 		{
 			context.getSource().sendFeedback(new TranslatableText("command.multihotbars.reached_maximum_number").formatted(Formatting.RED));
 			return 2;
