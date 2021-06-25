@@ -49,7 +49,7 @@ public class HotbarStorageInjector
      * Loading Injection - Calls the HotbarLoadFailCallback if the client fails to load the hotbar file.
      * @param ci CallbackInfo
      */
-    @Inject(method = "load", at = @At(value = "INVOKE", target = "Lorg/apache/logging/log4j/Logger;error(Ljava/lang/String;Ljava/lang/Throwable;)V", shift = At.Shift.AFTER))
+    @Inject(method = "load", at = @At(value = "INVOKE", target = "Lorg/apache/logging/log4j/Logger;error(Ljava/lang/String;Ljava/lang/Throwable;)V", shift = At.Shift.AFTER), remap = false)
     public void injectLoad(CallbackInfo ci)
     {
         HotbarLoadFailCallback.EVENT.invoker().onHotbarLoadFail();
@@ -59,7 +59,7 @@ public class HotbarStorageInjector
      * Saving Injection - Calls the HotbarSaveFailCallback if the client fails to save the hotbar file.
      * @param ci CallbackInfo
      */
-    @Inject(method = "save", at = @At(value = "INVOKE", target = "Lorg/apache/logging/log4j/Logger;error(Ljava/lang/String;Ljava/lang/Throwable;)V", shift = At.Shift.AFTER))
+    @Inject(method = "save", at = @At(value = "INVOKE", target = "Lorg/apache/logging/log4j/Logger;error(Ljava/lang/String;Ljava/lang/Throwable;)V", shift = At.Shift.AFTER), remap = false)
     public void injectSave(CallbackInfo ci)
     {
         HotbarSaveFailCallback.EVENT.invoker().onHotbarSaveFail();

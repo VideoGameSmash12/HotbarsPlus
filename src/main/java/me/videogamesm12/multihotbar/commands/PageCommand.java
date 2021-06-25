@@ -44,7 +44,7 @@ public class PageCommand implements Command<FabricClientCommandSource>
 		//  to double the capacity.
 		if (page < 0)
 		{
-			context.getSource().sendFeedback(new TranslatableText("command.multihotbars.goto_invalid_number", page).formatted(Formatting.RED));
+			context.getSource().sendError(new TranslatableText("command.multihotbars.goto_invalid_number", page));
 			return 2;
 		}
 

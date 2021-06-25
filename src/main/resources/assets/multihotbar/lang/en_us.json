@@ -2,6 +2,7 @@
   "category.multihotbar.navigation": "Hotbars+ - Navigation",
 
   "command.multihotbars.backup_failed": "Backup failed: %s",
+  "command.multihotbars.backup_in_progress": "A backup is already in progress.",
   "command.multihotbars.backup_success": "Backup completed: %s",
   "command.multihotbars.cant_backup_empty_hotbar_pages": "Empty hotbar pages can't be backed up.",
   "command.multihotbars.goto_invalid_number": "Invalid page: %d",
@@ -9,6 +10,7 @@
   "command.multihotbars.stats.current_file": "Current file: %s",
   "command.multihotbars.stats.version": "Version: %s",
 
+  "key.multihotbar.backup": "Backup Current Hotbar",
   "key.multihotbar.next": "Load Next Hotbar",
   "key.multihotbar.previous": "Load Previous Hotbar",
 
@@ -17,6 +19,7 @@
 
   "overlay.hotbar_is_empty": "Empty hotbar pages can't be backed up",
   "overlay.hotbar_backup_completed": "Hotbar backed up: %s",
+  "overlay.hotbar_backup_failed": "Failed to back up hotbar: %s",
   "overlay.hotbar_selected": "Hotbar selected: %s",
   "overlay.hotbar_load_failed": "Failed to load hotbar: %s",
   "overlay.hotbar_save_failed": "Failed to save hotbar: %s",
@@ -44,8 +47,9 @@
   "text.autoconfig.hotbars+.option.main.warnIfUsingUnsupportedSetup.@Tooltip[2]": "setup (e.g. conflicting mods) and throws",
   "text.autoconfig.hotbars+.option.main.warnIfUsingUnsupportedSetup.@Tooltip[3]": "a message into the logs if so.",
 
-  "toast.backup.empty": "Empty hotbars can't be backed up",
+  "toast.backup.empty": "Hotbar file is empty",
   "toast.backup.failed": "Backup failed",
+  "toast.backup.failed_error": "An error occurred",
   "toast.backup.file": "%s",
   "toast.backup.saved": "%s",
   "toast.backup.success": "Backup completed",

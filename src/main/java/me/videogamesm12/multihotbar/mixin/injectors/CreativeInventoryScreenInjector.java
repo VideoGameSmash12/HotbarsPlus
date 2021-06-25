@@ -29,9 +29,11 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -48,6 +50,11 @@ public abstract class CreativeInventoryScreenInjector extends AbstractInventoryS
     public ButtonWidget backupButton;
     public ButtonWidget nextButton;
     public ButtonWidget prevButton;
+    //
+    public Text backupLabel = new LiteralText("\uD83D\uDCBE").setStyle(Style.EMPTY.withFont(
+            new Identifier("multihotbar", "default")));
+    public Text nextLabel = new LiteralText("→");
+    public Text prevLabel = new LiteralText("←");
 
     public CreativeInventoryScreenInjector(CreativeInventoryScreen.CreativeScreenHandler screenHandler, PlayerInventory playerInventory, Text text)
     {
@@ -64,22 +71,21 @@ public abstract class CreativeInventoryScreenInjector extends AbstractInventoryS
         int x = this.getX() + 159;
         int y = this.getY() + 4;
         //
-        prevButton = new ButtonWidget(x - 16, y, 16, 12, new LiteralText("←"), (buttonWidget) ->
+        prevButton = new ButtonWidget(x - 16, y, 16, 12, prevLabel, (buttonWidget) ->
         {
             Util.previousPage();
             invokeSetSelectedTab(ItemGroup.HOTBAR);
         });
         //
-        // TODO: Figure out how to get custom text fonts to display correctly and replace this button's icon with a
-        //  floppy disk (namely, this one: 💾) so that the button icon is more accurate
-        backupButton = new ButtonWidget(x, y, 16, 12, new LiteralText("✍"), (buttonWidget) ->
+        backupButton = new ButtonWidget(x, y, 16, 12, backupLabel, (buttonWidget) ->
         {
             if (!Util.backupInProgress)
             {
                 Util.backupCurrentHotbar();
             }
         });
-        nextButton = new ButtonWidget(x + 16, y, 16, 12, new LiteralText("→"), (buttonWidget) ->
+        //
+        nextButton = new ButtonWidget(x + 16, y, 16, 12, nextLabel, (buttonWidget) ->
         {
             Util.nextPage();
             invokeSetSelectedTab(ItemGroup.HOTBAR);
@@ -109,7 +115,7 @@ public abstract class CreativeInventoryScreenInjector extends AbstractInventoryS
         {
             prevButton.active = Util.getPage() > 0;
             backupButton.active = Util.hotbarFileExists() && !Util.backupInProgress;
-            nextButton.active = Util.getPage() != 9223372036854775807L;
+            nextButton.active = Util.getPage() != Long.MAX_VALUE;
             //
             prevButton.visible = true;
             backupButton.visible = true;

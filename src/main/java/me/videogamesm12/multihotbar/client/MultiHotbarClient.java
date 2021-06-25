@@ -46,12 +46,20 @@ public class MultiHotbarClient implements ClientModInitializer
     public static final CommandManager commandManager = new CommandManager();
     public static final ConfigurationManager configManager = new ConfigurationManager();
     //
+    public static KeyBinding backup_binding;
     public static KeyBinding next_binding;
     public static KeyBinding previous_binding;
 
     @Override
     public void onInitializeClient()
     {
+        backup_binding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                "key.multihotbar.backup",
+                InputUtil.Type.KEYSYM,
+                GLFW.GLFW_KEY_UNKNOWN,
+                "category.multihotbar.navigation"
+        ));
+
         next_binding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.multihotbar.next",
                 InputUtil.Type.KEYSYM,

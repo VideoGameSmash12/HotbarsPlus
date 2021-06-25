@@ -41,7 +41,14 @@ public class BackupCommand implements Command<FabricClientCommandSource>
 		// This fixes the NPE caused when trying to make a backup of a file that does not exist.
 		if (!Util.hotbarFileExists())
 		{
-			context.getSource().sendFeedback(new TranslatableText("command.multihotbars.cant_backup_empty_hotbar_pages").formatted(Formatting.RED));
+			context.getSource().sendError(new TranslatableText("command.multihotbars.cant_backup_empty_hotbar_pages"));
+			return 2;
+		}
+
+		// Checks if a backup is already in progress beforehand.
+		if (Util.backupInProgress)
+		{
+			context.getSource().sendError(new TranslatableText("command.multihotbars.backup_in_progress"));
 			return 2;
 		}
 

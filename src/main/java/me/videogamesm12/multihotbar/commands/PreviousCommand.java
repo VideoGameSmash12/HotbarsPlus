@@ -39,7 +39,7 @@ public class PreviousCommand implements Command<FabricClientCommandSource>
 	{
 		if (Util.getPage() <= 0)
 		{
-			context.getSource().sendFeedback(new TranslatableText("command.multihotbars.previous_back").formatted(Formatting.RED));
+			context.getSource().sendError(new TranslatableText("command.multihotbars.previous_back"));
 			return 2;
 		}
 

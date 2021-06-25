@@ -41,6 +41,7 @@ public class Util
 	private static long page = MultiHotbarClient.configManager.getConfig().main.page;
 	public static boolean backupInProgress = false;
 	public static Thread thread;
+	public static Runnable backupRunnable = new BackupRunnable();
 	public static HotbarToast toast;
 
 	/**
@@ -62,39 +63,36 @@ public class Util
 		// Sends a toast message noting that the backup was in progress.
 		showToastMessage(HotbarToast.Type.BACKUP, new TranslatableText("toast.backup.in_progress"), new TranslatableText("toast.backup.file", getHotbarName()), true);
 
-		thread = new Thread(() ->
-		{
-			try
-			{
-				HotbarStorage storage = MinecraftClient.getInstance().getCreativeHotbarStorage();
-				File file = ((HotbarStorageAccessor) storage).getFile();
-				File copy = new File(getBackupFolder(), String.format("[%s] %s.nbt", new Date().getTime(), file.getName().replace(".nbt", "")));
-				//
-				if (!hotbarFileExists())
-				{
-					showToastMessage(HotbarToast.Type.BACKUP, new TranslatableText("toast.backup.failed"), new TranslatableText("toast.backup.empty"), true);
-					showOverlayMessage(new TranslatableText("overlay.hotbar_is_empty"));
-					backupInProgress = false;
-					return;
-				}
-				//
-				FileUtils.copyFile(file, copy);
-				//
-				showToastMessage(HotbarToast.Type.BACKUP, new TranslatableText("toast.backup.success"), new TranslatableText("toast.backup.saved", getHotbarName()), true);
-				showOverlayMessage(new TranslatableText("overlay.hotbar_backup_completed", getHotbarName()));
-			}
-			catch (Exception ex)
-			{
-				ex.printStackTrace();
-			}
-
-			toast = null;
-			backupInProgress = false;
-		});
-
+		// Creates a new thread to run the backup on. This prevents lag spikes caused by backing up large hotbar files.
+		thread = new Thread(backupRunnable);
 		thread.start();
 
 		return true;
+	}
+
+	/**
+	 * Shows a toast message if the player has toast notifications enabled.
+	 * @param type Type
+	 * @param newType Type
+	 * @param title Text
+	 * @param description Text
+	 * @param updateExisting Boolean
+	 */
+	public static void showToastMessage(HotbarToast.Type type, HotbarToast.Type newType, Text title, @Nullable Text description, boolean updateExisting)
+	{
+		if (MultiHotbarClient.configManager.getConfig().notifs.toastNotifications)
+		{
+			if (updateExisting && MinecraftClient.getInstance().getToastManager().getToast(HotbarToast.class, type) != null)
+			{
+				HotbarToast toast = MinecraftClient.getInstance().getToastManager().getToast(HotbarToast.class, type);
+				toast.change(title, description, newType);
+			}
+			else
+			{
+				toast = new HotbarToast(newType, title, description);
+				MinecraftClient.getInstance().getToastManager().add(toast);
+			}
+		}
 	}
 
 	/**
@@ -241,7 +239,7 @@ public class Util
 	 */
 	public static void nextPage()
 	{
-		if (page == 9223372036854775807L)
+		if (page == Long.MAX_VALUE)
 		{
 			return;
 		}
@@ -283,5 +281,50 @@ public class Util
 		MultiHotbar.logger.info("Hotbar selected: " + getHotbarName());
 		showOverlayMessage(new TranslatableText("overlay.hotbar_selected", getHotbarName()));
 		showToastMessage(HotbarToast.Type.SELECTION, new TranslatableText("toast.selected.title"), new LiteralText(getHotbarName()), true);
+	}
+
+	public static class BackupRunnable implements Runnable
+	{
+		@Override
+		public void run()
+		{
+			try
+			{
+				HotbarStorage storage = MinecraftClient.getInstance().getCreativeHotbarStorage();
+				File file = ((HotbarStorageAccessor) storage).getFile();
+				File copy = new File(getBackupFolder(), String.format("[%s] %s.nbt", new Date().getTime(), file.getName().replace(".nbt", "")));
+				//
+				// Does the hotbar file even exist?
+				if (!hotbarFileExists())
+				{
+					MultiHotbar.logger.info("Refused to back up hotbar file " + getHotbarName() + " as the file does not exist");
+					//
+					showToastMessage(HotbarToast.Type.BACKUP, HotbarToast.Type.BACKUP_FAILED, new TranslatableText("toast.backup.failed"), new TranslatableText("toast.backup.empty"), true);
+					showOverlayMessage(new TranslatableText("overlay.hotbar_is_empty"));
+					//
+					backupInProgress = false;
+					return;
+				}
+				//
+				FileUtils.copyFile(file, copy);
+				//
+				MultiHotbar.logger.info("Backed up hotbar file " + getHotbarName() + " to /backups/" + copy.getName());
+				//
+				showToastMessage(HotbarToast.Type.BACKUP, new TranslatableText("toast.backup.success"), new TranslatableText("toast.backup.saved", getHotbarName()), true);
+				showOverlayMessage(new TranslatableText("overlay.hotbar_backup_completed", getHotbarName()));
+			}
+			catch (Exception ex)
+			{
+				MultiHotbar.logger.error("An error occurred whilst backing up hotbar file " + getHotbarName());
+				//
+				showToastMessage(HotbarToast.Type.BACKUP, HotbarToast.Type.BACKUP_FAILED, new TranslatableText("toast.backup.failed"), new TranslatableText("toast.backup.failed_error"), true);
+				showOverlayMessage(new TranslatableText("overlay.hotbar_backup_failed"));
+				//
+				ex.printStackTrace();
+			}
+
+			toast = null;
+			backupInProgress = false;
+		}
 	}
 }

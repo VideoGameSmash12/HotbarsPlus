@@ -34,11 +34,23 @@ public class ClientTickListener implements ClientTickEvents.EndTick
     @Override
     public void onEndTick(MinecraftClient client)
     {
+        // Backups
+        if (MultiHotbarClient.backup_binding.wasPressed())
+        {
+            Util.backupCurrentHotbar();
+
+            // Prevents the binding from doing multiple backups at once when pressing the key. This is a stupid way to
+            // do it that probably doesn't even work, but I couldn't find anything that handles when a key has been held.
+            MultiHotbarClient.backup_binding.setPressed(false);
+        }
+
+        // Next page
         while (MultiHotbarClient.next_binding.wasPressed())
         {
             Util.nextPage();
         }
 
+        // Previous page
         while (MultiHotbarClient.previous_binding.wasPressed())
         {
             Util.previousPage();

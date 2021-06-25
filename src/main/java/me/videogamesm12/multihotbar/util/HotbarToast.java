@@ -23,7 +23,9 @@ import net.minecraft.client.texture.TextureManager;
 import net.minecraft.client.toast.Toast;
 import net.minecraft.client.toast.ToastManager;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
@@ -33,10 +35,10 @@ import org.jetbrains.annotations.Nullable;
  */
 public class HotbarToast implements Toast
 {
-    final Identifier id = TEXTURE;
+    final Identifier id = new Identifier("multihotbar", "textures/gui/toast_background.png");
     final TextureManager textureManager = MinecraftClient.getInstance().getTextureManager();
     //
-    final Type type;
+    Type type;
     //
     Visibility toastVisibility;
     long time;
@@ -53,11 +55,6 @@ public class HotbarToast implements Toast
         //
         this.toastVisibility = Visibility.SHOW;
         this.update = true;
-    }
-
-    public HotbarToast(Text title, Text description)
-    {
-        this(Type.MISC, title, description);
     }
 
     /**
@@ -78,18 +75,60 @@ public class HotbarToast implements Toast
             update = false;
         }
 
-        // Prepares the texture to be drawn
+        // Prepares the background texture to be drawn
         textureManager.bindTexture(id);
         RenderSystem.color3f(1.0F, 1.0F, 1.0F);
 
-        // Draws the textures
-        manager.drawTexture(matrices, 0, 0, 0, 64, this.getWidth(), this.getHeight());
+        // Draws the background
+        manager.drawTexture(matrices, 0, 0, 0, 0, this.getWidth(), this.getHeight());
+
+        // Gets the icon offset
+        // This is a terrible implementation, but it works.
+        int icon_offset_x;
+        int icon_offset_y = 0;
+        switch (type)
+        {
+            case SELECTION:
+            {
+                icon_offset_x = 0;
+                break;
+            }
+
+            case FAILED:
+            {
+                icon_offset_x = 1;
+                break;
+            }
+
+            case BACKUP:
+            {
+                icon_offset_x = 2;
+                break;
+            }
+
+            case BACKUP_FAILED:
+            {
+                icon_offset_x = 0;
+                icon_offset_y = 1;
+                break;
+            }
+
+            default:
+            {
+                icon_offset_x = 2;
+                icon_offset_y = 1;
+                break;
+            }
+        }
+
+        // Draws the icon
+        manager.drawTexture(matrices, 3, 3, 178 + (26 * icon_offset_x), 26 * icon_offset_y, 26, 26);
 
         // Draws the text
         if (description != null)
         {
-            MinecraftClient.getInstance().textRenderer.draw(matrices, title, 18, 7, 0xFFFF00);
-            MinecraftClient.getInstance().textRenderer.draw(matrices, description, 18, 18, 0xFFFFFF);
+            MinecraftClient.getInstance().textRenderer.draw(matrices, title, 30, 7, 0xFFFF00);
+            MinecraftClient.getInstance().textRenderer.draw(matrices, description, 30, 18, 0xFFFFFF);
         }
         else
         {
@@ -106,7 +145,7 @@ public class HotbarToast implements Toast
     }
 
     /**
-     * Changes the text in the toast and updates it
+     * Changes the text in the toast and updates it.
      * @param title Text
      * @param description Text
      */
@@ -118,6 +157,19 @@ public class HotbarToast implements Toast
     }
 
     /**
+     * Changes the text and type in the toast and updates it.
+     * @param title Text
+     * @param description Text
+     * @param type Type
+     */
+    public void change(Text title, @Nullable Text description, Type type)
+    {
+        this.type = type;
+        //
+        change(title, description);
+    }
+
+    /**
      * Gets the type of message the toast is for.
      * @return Type
      */
@@ -126,11 +178,21 @@ public class HotbarToast implements Toast
         return this.type;
     }
 
+    /**
+     * Change the type of message the toast is for.
+     * @param type Type
+     */
+    public void setType(Type type)
+    {
+        this.type = type;
+        this.update = true;
+    }
+
     public enum Type
     {
-        BACKUP,     // Toasts used for backups
-        FAILED,     // Toasts used for failures
-        MISC,       // Toasts used for miscellaneous things
-        SELECTION   // Toasts used for selections
+        BACKUP,         // Toasts used for backups
+        BACKUP_FAILED,  // Toasts used for backup failures
+        FAILED,         // Toasts used for failures
+        SELECTION       // Toasts used for selections
     }
 }
