@@ -7,7 +7,6 @@
     "accessors.CreativeInventoryScreenAccessor",
     "accessors.HandledScreenAccessor",
     "accessors.HotbarStorageAccessor",
-    "accessors.MinecraftClientAccessor",
     "injectors.CreativeInventoryScreenInjector",
     "injectors.HotbarStorageInjector",
     "injectors.MinecraftClientInjector"

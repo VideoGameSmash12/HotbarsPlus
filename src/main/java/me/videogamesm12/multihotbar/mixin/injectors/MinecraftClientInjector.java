@@ -18,14 +18,17 @@
 package me.videogamesm12.multihotbar.mixin.injectors;
 
 import me.videogamesm12.multihotbar.callbacks.ClientInitCallback;
+import me.videogamesm12.multihotbar.client.MultiHotbarClient;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.RunArgs;
+import net.minecraft.client.options.HotbarStorage;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
  * MinecraftClientInjector - Calls an event when the Minecraft client finishes initializing.
@@ -39,5 +42,11 @@ public class MinecraftClientInjector
     public void injectInit(RunArgs args, CallbackInfo ci)
     {
         ClientInitCallback.EVENT.invoker().onInitialize();
+    }
+
+    @Inject(method = "getCreativeHotbarStorage", at = @At("HEAD"), cancellable = true)
+    public void injectGetHotbarStorage(CallbackInfoReturnable<HotbarStorage> cir)
+    {
+        cir.setReturnValue(MultiHotbarClient.hotbarStorage);
     }
 }

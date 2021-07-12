@@ -32,6 +32,8 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.options.HotbarStorage;
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import org.lwjgl.glfw.GLFW;
@@ -49,10 +51,14 @@ public class MultiHotbarClient implements ClientModInitializer
     public static KeyBinding backup_binding;
     public static KeyBinding next_binding;
     public static KeyBinding previous_binding;
+    //
+    public static HotbarStorage hotbarStorage;
 
     @Override
     public void onInitializeClient()
     {
+        hotbarStorage = new HotbarStorage(MinecraftClient.getInstance().runDirectory, MinecraftClient.getInstance().getDataFixer());
+        //
         backup_binding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.multihotbar.backup",
                 InputUtil.Type.KEYSYM,

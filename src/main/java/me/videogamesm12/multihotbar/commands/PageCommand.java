@@ -40,8 +40,7 @@ public class PageCommand implements Command<FabricClientCommandSource>
 		Long page = context.getArgument("page", Long.class);
 
 		// Prevents the player from going into the negative pages.
-		// TODO: Make this a bit cleaner by using command exceptions instead. Consider removing this check in the future
-		//  to double the capacity.
+		// TODO: Make this a bit cleaner by using command exceptions instead.
 		if (page < 0)
 		{
 			context.getSource().sendError(new TranslatableText("command.multihotbars.goto_invalid_number", page));

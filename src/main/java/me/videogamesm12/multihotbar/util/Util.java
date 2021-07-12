@@ -20,7 +20,6 @@ package me.videogamesm12.multihotbar.util;
 import me.videogamesm12.multihotbar.MultiHotbar;
 import me.videogamesm12.multihotbar.client.MultiHotbarClient;
 import me.videogamesm12.multihotbar.mixin.accessors.HotbarStorageAccessor;
-import me.videogamesm12.multihotbar.mixin.accessors.MinecraftClientAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.options.HotbarStorage;
 import net.minecraft.text.LiteralText;
@@ -275,8 +274,9 @@ public class Util
 	 */
 	public static void refreshHotbar()
 	{
-		HotbarStorage storage = new HotbarStorage(MinecraftClient.getInstance().runDirectory, MinecraftClient.getInstance().getDataFixer());
-		((MinecraftClientAccessor) MinecraftClient.getInstance()).setCreativeHotbarStorage(storage);
+		// In versions of Hotbars+ after v1.3-Pre4, the mod handles the getting and setting of HotbarStorage instances.
+		// This is to (hopefully) allow the mod to behave properly under 1.17.
+		MultiHotbarClient.hotbarStorage = new HotbarStorage(MinecraftClient.getInstance().runDirectory, MinecraftClient.getInstance().getDataFixer());
 		//
 		MultiHotbar.logger.info("Hotbar selected: " + getHotbarName());
 		showOverlayMessage(new TranslatableText("overlay.hotbar_selected", getHotbarName()));
