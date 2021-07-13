@@ -83,43 +83,8 @@ public class HotbarToast implements Toast
         manager.drawTexture(matrices, 0, 0, 0, 0, this.getWidth(), this.getHeight());
 
         // Gets the icon offset
-        // This is a terrible implementation, but it works.
-        int icon_offset_x;
-        int icon_offset_y = 0;
-        switch (type)
-        {
-            case SELECTION:
-            {
-                icon_offset_x = 0;
-                break;
-            }
-
-            case FAILED:
-            {
-                icon_offset_x = 1;
-                break;
-            }
-
-            case BACKUP:
-            {
-                icon_offset_x = 2;
-                break;
-            }
-
-            case BACKUP_FAILED:
-            {
-                icon_offset_x = 0;
-                icon_offset_y = 1;
-                break;
-            }
-
-            default:
-            {
-                icon_offset_x = 2;
-                icon_offset_y = 1;
-                break;
-            }
-        }
+        int icon_offset_x = type.getOffsetX();
+        int icon_offset_y = type.getOffsetY();
 
         // Draws the icon
         manager.drawTexture(matrices, 3, 3, 178 + (26 * icon_offset_x), 26 * icon_offset_y, 26, 26);
@@ -190,9 +155,29 @@ public class HotbarToast implements Toast
 
     public enum Type
     {
-        BACKUP,         // Toasts used for backups
-        BACKUP_FAILED,  // Toasts used for backup failures
-        FAILED,         // Toasts used for failures
-        SELECTION       // Toasts used for selections
+        BACKUP(2, 0),         // Toasts used for backups
+        BACKUP_FAILED(0, 1),  // Toasts used for backup failures
+        DEFAULT(2, 1),        // Toasts used for unknown reasons
+        FAILED(1, 0),         // Toasts used for failures
+        SELECTION(0, 0);      // Toasts used for selections
+
+        private int x_offset = 0;
+        private int y_offset = 0;
+
+        Type(int x, int y)
+        {
+            this.x_offset = x;
+            this.y_offset = y;
+        }
+
+        public int getOffsetX()
+        {
+            return this.x_offset;
+        }
+
+        public int getOffsetY()
+        {
+            return this.y_offset;
+        }
     }
 }
