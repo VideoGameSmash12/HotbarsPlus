@@ -31,19 +31,45 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
- * MinecraftClientInjector - Calls an event when the Minecraft client finishes initializing.
+ * MinecraftClientInjector - Modifies the main class to call events and redirect queries for saved hotbar data.
+ * --
+ * @since v1.1
  * @author Video
  */
 @Environment(EnvType.CLIENT)
 @Mixin(MinecraftClient.class)
 public class MinecraftClientInjector
 {
+    /**
+     * Early versions of Hotbars+ stored additional hotbar pages in the same folder as the hotbar.nbt file. This was
+     *   changed in v1.1 to save additional hotbar pages to a dedicated folder. To ensure that anyone using v1.0 could
+     *   update the mod to v1.1 or newer while still keeping their saved hotbar pages, this was added to show a pop-up
+     *   prompt on startup asking the user if they wanted to to migrate the files to the aforementioned folder.
+     *   directory.
+     * --
+     * @since v1.1
+     * --
+     * @param args RunArgs
+     * @param ci CallbackInfo
+     */
     @Inject(method = "<init>", at = @At("RETURN"))
     public void injectInit(RunArgs args, CallbackInfo ci)
     {
         ClientInitCallback.EVENT.invoker().onInitialize();
     }
 
+    /**
+     * In versions of Minecraft 1.17 and newer, modifying anything marked as "final" causes the client to instantly
+     *  crash to the launcher with a Mixin error. To combat this, versions of Hotbars+ after v1.3-Pre4 use their own
+     *  instance of HotbarStorage. What this injection does is elementary: it redirects all queries for the built-in
+     *  HotbarStorage instance to the one in this mod.
+     * --
+     * @since v1.3-Pre4
+     * @implNote While Hotbars+ does not currently support 1.17.x, this is here to make the transition process easier.
+     *  In addition, this gives anybody wishing to port the mod to 1.17.x themselves a little bit less work to do.
+     * --
+     * @param cir CallbackInfoReturnable<HotbarStorage>
+     */
     @Inject(method = "getCreativeHotbarStorage", at = @At("HEAD"), cancellable = true)
     public void injectGetHotbarStorage(CallbackInfoReturnable<HotbarStorage> cir)
     {

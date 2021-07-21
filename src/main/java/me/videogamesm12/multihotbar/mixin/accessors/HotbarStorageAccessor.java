@@ -27,12 +27,19 @@ import java.io.File;
 
 /**
  * HotbarStorage - Accesses certain variables in HotbarStorage.
+ * --
+ * @since v1.0
  * @author Video
  */
 @Environment(EnvType.CLIENT)
 @Mixin(HotbarStorage.class)
 public interface HotbarStorageAccessor
 {
+	/**
+	 * Gets the hotbar file from the HotbarStorage.
+	 * --
+	 * @return File
+	 */
 	@Accessor("file")
 	public File getFile();
 }

@@ -26,11 +26,18 @@ import net.minecraft.client.MinecraftClient;
 
 /**
  * ClientTickListener - Listens for client-side tick events to handle binding events.
+ * --
+ * @since v1.0
  * @author Video
  */
 @Environment(EnvType.CLIENT)
 public class ClientTickListener implements ClientTickEvents.EndTick
 {
+    /**
+     * Handles key presses for certain keybinds specific to Hotbars+.
+     * --
+     * @param client MinecraftClient
+     */
     @Override
     public void onEndTick(MinecraftClient client)
     {

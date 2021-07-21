@@ -23,6 +23,8 @@ import me.videogamesm12.multihotbar.config.ClothConfiguration;
 
 /**
  * ConfigurationManager - Manages the configuration for Hotbars+.
+ * --
+ * @since v1.3-Pre2
  * @author Video
  */
 public class ConfigurationManager
@@ -45,6 +47,7 @@ public class ConfigurationManager
 
     /**
      * Gets the current configuration.
+     * --
      * @return ClothConfiguration
      */
     public ClothConfiguration getConfig()

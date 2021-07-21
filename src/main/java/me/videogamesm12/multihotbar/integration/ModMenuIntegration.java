@@ -26,11 +26,18 @@ import net.fabricmc.api.Environment;
 
 /**
  * ModMenuIntegration - Mod Menu support for Hotbars+.
+ * --
  * @author Video
+ * @since 1.1
  */
 @Environment(EnvType.CLIENT)
 public class ModMenuIntegration implements ModMenuApi
 {
+    /**
+     * This automatically generates a configuration screen for the ModMenu mod using Cloth's AutoConfig.
+     * --
+     * @return ConfigScreenFactory<?>
+     */
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory()
     {

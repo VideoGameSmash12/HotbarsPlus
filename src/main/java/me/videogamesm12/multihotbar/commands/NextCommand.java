@@ -29,6 +29,7 @@ import net.minecraft.util.Formatting;
 
 /**
  * NextCommand - Subcommand for advancing the current hotbar page.
+ * --
  * @author Video
  */
 @Environment(EnvType.CLIENT)

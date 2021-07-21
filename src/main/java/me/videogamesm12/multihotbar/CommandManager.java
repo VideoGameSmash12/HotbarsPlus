@@ -18,6 +18,7 @@
 package me.videogamesm12.multihotbar;
 
 import com.mojang.brigadier.arguments.LongArgumentType;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import me.videogamesm12.multihotbar.commands.BackupCommand;
 import me.videogamesm12.multihotbar.commands.NextCommand;
@@ -30,6 +31,8 @@ import net.fabricmc.fabric.api.client.command.v1.FabricClientCommandSource;
 
 /**
  * CommandManager - Registers client-side commands in-game.
+ * --
+ * @since 1.1
  * @author Video
  */
 @Environment(EnvType.CLIENT)
@@ -59,6 +62,7 @@ public class CommandManager
 
 	/**
 	 * Gets the command node that registers on start-up.
+	 * --
 	 * @return LiteralCommandNode<FabricClientCommandSource>
 	 */
 	public LiteralCommandNode<FabricClientCommandSource> getCommandNode()

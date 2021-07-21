@@ -40,6 +40,7 @@ import org.lwjgl.glfw.GLFW;
 
 /**
  * MultiHotbarClient - The client-side main class for Hotbars+.
+ * --
  * @author Video
  */
 @Environment(EnvType.CLIENT)

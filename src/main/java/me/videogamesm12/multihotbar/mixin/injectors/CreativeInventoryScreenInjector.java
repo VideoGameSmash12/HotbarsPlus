@@ -41,6 +41,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
  * CreativeInventoryScreenInjector - Adds a few buttons to the CreativeInventoryScreen.
+ * --
+ * @since v1.0
  * @author Video
  */
 @Environment(EnvType.CLIENT)
@@ -63,6 +65,9 @@ public abstract class CreativeInventoryScreenInjector extends AbstractInventoryS
 
     /**
      * Adds the hotbar buttons to the menu.
+     * --
+     * @since v1.0
+     * --
      * @param ci CallbackInfo
      */
     @Inject(method = "init", at = @At("RETURN"))
@@ -102,6 +107,9 @@ public abstract class CreativeInventoryScreenInjector extends AbstractInventoryS
 
     /**
      * Rendering Injection Part 1 - Displays, hides, and disables the hotbar buttons depending on certain conditions.
+     * --
+     * @since v1.0
+     * --
      * @param matrices MatrixStack
      * @param mouseX int
      * @param mouseY int
@@ -113,9 +121,9 @@ public abstract class CreativeInventoryScreenInjector extends AbstractInventoryS
     {
         if (this.getSelectedTab() == ItemGroup.HOTBAR.getIndex())
         {
-            prevButton.active = Util.getPage() > 0;
+            prevButton.active = Util.getPage() > Long.MIN_VALUE;
             backupButton.active = Util.hotbarFileExists() && !Util.backupInProgress;
-            nextButton.active = Util.getPage() != Long.MAX_VALUE;
+            nextButton.active = Util.getPage() < Long.MAX_VALUE;
             //
             prevButton.visible = true;
             backupButton.visible = true;
@@ -131,6 +139,9 @@ public abstract class CreativeInventoryScreenInjector extends AbstractInventoryS
 
     /**
      * Rendering Injection Part 2 - Calls `renderButtonToolTips` to render the tooltips for the hotbar buttons.
+     * --
+     * @since v1.0
+     * --
      * @param matrices MatrixStack
      * @param mouseX int
      * @param mouseY int
@@ -145,6 +156,9 @@ public abstract class CreativeInventoryScreenInjector extends AbstractInventoryS
 
     /**
      * Renders the button tooltips.
+     * --
+     * @since v1.0
+     * --
      * @param matrices MatrixStack
      * @param mouseX int
      * @param mouseY int

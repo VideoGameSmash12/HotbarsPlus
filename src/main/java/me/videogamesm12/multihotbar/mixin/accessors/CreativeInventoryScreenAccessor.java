@@ -27,15 +27,27 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 /**
  * CreativeInventoryScreenAccessor - Accesses certain variables and methods in CreativeInventoryScreen.
+ * --
+ * @since v1.0
  * @author Video
  */
 @Environment(EnvType.CLIENT)
 @Mixin(CreativeInventoryScreen.class)
 public interface CreativeInventoryScreenAccessor
 {
+    /**
+     * Gets the ID of the tab that is currently open.
+     * --
+     * @return Integer
+     */
     @Accessor("selectedTab")
     public int getSelectedTab();
 
+    /**
+     * Changes the tab that is currently open.
+     * --
+     * @param group ItemGroup
+     */
     @Invoker("setSelectedTab")
     public void invokeSetSelectedTab(ItemGroup group);
 }

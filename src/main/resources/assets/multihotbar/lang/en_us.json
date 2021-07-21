@@ -7,6 +7,7 @@
   "command.multihotbars.cant_backup_empty_hotbar_pages": "Empty hotbar pages can't be backed up.",
   "command.multihotbars.goto_invalid_number": "Invalid page: %d",
   "command.multihotbars.reached_maximum_number": "You have reached the maximum number of hotbar pages allowed.",
+  "command.multihotbars.previous_back": "You can't go back that far.",
   "command.multihotbars.stats.current_file": "Current file: %s",
   "command.multihotbars.stats.version": "Version: %s",
 

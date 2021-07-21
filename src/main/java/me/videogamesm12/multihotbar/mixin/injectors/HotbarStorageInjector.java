@@ -32,12 +32,21 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 /**
  * HotbarStorageInjector - Intercepts the Hotbar file used by Minecraft to save to other files.
+ * --
+ * @since v1.0
  * @author Video
  */
 @Environment(EnvType.CLIENT)
 @Mixin(HotbarStorage.class)
 public class HotbarStorageInjector
 {
+    /**
+     * Initialization Injection - Changes the file name and location of the hotbar file being used.
+     * --
+     * @since v1.0
+     * --
+     * @param args Args
+     */
     @ModifyArgs(method = "<init>", at = @At(value = "INVOKE", target = "Ljava/io/File;<init>(Ljava/io/File;Ljava/lang/String;)V"))
     private void injectFile(Args args)
     {
@@ -47,9 +56,12 @@ public class HotbarStorageInjector
 
     /**
      * Loading Injection - Calls the HotbarLoadFailCallback if the client fails to load the hotbar file.
+     * --
+     * @since v1.3-Pre3
+     * --
      * @param ci CallbackInfo
      */
-    @Inject(method = "load", at = @At(value = "INVOKE", target = "Lorg/apache/logging/log4j/Logger;error(Ljava/lang/String;Ljava/lang/Throwable;)V", shift = At.Shift.AFTER), remap = false)
+    @Inject(method = "load", at = @At(value = "INVOKE", target = "Lorg/apache/logging/log4j/Logger;error(Ljava/lang/String;Ljava/lang/Throwable;)V", shift = At.Shift.AFTER))
     public void injectLoad(CallbackInfo ci)
     {
         HotbarLoadFailCallback.EVENT.invoker().onHotbarLoadFail();
@@ -57,9 +69,12 @@ public class HotbarStorageInjector
 
     /**
      * Saving Injection - Calls the HotbarSaveFailCallback if the client fails to save the hotbar file.
+     * --
+     * @since v1.3-Pre3
+     * --
      * @param ci CallbackInfo
      */
-    @Inject(method = "save", at = @At(value = "INVOKE", target = "Lorg/apache/logging/log4j/Logger;error(Ljava/lang/String;Ljava/lang/Throwable;)V", shift = At.Shift.AFTER), remap = false)
+    @Inject(method = "save", at = @At(value = "INVOKE", target = "Lorg/apache/logging/log4j/Logger;error(Ljava/lang/String;Ljava/lang/Throwable;)V", shift = At.Shift.AFTER))
     public void injectSave(CallbackInfo ci)
     {
         HotbarSaveFailCallback.EVENT.invoker().onHotbarSaveFail();

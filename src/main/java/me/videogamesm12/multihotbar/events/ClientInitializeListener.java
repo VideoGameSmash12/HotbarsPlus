@@ -40,6 +40,8 @@ import java.util.regex.Pattern;
 /**
  * ClientInitializeListener - Listens for ClientInitCallbacks to display a message if any legacy hotbar files were found
  * in the game's root directory.
+ * --
+ * @since v1.1
  * @author Video
  */
 @Environment(EnvType.CLIENT)
@@ -48,6 +50,12 @@ public class ClientInitializeListener implements ClientInitCallback
     final Pattern pattern = Pattern.compile("hotbar\\.[0-9]*\\.nbt");
     final FilenameFilter pageFilter = (dir, name) -> pattern.matcher(name).matches();
 
+    /**
+     * Checks for non-default hotbar files saved in the root directory and prompts the player to migrate these files if
+     *  any are present.
+     * --
+     * @return ActionResult
+     */
     @Override
     public ActionResult onInitialize()
     {

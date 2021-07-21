@@ -20,6 +20,10 @@ package me.videogamesm12.multihotbar.commands;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.mojang.brigadier.suggestion.SuggestionProvider;
+import com.mojang.brigadier.suggestion.Suggestions;
+import com.mojang.brigadier.suggestion.SuggestionsBuilder;
+import me.videogamesm12.multihotbar.client.MultiHotbarClient;
 import me.videogamesm12.multihotbar.util.Util;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -27,8 +31,11 @@ import net.fabricmc.fabric.api.client.command.v1.FabricClientCommandSource;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 
+import java.util.concurrent.CompletableFuture;
+
 /**
  * PageCommand - Subcommand for navigating directly to a certain page.
+ * --
  * @author Video
  */
 @Environment(EnvType.CLIENT)
@@ -38,14 +45,6 @@ public class PageCommand implements Command<FabricClientCommandSource>
 	public int run(CommandContext<FabricClientCommandSource> context) throws CommandSyntaxException
 	{
 		Long page = context.getArgument("page", Long.class);
-
-		// Prevents the player from going into the negative pages.
-		// TODO: Make this a bit cleaner by using command exceptions instead.
-		if (page < 0)
-		{
-			context.getSource().sendError(new TranslatableText("command.multihotbars.goto_invalid_number", page));
-			return 2;
-		}
 
 		Util.goToPage(page);
 		return 1;

@@ -31,6 +31,8 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * HotbarToast - Toast notifications for Hotbars+.
+ * ---
+ * @since v1.3-Pre2
  * @author Video
  */
 public class HotbarToast implements Toast
@@ -111,6 +113,7 @@ public class HotbarToast implements Toast
 
     /**
      * Changes the text in the toast and updates it.
+     * --
      * @param title Text
      * @param description Text
      */
@@ -123,6 +126,7 @@ public class HotbarToast implements Toast
 
     /**
      * Changes the text and type in the toast and updates it.
+     * --
      * @param title Text
      * @param description Text
      * @param type Type
@@ -136,6 +140,7 @@ public class HotbarToast implements Toast
 
     /**
      * Gets the type of message the toast is for.
+     * --
      * @return Type
      */
     public Type getType()
@@ -145,6 +150,7 @@ public class HotbarToast implements Toast
 
     /**
      * Change the type of message the toast is for.
+     * --
      * @param type Type
      */
     public void setType(Type type)

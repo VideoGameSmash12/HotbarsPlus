@@ -25,15 +25,27 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 /**
  * HandledScreenAccessor - Accesses certain variables in HandledScreen.
+ * --
+ * @since v1.0
  * @author Video
  */
 @Environment(EnvType.CLIENT)
 @Mixin(HandledScreen.class)
 public interface HandledScreenAccessor
 {
+    /**
+     * Gets the X coordinates of the menu.
+     * --
+     * @return Integer
+     */
     @Accessor("x")
     public int getX();
 
+    /**
+     * Gets the Y coordinates of the menu.
+     * --
+     * @return Integer
+     */
     @Accessor("y")
     public int getY();
 }

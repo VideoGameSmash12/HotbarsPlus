@@ -28,23 +28,42 @@ import net.minecraft.util.ActionResult;
 /**
  * HotbarFailListener - Listens for HotbarLoadFailCallbacks and HotbarSaveFailCallbacks to display error messages when
  * hotbar files fail to save or load.
+ * --
+ * @since v1.3-Pre3
  * @author Video
  */
 public class HotbarFailListener implements HotbarLoadFailCallback, HotbarSaveFailCallback
 {
+    /**
+     * When Minecraft fails to load the current hotbar file, this notifies a player about it and gives the file name.
+     *  This can be useful for in case the file gets corrupted and the user doesn't know
+     * --
+     * @since v1.3-Pre3
+     * --
+     * @return ActionResult
+     */
     @Override
     public ActionResult onHotbarLoadFail()
     {
-        Util.showToastMessage(HotbarToast.Type.FAILED, new TranslatableText("toast.failed.load"), new LiteralText(Util.getHotbarName()), false);
+        Util.showToastMessage(HotbarToast.Type.FAILED, new TranslatableText("toast.failed.load"),
+                new LiteralText(Util.getHotbarName()), false);
         Util.showOverlayMessage(new TranslatableText("overlay.hotbar_load_failed", Util.getHotbarName()));
         //
         return ActionResult.SUCCESS;
     }
 
+    /**
+     * When Minecraft fails to save the current hotbar file, the mod notifies the player about it.
+     * --
+     * @since v1.3-Pre3
+     * --
+     * @return ActionResult
+     */
     @Override
     public ActionResult onHotbarSaveFail()
     {
-        Util.showToastMessage(HotbarToast.Type.FAILED, new TranslatableText("toast.failed.save"), new LiteralText(Util.getHotbarName()), false);
+        Util.showToastMessage(HotbarToast.Type.FAILED, new TranslatableText("toast.failed.save"),
+                new LiteralText(Util.getHotbarName()), false);
         Util.showOverlayMessage(new TranslatableText("overlay.hotbar_save_failed", Util.getHotbarName()));
         //
         return ActionResult.SUCCESS;

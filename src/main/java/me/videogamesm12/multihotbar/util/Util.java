@@ -33,6 +33,7 @@ import java.util.Date;
 
 /**
  * Util - Miscellaneous methods used by Hotbars+.
+ * --
  * @author Video
  */
 public class Util
@@ -44,8 +45,10 @@ public class Util
 	public static HotbarToast toast;
 
 	/**
-	 * Backs up the currently loaded hotbar file.
-	 * Does not do anything if a backup is currently ongoing.
+	 * Backs up the currently loaded hotbar file. Does not do anything if a backup is currently ongoing.
+	 * --
+	 * @since v1.3-Pre2
+	 * --
 	 * @return Boolean
 	 */
 	public static boolean backupCurrentHotbar()
@@ -71,6 +74,9 @@ public class Util
 
 	/**
 	 * Shows a toast message if the player has toast notifications enabled.
+	 * --
+	 * @since v1.3-Pre2
+	 * --
 	 * @param type Type
 	 * @param newType Type
 	 * @param title Text
@@ -96,6 +102,9 @@ public class Util
 
 	/**
 	 * Shows a toast message if the player has toast notifications enabled.
+	 * --
+	 * @since v1.3-Pre2
+	 * --
 	 * @param type Type
 	 * @param title Text
 	 * @param description Text
@@ -120,6 +129,9 @@ public class Util
 
 	/**
 	 * Shows an overlay message if the player has overlay notifications enabled.
+	 * --
+	 * @since v1.3-Pre2
+	 * --
 	 * @param text Text
 	 */
 	public static void showOverlayMessage(Text text)
@@ -132,6 +144,9 @@ public class Util
 
 	/**
 	 * Checks whether or not the current hotbar file actually exists and returns the value accordingly.
+	 * --
+	 * @since v1.1
+	 * --
 	 * @return Boolean
 	 */
 	public static boolean hotbarFileExists()
@@ -143,7 +158,10 @@ public class Util
 	}
 
 	/**
-	 * Gets the `hotbars` directory and automatically creates it if the directory doesn't already exist..
+	 * Gets the `hotbars` directory and automatically creates it if the directory doesn't already exist.
+	 * --
+	 * @since v1.1
+	 * --
 	 * @return File
 	 */
 	public static File getStorageFolder()
@@ -160,6 +178,9 @@ public class Util
 
 	/**
 	 * Gets the `backups` directory and automatically creates it if the directory doesn't already exist.
+	 * --
+	 * @since v1.1
+	 * --
 	 * @return File
 	 */
 	public static File getBackupFolder()
@@ -177,6 +198,9 @@ public class Util
 	/**
 	 * Gets the folder in which the current hotbar page is located.
 	 * If the page is 0, it will be the game's root directory. Otherwise, it will be the `hotbars` directory.
+	 * --
+	 * @since v1.1
+	 * --
 	 * @return File
 	 */
 	public static File getHotbarFolder()
@@ -193,11 +217,12 @@ public class Util
 
 	/**
 	 * Gets the file name of the current hotbar page.
-	 * @return Stirng
+	 * --
+	 * @return String
 	 */
 	public static String getHotbarName()
 	{
-		if (page > 0)
+		if (page != 0)
 		{
 			return "hotbar." + page + ".nbt";
 		}
@@ -209,6 +234,7 @@ public class Util
 
 	/**
 	 * Gets the current hotbar page.
+	 * --
 	 * @return long
 	 */
 	public static long getPage()
@@ -218,50 +244,33 @@ public class Util
 
 	/**
 	 * Sets the current page to the one given.
-	 * Does not do anything if the one given is less than 0.
+	 * --
 	 * @param newPage long
 	 */
 	public static void goToPage(long newPage)
 	{
-		if (newPage < 0)
-		{
-			return;
-		}
-
 		page = newPage;
 		refreshHotbar();
 	}
 
 	/**
-	 * Increase the current hotbar page.
-	 * Does not do anything when the maximum of 9,223,372,036,854,775,807 is reached.
+	 * Increase the current hotbar page. Does not do anything when the maximum of 9,223,372,036,854,775,807 is reached.
 	 */
 	public static void nextPage()
 	{
-		if (page == Long.MAX_VALUE)
-		{
-			return;
-		}
-
-		if (page < 0)
-		{
-			page = 0;
-		}
-		else
+		if (page < Long.MAX_VALUE)
 		{
 			page++;
+			refreshHotbar();
 		}
-
-		refreshHotbar();
 	}
 
 	/**
-	 * Go back a hotbar page.
-	 * Does not do anything when the page is less than or equal to 0.
+	 * Go back a hotbar page. Does not do anything when the minimum of -9,223,372,036,854,775,808 is reached.
 	 */
 	public static void previousPage()
 	{
-		if (page > 0)
+		if (page > Long.MIN_VALUE)
 		{
 			page--;
 			refreshHotbar();
@@ -269,8 +278,10 @@ public class Util
 	}
 
 	/**
-	 * Reloads the current hotbar page.
-	 * Usually called when changing the currently loaded page.
+	 * Reloads the current hotbar page. Usually called when changing the currently loaded page.
+	 * --
+	 * TODO: Look into moving some of the code here to custom event listeners. Some of the methods called here would be
+	 *  better off being called in those.
 	 */
 	public static void refreshHotbar()
 	{

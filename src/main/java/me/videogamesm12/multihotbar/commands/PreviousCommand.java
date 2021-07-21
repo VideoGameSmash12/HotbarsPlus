@@ -29,6 +29,7 @@ import net.minecraft.util.Formatting;
 
 /**
  * PreviousCommand - Subcommand for going a page back.
+ * --
  * @author Video
  */
 @Environment(EnvType.CLIENT)
@@ -37,7 +38,7 @@ public class PreviousCommand implements Command<FabricClientCommandSource>
 	@Override
 	public int run(CommandContext<FabricClientCommandSource> context) throws CommandSyntaxException
 	{
-		if (Util.getPage() <= 0)
+		if (Util.getPage() <= Long.MIN_VALUE)
 		{
 			context.getSource().sendError(new TranslatableText("command.multihotbars.previous_back"));
 			return 2;
