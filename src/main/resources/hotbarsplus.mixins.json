@@ -1,0 +1,19 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "me.videogamesm12.hotbarsplus.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "accessors.CreativeInventoryScreenAccessor",
+    "accessors.HandledScreenAccessor",
+    "accessors.HotbarStorageAccessor",
+    "injectors.CreativeInventoryScreenInjector",
+    "injectors.HotbarStorageInjector",
+    "injectors.MinecraftClientInjector"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

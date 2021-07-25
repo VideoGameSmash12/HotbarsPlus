@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "multihotbar",
+  "id": "hotbarsplus",
   "version": "${version}",
   "name": "Hotbars+",
   "description": "Get more use out of your saved hotbars!",
@@ -11,21 +11,21 @@
     "sources": "https://github.com/VideoGameSmash12/HotbarsPlus"
   },
   "license": "MIT",
-  "icon": "assets/multihotbar/icon.png",
+  "icon": "assets/hotbarsplus/icon.png",
   "environment": "client",
   "entrypoints": {
     "client": [
-      "me.videogamesm12.multihotbar.client.MultiHotbarClient"
+      "me.videogamesm12.hotbarsplus.client.HotbarsPlusClient"
     ],
     "main": [
-      "me.videogamesm12.multihotbar.MultiHotbar"
+      "me.videogamesm12.hotbarsplus.HotbarsPlus"
     ],
     "modmenu":[
-      "me.videogamesm12.multihotbar.integration.ModMenuIntegration"
+      "me.videogamesm12.hotbarsplus.integration.ModMenuIntegration"
     ]
   },
   "mixins": [
-    "MultiHotbar.mixins.json"
+    "hotbarsplus.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.11.2",
@@ -35,5 +35,8 @@
   },
   "suggests": {
     "modmenu": ">=1.16.8"
+  },
+  "breaks": {
+    "multihotbar": "*"
   }
 }
