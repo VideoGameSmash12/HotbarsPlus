@@ -121,7 +121,7 @@ public abstract class CreativeInventoryScreenInjector extends AbstractInventoryS
     {
         if (this.getSelectedTab() == ItemGroup.HOTBAR.getIndex())
         {
-            prevButton.active = Util.getPage() > /*Long.MIN_VALUE*/ 0;
+            prevButton.active = Util.getPage() > Long.MIN_VALUE;
             backupButton.active = Util.hotbarFileExists() && !Util.backupInProgress;
             nextButton.active = Util.getPage() < Long.MAX_VALUE;
             //
