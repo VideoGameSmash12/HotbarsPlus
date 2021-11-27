@@ -12,10 +12,6 @@ group = project.maven_group
 
 repositories {
     maven {
-        name = 'CottonMC'
-        url = 'https://server.bbkr.space/artifactory/libs-release'
-    }
-    maven {
         url = "https://maven.shedaniel.me/"
     }
     maven {
@@ -31,6 +27,14 @@ dependencies {
 
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+    // Cloth Configuration API - Required for saving preferences
+    modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_version}") {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+
+    // ModMenu Implementation - Not necessarily required to run but it is for the mod menu integration.
+    modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
 
     // PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
     // You may need to force-disable transitiveness on them.

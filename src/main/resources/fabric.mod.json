@@ -1,34 +1,42 @@
 {
   "schemaVersion": 1,
-  "id": "multihotbar",
+  "id": "hotbarsplus",
   "version": "${version}",
   "name": "Hotbars+",
   "description": "Get more use out of your saved hotbars!",
   "authors": ["videogamesm12"],
   "contact": {
     "issues": "https://github.com/VideoGameSmash12/HotbarsPlus/issues",
+    "homepage": "https://github.com/VideoGameSmash12/HotbarsPlus",
     "sources": "https://github.com/VideoGameSmash12/HotbarsPlus"
   },
   "license": "MIT",
-  "icon": "assets/multihotbar/icon.png",
-  "environment": "*",
+  "icon": "assets/hotbarsplus/icon.png",
+  "environment": "client",
   "entrypoints": {
     "client": [
-      "me.videogamesm12.multihotbar.client.MultiHotbarClient"
+      "me.videogamesm12.hotbarsplus.client.HotbarsPlusClient"
     ],
     "main": [
-      "me.videogamesm12.multihotbar.MultiHotbar"
+      "me.videogamesm12.hotbarsplus.HotbarsPlus"
+    ],
+    "modmenu":[
+      "me.videogamesm12.hotbarsplus.integration.ModMenuIntegration"
     ]
   },
   "mixins": [
-    "MultiHotbar.mixins.json"
+    "hotbarsplus.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.11.2",
     "fabric": ">=0.31.0+1.16",
-    "minecraft": ">=1.16.5"
+    "minecraft": "1.16.5",
+    "cloth-config2": ">=4.11.18"
+  },
+  "suggests": {
+    "modmenu": ">=1.16.8"
   },
   "breaks": {
-    "moretoolbars": "*"
+    "multihotbar": "*"
   }
 }
