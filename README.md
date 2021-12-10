@@ -25,7 +25,11 @@ Backups are stored in the `backups` folder, also in the root of the Minecraft cl
 ```
 
 ## Requirements
-Hotbars+ requires Minecraft 1.16.5 and at least v0.31.0 of the Fabric API. You can download the latest version of the Fabric API here: [https://www.curseforge.com/minecraft/mc-mods/fabric-api](https://www.curseforge.com/minecraft/mc-mods/fabric-api). You will also need the latest version of the Cloth Config API for Fabric, which you can download here: [https://www.curseforge.com/minecraft/mc-mods/cloth-config](https://www.curseforge.com/minecraft/mc-mods/cloth-config). 
+Hotbars+ requires the following to work properly:
+- Minecraft 1.17.1
+- At least version 0.12.11 of the Fabric loader.
+- At least version 0.44.0 of the Fabric API. You can download the latest version of the Fabric API here: [https://www.curseforge.com/minecraft/mc-mods/fabric-api](https://www.curseforge.com/minecraft/mc-mods/fabric-api) 
+- The latest version of the Cloth Config API for Fabric, which you can download here: [https://www.curseforge.com/minecraft/mc-mods/cloth-config](https://www.curseforge.com/minecraft/mc-mods/cloth-config)
 
 ## Installation
 Installing Hotbars+ is simple. Just download the latest release jar (be sure to get the regular `Hotbars+-<version>.jar` and not the sources or dev files) from [the releases page](https://github.com/VideoGameSmash12/HotbarsPlus/releases/) and put it into the mods folder.

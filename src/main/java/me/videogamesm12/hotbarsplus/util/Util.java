@@ -21,7 +21,7 @@ import me.videogamesm12.hotbarsplus.HotbarsPlus;
 import me.videogamesm12.hotbarsplus.client.HotbarsPlusClient;
 import me.videogamesm12.hotbarsplus.mixin.accessors.HotbarStorageAccessor;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.options.HotbarStorage;
+import net.minecraft.client.option.HotbarStorage;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
@@ -29,7 +29,6 @@ import org.apache.commons.io.FileUtils;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.*;
-import java.math.BigInteger;
 import java.util.Date;
 
 /**
@@ -287,7 +286,6 @@ public class Util
 	public static void refreshHotbar()
 	{
 		// In versions of Hotbars+ after v1.3-Pre4, the mod handles the getting and setting of HotbarStorage instances.
-		// This is to (hopefully) allow the mod to behave properly under 1.17.
 		HotbarsPlusClient.hotbarStorage = new HotbarStorage(MinecraftClient.getInstance().runDirectory, MinecraftClient.getInstance().getDataFixer());
 		//
 		HotbarsPlus.logger.info("Hotbar selected: " + getHotbarName());

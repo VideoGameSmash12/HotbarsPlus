@@ -96,7 +96,7 @@ public class ClientInitializeListener implements ClientInitCallback
             migrateHotbars();
         }
 
-        MinecraftClient.getInstance().openScreen(null);
+        MinecraftClient.getInstance().setScreen(null);
     }
 
     /**
@@ -108,7 +108,7 @@ public class ClientInitializeListener implements ClientInitCallback
         Text prompt = new TranslatableText("migration.legacy_hotbars_confirm");
         Text yes = ScreenTexts.YES;
         Text no = ScreenTexts.NO;
-        MinecraftClient.getInstance().openScreen(new ConfirmScreen(this::verifyMigration, text, prompt, yes, no));
+        MinecraftClient.getInstance().setScreen(new ConfirmScreen(this::verifyMigration, text, prompt, yes, no));
     }
 
     /**

@@ -23,7 +23,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.RunArgs;
-import net.minecraft.client.options.HotbarStorage;
+import net.minecraft.client.option.HotbarStorage;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -65,8 +65,6 @@ public class MinecraftClientInjector
      *  HotbarStorage instance to the one in this mod.
      * --
      * @since v1.3-Pre4
-     * @implNote While Hotbars+ does not currently support 1.17.x, this is here to make the transition process easier.
-     *  In addition, this gives anybody wishing to port the mod to 1.17.x themselves a little bit less work to do.
      * --
      * @param cir CallbackInfoReturnable<HotbarStorage>
      */
