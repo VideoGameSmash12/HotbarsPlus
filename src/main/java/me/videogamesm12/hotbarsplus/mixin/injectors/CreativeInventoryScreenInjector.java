@@ -100,9 +100,9 @@ public abstract class CreativeInventoryScreenInjector extends AbstractInventoryS
         backupButton.visible = false;
         nextButton.visible = false;
         //
-        addButton(prevButton);
-        addButton(backupButton);
-        addButton(nextButton);
+        addDrawableChild(prevButton);
+        addDrawableChild(backupButton);
+        addDrawableChild(nextButton);
     }
 
     /**

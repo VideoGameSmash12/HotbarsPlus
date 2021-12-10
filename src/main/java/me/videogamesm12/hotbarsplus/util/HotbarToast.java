@@ -76,8 +76,8 @@ public class HotbarToast implements Toast
         }
 
         // Prepares the background texture to be drawn
-        textureManager.bindTexture(id);
-        RenderSystem.color3f(1.0F, 1.0F, 1.0F);
+        RenderSystem.setShaderTexture(0, id);
+        RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
 
         // Draws the background
         manager.drawTexture(matrices, 0, 0, 0, 0, this.getWidth(), this.getHeight());
