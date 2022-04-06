@@ -1,0 +1,34 @@
+{
+  "category.hotbarsplus.navigation": "Hotbars+",
+
+  "command.cache.clear.success": "Cache cleared.",
+  "command.cache.list.amount": "There are currently %d hotbar pages cached in memory.",
+  "command.cache.list.entries": "Cached pages: %s",
+
+  "gui.hotbarsplus.cis.backup_button.tooltip": "Backup this page",
+  "gui.hotbarsplus.cis.next_button.tooltip": "Next Page",
+  "gui.hotbarsplus.cis.previous_button.tooltip": "Previous Page",
+
+  "key.hotbarsplus.backup": "Backup Page",
+  "key.hotbarsplus.next": "Next Page",
+  "key.hotbarsplus.previous": "Previous Page",
+
+  "notif.hotbarsplus.backup.failed": "Backup failed",
+  "notif.hotbarsplus.backup.failed.mini": "Backup failed: %s",
+  "notif.hotbarsplus.backup.success": "Backup complete",
+  "notif.hotbarsplus.backup.success.mini": "Backed up %s to %s",
+  "notif.hotbarsplus.load.failed": "Load failed",
+  "notif.hotbarsplus.load.failed.body": "Check the logs for more information.",
+  "notif.hotbarsplus.load.failed.mini": "Load failed",
+  "notif.hotbarsplus.save.failed": "Save failed",
+  "notif.hotbarsplus.save.failed.body": "Check the logs for more information.",
+  "notif.hotbarsplus.save.failed.mini": "Save failed",
+
+  "notif.hotbarsplus.navigation.selected": "Page selected",
+  "notif.hotbarsplus.navigation.selected.mini": "Page selected: %s",
+
+  "text.autoconfig.hotbarsplus.option.notifications": "Notifications",
+  "text.autoconfig.hotbarsplus.option.notifications.actionBarNotifications": "Action Bar",
+  "text.autoconfig.hotbarsplus.option.notifications.systemTrayIntegration": "System Tray",
+  "text.autoconfig.hotbarsplus.title": "Configure Hotbars+"
+}

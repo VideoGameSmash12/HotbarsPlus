@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "hotbarsplus-1_16",
+  "version": "${version}",
+  "name": "Hooks for 1.16",
+  "description": "Hooks specific to 1.16.x for Hotbars+.",
+  "authors": ["videogamesm12"],
+  "contact": {
+    "issues": "https://github.com/VideoGameSmash12/HotbarsPlus/issues",
+    "homepage": "https://github.com/VideoGameSmash12/HotbarsPlus",
+    "sources": "https://github.com/VideoGameSmash12/HotbarsPlus"
+  },
+  "license": "MIT",
+  "icon": "assets/hotbarsplus/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "me.videogamesm12.hotbarsplus.v1_16.HotbarsPlus"
+    ]
+  },
+  "mixins": [
+    "hotbarsplus.1_16.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.12.12",
+    "minecraft": "1.16.x"
+  },
+  "breaks": {
+    "multihotbar": "*"
+  },
+  "custom": {
+    "modmenu": {
+      "badges": ["library"],
+      "parent": "hotbarsplus"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "me.videogamesm12.hotbarsplus.core.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "HotbarStorageMixin",
+    "HotbarStorageMixin$HSAccessor",
+    "MinecraftClientMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
