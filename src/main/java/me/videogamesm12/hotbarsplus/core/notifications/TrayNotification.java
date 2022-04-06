@@ -69,7 +69,7 @@ public class TrayNotification implements NotificationManager.NotificationType
     @Override
     public boolean isEnabled()
     {
-        return true;
+        return HBPCore.UCL.getConfig().isTrayEnabled();
     }
 
     public static class HPopupMenu extends PopupMenu
