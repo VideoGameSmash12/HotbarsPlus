@@ -19,8 +19,7 @@
     ]
   },
   "mixins": [
-    "hotbarsplus.mixin.json",
-    "hotbarsplus.optional.mixin.json"
+    "hotbarsplus.mixin.json"
   ],
   "depends": {
     "fabric": "*",
