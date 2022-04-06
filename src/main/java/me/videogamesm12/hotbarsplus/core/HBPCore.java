@@ -22,6 +22,7 @@ import me.videogamesm12.hotbarsplus.api.IKeybindManager;
 import me.videogamesm12.hotbarsplus.core.notifications.ActionBarNotification;
 import me.videogamesm12.hotbarsplus.core.notifications.TrayNotification;
 import me.videogamesm12.hotbarsplus.core.universal.BackupManager;
+import me.videogamesm12.hotbarsplus.core.universal.ConfigurationManager;
 import me.videogamesm12.hotbarsplus.core.universal.NotificationManager;
 import me.videogamesm12.hotbarsplus.core.universal.PageManager;
 import net.fabricmc.api.ClientModInitializer;
@@ -35,12 +36,13 @@ import org.apache.logging.log4j.Logger;
 public class HBPCore implements ClientModInitializer
 {
     // VERSION SPECIFIC
-    public static IKeybindManager KEYBINDS = null;
+    public static IKeybindManager<?> KEYBINDS = null;
     public static ICommandManager<?> COMMANDS = null;
 
     // UNIVERSAL
     public static PageManager UPL = new PageManager();
     public static BackupManager UBL = new BackupManager();
+    public static ConfigurationManager UCL = new ConfigurationManager();
     public static NotificationManager UNL = new NotificationManager();
 
     // UTILITIES
@@ -50,9 +52,11 @@ public class HBPCore implements ClientModInitializer
     public void onInitializeClient()
     {
         // NOTIFICATION TYPES
-        //--------------------------------------------------------------------
-        UNL.register(ActionBarNotification.class);  // Action bar notification
-        UNL.register(TrayNotification.class);       // System tray integration
-        //--------------------------------------------------------------------
+        //------------------------------------------------------------------------
+        UNL.register(ActionBarNotification.class);      // Action bar notification
+        //------------------------------------------------------------------------
+        if (UCL.getConfig().isTrayEnabled())            // System tray integration
+            UNL.register(TrayNotification.class);
+        //------------------------------------------------------------------------
     }
 }

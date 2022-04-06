@@ -25,8 +25,8 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface HSAccessor
 {
     @Accessor("x")
-    public int getX();
+    int getX();
 
     @Accessor("y")
-    public int getY();
+    int getY();
 }

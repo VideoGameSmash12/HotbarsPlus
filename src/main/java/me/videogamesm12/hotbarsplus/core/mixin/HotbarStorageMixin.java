@@ -23,9 +23,7 @@ import net.minecraft.client.option.HotbarStorage;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.gen.Invoker;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArgs;
+import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
@@ -40,6 +38,9 @@ public class HotbarStorageMixin
 {
     /**
      * <p>Hijacks what is used as the location by HotbarStorage on initialization.</p>
+     * FIXME: This implementation works when you want information for the currently selected page, however it does not
+     *        work at all if you want data for, say, other hotbar pages that haven't been loaded yet. Look into a way to
+     *        more cleanly implement this if possible.
      * @param args Args
      */
     @ModifyArgs(method = "<init>", at = @At(value = "INVOKE", target = "Ljava/io/File;<init>(Ljava/io/File;Ljava/lang/String;)V"))

@@ -23,7 +23,6 @@
     "hotbarsplus.legacy.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.12.12",
     "minecraft": ["1.14.x", "1.15.x"],
     "cotton-client-commands": "*"
   },

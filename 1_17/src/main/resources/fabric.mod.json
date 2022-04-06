@@ -22,7 +22,6 @@
     "hotbarsplus.1_17.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.12.12",
     "minecraft": ">=1.17"
   },
   "breaks": {

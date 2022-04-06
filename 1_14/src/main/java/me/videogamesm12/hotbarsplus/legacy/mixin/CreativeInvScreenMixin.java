@@ -56,7 +56,7 @@ public abstract class CreativeInvScreenMixin extends AbstractInventoryScreen<Cre
         this.backup = new CustomButtons.BackupButton(x, y);
         this.previous = new CustomButtons.PreviousButton(x - 16, y);
 
-        // Modify buttons
+        // Modify buttons to adjust for the currently selected tab
         if (((CISAccessor) this).getSelectedTab() != ItemGroup.HOTBAR.getIndex())
         {
             next.visible = false;
@@ -64,6 +64,7 @@ public abstract class CreativeInvScreenMixin extends AbstractInventoryScreen<Cre
             previous.visible = false;
         }
 
+        // Regardless of the current tab, disable this button if the selected hotbar file doesn't exist
         backup.active = HBPCore.UPL.hotbarPageExists();
 
         // Adding buttons
@@ -98,9 +99,9 @@ public abstract class CreativeInvScreenMixin extends AbstractInventoryScreen<Cre
     public interface CISAccessor
     {
         @Invoker("setSelectedTab")
-        public void setSelectedTab(ItemGroup group);
+        void setSelectedTab(ItemGroup group);
 
         @Accessor
-        public int getSelectedTab();
+        int getSelectedTab();
     }
 }
