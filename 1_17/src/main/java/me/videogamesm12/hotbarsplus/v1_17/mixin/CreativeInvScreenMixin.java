@@ -17,8 +17,12 @@
 
 package me.videogamesm12.hotbarsplus.v1_17.mixin;
 
+import me.videogamesm12.hotbarsplus.api.event.keybind.BackupBindPressEvent;
+import me.videogamesm12.hotbarsplus.api.event.keybind.NextBindPressEvent;
+import me.videogamesm12.hotbarsplus.api.event.keybind.PreviousBindPressEvent;
 import me.videogamesm12.hotbarsplus.core.HBPCore;
 import me.videogamesm12.hotbarsplus.core.gui.CustomButtons;
+import me.videogamesm12.hotbarsplus.v1_17.manager.KeybindManager;
 import net.minecraft.client.gui.screen.ingame.AbstractInventoryScreen;
 import net.minecraft.client.gui.screen.ingame.CreativeInventoryScreen;
 import net.minecraft.client.option.HotbarStorageEntry;
@@ -31,6 +35,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -40,6 +45,7 @@ public abstract class CreativeInvScreenMixin extends AbstractInventoryScreen<Cre
 {
     @Shadow public abstract int getSelectedTab();
 
+    @Shadow private boolean ignoreTypedCharacter;
     public CustomButtons.NextButton next;
     public CustomButtons.BackupButton backup;
     public CustomButtons.PreviousButton previous;
@@ -97,6 +103,34 @@ public abstract class CreativeInvScreenMixin extends AbstractInventoryScreen<Cre
             }
 
             backup.active = HBPCore.UPL.hotbarPageExists();
+        }
+    }
+
+    @Inject(method = "keyPressed", at = @At(value = "HEAD", shift = At.Shift.AFTER), cancellable = true)
+    public void injectKeyPressed(int keyCode, int scanCode, int modifiers, CallbackInfoReturnable<Boolean> cir)
+    {
+        if (getSelectedTab() == ItemGroup.HOTBAR.getIndex())
+        {
+            KeybindManager manager = (KeybindManager) HBPCore.KEYBINDS;
+
+            if (manager.next.matchesKey(keyCode, scanCode))
+            {
+                NextBindPressEvent.EVENT.invoker().onNextPress();
+                ignoreTypedCharacter = true;
+                cir.setReturnValue(true);
+            }
+            else if (manager.backup.matchesKey(keyCode, scanCode))
+            {
+                BackupBindPressEvent.EVENT.invoker().onBackupPress();
+                ignoreTypedCharacter = true;
+                cir.setReturnValue(true);
+            }
+            else if (manager.previous.matchesKey(keyCode, scanCode))
+            {
+                PreviousBindPressEvent.EVENT.invoker().onPreviousPress();
+                ignoreTypedCharacter = true;
+                cir.setReturnValue(true);
+            }
         }
     }
 

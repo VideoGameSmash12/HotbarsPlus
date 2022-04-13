@@ -50,6 +50,8 @@ public class ConfigurationManager implements ClientLifecycleEvents.ClientStoppin
 
     public void load()
     {
+        HBPCore.LOGGER.info("Loading configuration from disk...");
+
         // Try loading the configuration from disk.
         try
         {
@@ -85,6 +87,7 @@ public class ConfigurationManager implements ClientLifecycleEvents.ClientStoppin
     @Override
     public void onClientStopping(MinecraftClient client)
     {
+        // Automatically saves to disk.
         save();
     }
 }

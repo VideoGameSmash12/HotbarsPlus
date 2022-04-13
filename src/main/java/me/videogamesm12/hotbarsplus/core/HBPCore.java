@@ -35,6 +35,9 @@ import org.apache.logging.log4j.Logger;
  */
 public class HBPCore implements ClientModInitializer
 {
+    // UTILITIES
+    public static Logger LOGGER = LogManager.getLogger("Hotbars+");
+
     // VERSION SPECIFIC
     public static IKeybindManager<?> KEYBINDS = null;
     public static ICommandManager<?> COMMANDS = null;
@@ -44,9 +47,6 @@ public class HBPCore implements ClientModInitializer
     public static BackupManager UBL = new BackupManager();
     public static ConfigurationManager UCL = new ConfigurationManager();
     public static NotificationManager UNL = new NotificationManager();
-
-    // UTILITIES
-    public static Logger LOGGER = LogManager.getLogger("Hotbars+");
 
     @Override
     public void onInitializeClient()
