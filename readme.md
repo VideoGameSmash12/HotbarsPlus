@@ -4,3 +4,11 @@ Hotbars+ (also known as "MultiHotbar" in earlier versions) is a mod for Minecraf
 ### How does it work?
 The mod works by hijacking the saved hotbar system Minecraft uses to use a different file to load and save from in place of the traditional `hotbar.nbt`, hot-swapping files for each page. A simple concept, yes, but it works beautifully.
 
+### What is required to use the mod?
+The requirements depend on the version of Minecraft you're using. To help guide you, here's a table:
+
+| Version          | Fabric Loader | Fabric API | Cotton Client Commands |
+| ---------------- | ------------- | ---------- | ---------------------- |
+| 1.14.x - 1.15.x  | Yes           | Yes        | Yes                    |
+| 1.16.x           | Yes           | Yes        | No                     |
+| 1.17.x - Current | Yes           | Yes        | No                     |
