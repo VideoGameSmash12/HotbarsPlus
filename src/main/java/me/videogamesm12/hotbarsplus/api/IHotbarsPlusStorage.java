@@ -19,6 +19,10 @@ package me.videogamesm12.hotbarsplus.api;
 
 import java.math.BigInteger;
 
+/**
+ * <h1>IHotbarsPlusStorage</h1>
+ * <p>Interface for anything wrapping HotbarStorage instances.</p>
+ */
 public interface IHotbarsPlusStorage
 {
     BigInteger getPage();

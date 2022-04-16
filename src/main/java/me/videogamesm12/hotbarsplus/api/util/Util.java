@@ -36,14 +36,12 @@ public class Util
         return folder;
     }
 
-    public static File getHotbarFolderForPage(BigInteger page)
-    {
-        return page.equals(BigInteger.ZERO) ? MinecraftClient.getInstance().runDirectory : getHotbarFolder();
-    }
-
     public static File getHotbarFile(BigInteger page)
     {
-        return new File(getHotbarFolderForPage(page), getHotbarFilename(page));
+        return new File(
+                page.equals(BigInteger.ZERO) ? MinecraftClient.getInstance().runDirectory : getHotbarFolder(),
+                getHotbarFilename(page)
+        );
     }
 
     public static String getHotbarFilename(BigInteger page)
