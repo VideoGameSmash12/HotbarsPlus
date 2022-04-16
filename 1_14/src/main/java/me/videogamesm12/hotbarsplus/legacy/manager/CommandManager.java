@@ -58,7 +58,7 @@ public class CommandManager implements ICommandManager<CottonClientCommandSource
                 )
             ).then(
                 ArgumentBuilders.literal("cache").then(
-                        ArgumentBuilders.literal("list").executes(CacheCommand.ListCommand.impl())
+                        ArgumentBuilders.literal("list").executes(CacheCommand.ListCommandLegacy.impl())
                 ).then(
                         ArgumentBuilders.literal("clear").executes(CacheCommand.ClearCommand.impl())
                 )

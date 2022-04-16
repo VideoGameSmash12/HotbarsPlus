@@ -60,6 +60,33 @@ public interface CacheCommand
         }
     }
 
+    interface ListCommandLegacy<T> extends Command<T>
+    {
+        @Override
+        default int run(CommandContext<T> context) throws CommandSyntaxException
+        {
+            if (MinecraftClient.getInstance().player == null)
+            {
+                // WTF?
+                return 1;
+            }
+
+            MinecraftClient.getInstance().player.sendMessage(new TranslatableText("command.cache.list.amount", HBPCore.UPL.getCacheSize()), false);
+
+            List<LiteralText> texts = new ArrayList<>();
+            HBPCore.UPL.getCache().keySet().stream().sorted().forEach((key) -> texts.add(new LiteralText(Util.getHotbarFilename(key))));
+            Text joined = Texts.join(texts, (text) -> text);
+
+            MinecraftClient.getInstance().player.sendMessage(new TranslatableText("command.cache.list.entries", joined), false);
+            return 1;
+        }
+
+        static <Z> ListCommandLegacy<Z> impl()
+        {
+            return new ListCommandLegacy<Z>() {};
+        }
+    }
+
     interface ClearCommand<T> extends Command<T>
     {
         @Override
