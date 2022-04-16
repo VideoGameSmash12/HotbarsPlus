@@ -20,10 +20,15 @@ package me.videogamesm12.hotbarsplus.core.universal;
 import me.videogamesm12.hotbarsplus.api.event.keybind.NextBindPressEvent;
 import me.videogamesm12.hotbarsplus.api.event.keybind.PreviousBindPressEvent;
 import me.videogamesm12.hotbarsplus.api.event.navigation.HotbarNavigateEvent;
+import me.videogamesm12.hotbarsplus.core.HBPCore;
 import me.videogamesm12.hotbarsplus.core.HotbarsPlusStorage;
 import me.videogamesm12.hotbarsplus.core.mixin.HotbarStorageMixin;
+import me.videogamesm12.hotbarsplus.core.mixin.PlayerEntityMixin;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.option.HotbarStorage;
+import net.minecraft.client.option.HotbarStorageEntry;
+import net.minecraft.entity.player.PlayerInventory;
 
 import java.math.BigInteger;
 import java.util.HashMap;
@@ -42,6 +47,70 @@ public class PageManager implements NextBindPressEvent, PreviousBindPressEvent
     {
         NextBindPressEvent.EVENT.register(this);
         PreviousBindPressEvent.EVENT.register(this);
+    }
+
+    public void saveToNearestRow()
+    {
+        ClientPlayerEntity player = MinecraftClient.getInstance().player;
+
+        if (player == null)
+        {
+            return;
+        }
+
+        boolean saved = false;
+        //--
+        BigInteger page = getCurrentPage();
+        HotbarStorage current = getHotbarPage();
+
+        // This constantly loops until it finds everything.
+        while (!saved)
+        {
+            // Try to load the file if it isn't already loaded.
+            if (!((HotbarStorageMixin.HSAccessor) current).isLoaded())
+            {
+                ((HotbarStorageMixin.HSAccessor) current).invokeLoad();
+            }
+
+            HBPCore.LOGGER.info("Starting iteration");
+
+            // Let's try to do some saving.
+            for (HotbarStorageEntry entry : ((HotbarStorageMixin.HSAccessor) current).getEntries())
+            {
+                // DEBUG SHIT REMOVE PLEASE
+                HBPCore.LOGGER.info("Iterating on a new row");
+
+                // If the row is empty, save to it.
+                if (entry.isEmpty())
+                {
+                    HBPCore.LOGGER.info("Found an empty row! Saving!");
+
+                    for (int col = 0; col < PlayerInventory.getHotbarSize(); col++)
+                    {
+                        // I'm aware that 1.16+ uses the built in getInventory(), however 1.14.x doesn't have that.
+                        entry.set(col, ((PlayerEntityMixin) player).getInventory().getStack(col));
+                    }
+
+                    saved = true;
+                    break;
+                }
+            }
+
+            // Did the iteration above do anything?
+            if (saved)
+            {
+                HBPCore.LOGGER.info("Saving changes to disk!");
+                current.save();
+            }
+            // Ok, then keep going on.
+            else
+            {
+                HBPCore.LOGGER.info("Fuck, moving on to page #" + page.toString());
+
+                page = page.add(BigInteger.ONE);
+                current = getHotbarPage(page);
+            }
+        }
     }
 
     public void decrementPage()

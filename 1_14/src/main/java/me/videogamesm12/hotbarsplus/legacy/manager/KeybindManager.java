@@ -36,6 +36,8 @@ public class KeybindManager implements IKeybindManager<KeyBinding>, ClientTickEv
             GLFW.GLFW_KEY_RIGHT_BRACKET, "category.hotbarsplus.navigation");
     public KeyBinding previous = new KeyBinding("key.hotbarsplus.previous", InputUtil.Type.KEYSYM,
             GLFW.GLFW_KEY_LEFT_BRACKET, "category.hotbarsplus.navigation");
+    public KeyBinding save2nearest = new KeyBinding("key.hotbarsplus.save2nearest", InputUtil.Type.KEYSYM,
+            GLFW.GLFW_KEY_GRAVE_ACCENT, "category.hotbarsplus.navigation");
 
     public KeybindManager()
     {
@@ -48,6 +50,7 @@ public class KeybindManager implements IKeybindManager<KeyBinding>, ClientTickEv
         backup = KeyBindingHelper.registerKeyBinding(backup);
         next = KeyBindingHelper.registerKeyBinding(next);
         previous = KeyBindingHelper.registerKeyBinding(previous);
+        save2nearest = KeyBindingHelper.registerKeyBinding(save2nearest);
         //--
         ClientTickEvents.END_CLIENT_TICK.register(this);
     }

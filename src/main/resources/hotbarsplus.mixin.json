@@ -6,7 +6,8 @@
   "mixins": [
     "HotbarStorageMixin",
     "HotbarStorageMixin$HSAccessor",
-    "MinecraftClientMixin"
+    "MinecraftClientMixin",
+    "PlayerEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -128,6 +128,12 @@ public abstract class CreativeInvScreenMixin extends AbstractInventoryScreen<Cre
                 field_2888 = true;
                 cir.setReturnValue(true);
             }
+            else if (manager.save2nearest.matchesKey(keyCode, scanCode))
+            {
+                HBPCore.UPL.saveToNearestRow();
+                field_2888 = true;
+                cir.setReturnValue(true);
+            }
         }
     }
 

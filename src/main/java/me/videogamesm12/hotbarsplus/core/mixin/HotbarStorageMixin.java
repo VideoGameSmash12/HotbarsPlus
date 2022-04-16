@@ -20,8 +20,10 @@ package me.videogamesm12.hotbarsplus.core.mixin;
 import com.mojang.datafixers.DataFixer;
 import me.videogamesm12.hotbarsplus.core.HotbarsPlusStorage;
 import net.minecraft.client.option.HotbarStorage;
+import net.minecraft.client.option.HotbarStorageEntry;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
+import org.spongepowered.asm.mixin.gen.Invoker;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
@@ -53,9 +55,18 @@ public class HotbarStorageMixin
     public interface HSAccessor
     {
         @Accessor
+        boolean isLoaded();
+
+        @Invoker
+        void invokeLoad();
+
+        @Accessor
         File getFile();
 
         @Accessor
         void setFile(File file);
+
+        @Accessor
+        HotbarStorageEntry[] getEntries();
     }
 }
