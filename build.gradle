@@ -30,6 +30,10 @@ test {
     useJUnitPlatform()
 }
 
+loom {
+    accessWidenerPath = file("src/main/resources/hotbarsplus.accesswidener")
+}
+
 allprojects {
     apply plugin: 'fabric-loom'
     apply plugin: 'maven-publish'

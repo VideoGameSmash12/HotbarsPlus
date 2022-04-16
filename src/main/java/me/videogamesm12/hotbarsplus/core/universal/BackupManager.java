@@ -55,12 +55,14 @@ public class BackupManager extends Thread implements BackupBindPressEvent
         String name = String.format("%s [%s].nbt", file.getName(), FORMAT.format(new Date()));
         File destination = new File(getBackupFolder(), name);
 
+        // Let's try to copy the file from one place to the next. If that works call the event that indicates such.
         try
         {
             FileUtils.copyFile(file, destination);
 
             BackupSuccessEvent.EVENT.invoker().onBackupSuccess(file, destination);
         }
+        // Well shit that didn't work. Call the event that indicates the failure
         catch (Exception ex)
         {
             BackupFailEvent.EVENT.invoker().onBackupFailure(ex);

@@ -20,8 +20,7 @@ package me.videogamesm12.hotbarsplus.core.universal;
 import me.videogamesm12.hotbarsplus.api.event.keybind.NextBindPressEvent;
 import me.videogamesm12.hotbarsplus.api.event.keybind.PreviousBindPressEvent;
 import me.videogamesm12.hotbarsplus.api.event.navigation.HotbarNavigateEvent;
-import me.videogamesm12.hotbarsplus.api.util.Util;
-import me.videogamesm12.hotbarsplus.core.HBPCore;
+import me.videogamesm12.hotbarsplus.core.HotbarsPlusStorage;
 import me.videogamesm12.hotbarsplus.core.mixin.HotbarStorageMixin;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.HotbarStorage;
@@ -29,7 +28,6 @@ import net.minecraft.client.option.HotbarStorage;
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 
 /**
  * <b>PageManager</b>
@@ -84,7 +82,11 @@ public class PageManager implements NextBindPressEvent, PreviousBindPressEvent
         // Get from disk if not cached in memory
         if (!cache.containsKey(page))
         {
-            cache.put(page, new HotbarStorage(Util.getHotbarFile(page), MinecraftClient.getInstance().getDataFixer()));
+            HotbarStorage storage = page.equals(BigInteger.ZERO) ?
+                    new HotbarStorage(MinecraftClient.getInstance().runDirectory, MinecraftClient.getInstance().getDataFixer()) :
+                    new HotbarsPlusStorage(page);
+
+            cache.put(page, storage);
         }
 
         return cache.get(page);

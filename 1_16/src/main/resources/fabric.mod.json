@@ -11,7 +11,7 @@
     "sources": "https://github.com/VideoGameSmash12/HotbarsPlus"
   },
   "license": "MIT",
-  "icon": "assets/hotbarsplus/icon.png",
+  "icon": "assets/hotbarsplus-1_16/icon.png",
   "environment": "client",
   "entrypoints": {
     "client": [
@@ -23,9 +23,6 @@
   ],
   "depends": {
     "minecraft": "1.16.x"
-  },
-  "breaks": {
-    "multihotbar": "*"
   },
   "custom": {
     "modmenu": {

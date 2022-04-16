@@ -17,15 +17,13 @@
 
 package me.videogamesm12.hotbarsplus.core.mixin;
 
-import me.videogamesm12.hotbarsplus.api.util.Util;
-import me.videogamesm12.hotbarsplus.core.HBPCore;
+import com.mojang.datafixers.DataFixer;
+import me.videogamesm12.hotbarsplus.core.HotbarsPlusStorage;
 import net.minecraft.client.option.HotbarStorage;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
-import org.spongepowered.asm.mixin.gen.Invoker;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 import java.io.File;
 
@@ -38,19 +36,17 @@ public class HotbarStorageMixin
 {
     /**
      * <p>Hijacks what is used as the location by HotbarStorage on initialization.</p>
-     * FIXME: This implementation works when you want information for the currently selected page, however it does not
-     *        work at all if you want data for, say, other hotbar pages that haven't been loaded yet. Look into a way to
-     *        more cleanly implement this if possible.
-     * @param args Args
+     * @param ci        CallbackInfo
+     * @param dataFixer DataFixer
+     * @param file      File
      */
-    @ModifyArgs(method = "<init>", at = @At(value = "INVOKE", target = "Ljava/io/File;<init>(Ljava/io/File;Ljava/lang/String;)V"))
-    private void injectFile(Args args)
+    @Inject(method = "<init>", at = @At(value = "TAIL"))
+    private void inject(File file, DataFixer dataFixer, CallbackInfo ci)
     {
-        // Changes the folder
-        args.set(0, Util.getHotbarFolderForPage(HBPCore.UPL.getCurrentPage()));
-
-        // Changes the file name
-        args.set(1, Util.getHotbarFilename(HBPCore.UPL.getCurrentPage()));
+        if (HotbarsPlusStorage.class.isAssignableFrom(getClass()))
+        {
+            ((HSAccessor) this).setFile(file);
+        }
     }
 
     @Mixin(HotbarStorage.class)
@@ -58,5 +54,8 @@ public class HotbarStorageMixin
     {
         @Accessor
         File getFile();
+
+        @Accessor
+        void setFile(File file);
     }
 }

@@ -20,17 +20,14 @@ package me.videogamesm12.hotbarsplus.core.universal;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import lombok.Getter;
-import me.shedaniel.clothconfig2.api.ConfigBuilder;
-import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
+
 import me.videogamesm12.hotbarsplus.api.config.Configuration;
 import me.videogamesm12.hotbarsplus.core.HBPCore;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.Screen;
 
 import java.io.FileReader;
 import java.nio.file.Files;
-import java.util.Arrays;
 
 /**
  * <b>ConfigurationManager</b>

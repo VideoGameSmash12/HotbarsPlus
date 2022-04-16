@@ -25,6 +25,7 @@
     "fabric": "*",
     "minecraft": ">=1.14.4"
   },
+  "accessWidener": "hotbarsplus.accesswidener",
   "breaks": {
     "multihotbar": "*"
   }
