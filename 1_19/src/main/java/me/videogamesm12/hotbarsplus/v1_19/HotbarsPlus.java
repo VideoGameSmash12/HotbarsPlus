@@ -15,13 +15,13 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package me.videogamesm12.hotbarsplus.legacy;
+package me.videogamesm12.hotbarsplus.v1_19;
 
 import me.videogamesm12.hotbarsplus.api.event.navigation.HotbarNavigateEvent;
 import me.videogamesm12.hotbarsplus.core.HBPCore;
-import me.videogamesm12.hotbarsplus.legacy.manager.CommandManager;
-import me.videogamesm12.hotbarsplus.legacy.manager.KeybindManager;
-import me.videogamesm12.hotbarsplus.legacy.mixin.CreativeInvScreenMixin;
+import me.videogamesm12.hotbarsplus.v1_19.manager.CommandManager;
+import me.videogamesm12.hotbarsplus.v1_19.manager.KeybindManager;
+import me.videogamesm12.hotbarsplus.v1_19.mixin.CreativeInvScreenMixin;
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
@@ -36,9 +36,8 @@ public class HotbarsPlus implements ClientModInitializer, HotbarNavigateEvent
     @Override
     public void onInitializeClient()
     {
-        HBPCore.KEYBINDS = new KeybindManager();
         HBPCore.COMMANDS = new CommandManager();
-        HBPCore.VHOOKS = new FourteenHooks();
+        HBPCore.KEYBINDS = new KeybindManager();
         //--
         HotbarNavigateEvent.EVENT.register(this);
     }
@@ -51,7 +50,7 @@ public class HotbarsPlus implements ClientModInitializer, HotbarNavigateEvent
         {
             Screen screen = MinecraftClient.getInstance().currentScreen;
 
-            if (((CreativeInvScreenMixin.CISAccessor) screen).getSelectedTab() == ItemGroup.HOTBAR.getIndex())
+            if (((CreativeInventoryScreen) screen).getSelectedTab() == ItemGroup.HOTBAR.getIndex())
             {
                 ((CreativeInvScreenMixin.CISAccessor) screen).setSelectedTab(ItemGroup.HOTBAR);
             }

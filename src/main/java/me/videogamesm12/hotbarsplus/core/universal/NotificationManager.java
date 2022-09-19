@@ -23,9 +23,8 @@ import me.videogamesm12.hotbarsplus.api.event.success.BackupSuccessEvent;
 import me.videogamesm12.hotbarsplus.api.util.Util;
 import me.videogamesm12.hotbarsplus.core.HBPCore;
 import me.videogamesm12.hotbarsplus.core.notifications.ActionBarNotification;
-import net.minecraft.text.LiteralText;
+import net.kyori.adventure.text.Component;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
 
 import java.io.File;
@@ -48,13 +47,14 @@ public class NotificationManager
 
     /**
      * Show a message to all active NotificationTypes.
-     * @param title         Text
-     * @param description   Text
-     * @param miniature     Text
+     * @param title         Component
+     * @param description   Component
+     * @param miniature     Component
      */
-    public void showNotification(Text title, Text description, Text miniature)
+    public void showNotification(Component title, Component description, Component miniature)
     {
-        types.values().stream().filter(NotificationType::isEnabled).forEach((type) -> type.display(title, description, miniature));
+        types.values().stream().filter(NotificationType::isEnabled).forEach((type) ->
+                type.display(Util.advToNative(title), Util.advToNative(description), Util.advToNative(miniature)));
     }
 
     /**
@@ -104,10 +104,12 @@ public class NotificationManager
         public ActionResult onNavigate(BigInteger page)
         {
             showNotification(
-                    new TranslatableText("notif.hotbarsplus.navigation.selected", "Why the fuck"),
-                    new LiteralText(Util.getHotbarFilename(page)),
-                    new TranslatableText("notif.hotbarsplus.navigation.selected.mini", Util.getHotbarFilename(page))
+                    Component.translatable("notif.hotbarsplus.navigation.selected"),
+                    Component.text(Util.getHotbarFilename(page)),
+                    Component.translatable("notif.hotbarsplus.navigation.selected.mini",
+                            Component.text(Util.getHotbarFilename(page)))
             );
+
             return ActionResult.PASS;
         }
 
@@ -117,10 +119,12 @@ public class NotificationManager
         public ActionResult onBackupFailure(Exception ex)
         {
             showNotification(
-                    new TranslatableText("notif.hotbarsplus.backup.failed", ""),
-                    new LiteralText(ex.getMessage()),
-                    new TranslatableText("notif.hotbarsplus.backup.failed.mini", ex.getClass().getSimpleName())
+                    Component.translatable("notif.hotbarsplus.backup.failed"),
+                    Component.text(ex.getLocalizedMessage()),
+                    Component.translatable("notif.hotbarsplus.backup.failed.mini",
+                            Component.text(ex.getClass().getSimpleName()))
             );
+
             return ActionResult.PASS;
         }
 
@@ -130,9 +134,11 @@ public class NotificationManager
         public ActionResult onBackupSuccess(File from, File to)
         {
             showNotification(
-                    new TranslatableText("notif.hotbarsplus.backup.success", ""),
-                    new LiteralText(to.getName()),
-                    new TranslatableText("notif.hotbarsplus.backup.success.mini", from.getName(), to.getName())
+                    Component.translatable("notif.hotbarsplus.backup.success"),
+                    Component.text(to.getName()),
+                    Component.translatable("notif.hotbarsplus.backup.success.mini",
+                            Component.text(from.getName()),
+                            Component.text(to.getName()))
             );
             return ActionResult.PASS;
         }
