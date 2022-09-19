@@ -19,14 +19,11 @@ package me.videogamesm12.hotbarsplus.core.commands;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import me.videogamesm12.hotbarsplus.api.util.Util;
 import me.videogamesm12.hotbarsplus.core.HBPCore;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.JoinConfiguration;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.Text;
-import net.minecraft.text.Texts;
-import net.minecraft.text.TranslatableText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +33,7 @@ public interface CacheCommand
     interface ListCommand<T> extends Command<T>
     {
         @Override
-        default int run(CommandContext<T> context) throws CommandSyntaxException
+        default int run(CommandContext<T> context)
         {
             if (MinecraftClient.getInstance().player == null)
             {
@@ -44,13 +41,13 @@ public interface CacheCommand
                 return 1;
             }
 
-            MinecraftClient.getInstance().player.sendMessage(new TranslatableText("command.cache.list.amount", HBPCore.UPL.getCacheSize()), false);
+            Util.msg(Component.translatable("command.cache.list.amount", Component.text(HBPCore.UPL.getCacheSize())));
 
-            List<LiteralText> texts = new ArrayList<>();
-            HBPCore.UPL.getCache().keySet().stream().sorted().forEach((key) -> texts.add(new LiteralText(Util.getHotbarFilename(key))));
-            Text joined = Texts.join(texts, new LiteralText(", "));
+            List<Component> texts = new ArrayList<>();
+            HBPCore.UPL.getCache().keySet().stream().sorted().forEach((key) -> texts.add(Component.text(Util.getHotbarFilename(key))));
 
-            MinecraftClient.getInstance().player.sendMessage(new TranslatableText("command.cache.list.entries", joined), false);
+            Util.msg(Component.translatable("command.cache.list.entries",
+                    Component.join(JoinConfiguration.builder().separator(Component.text(", ")).build(), texts)));
             return 1;
         }
 
@@ -60,37 +57,10 @@ public interface CacheCommand
         }
     }
 
-    interface ListCommandLegacy<T> extends Command<T>
-    {
-        @Override
-        default int run(CommandContext<T> context) throws CommandSyntaxException
-        {
-            if (MinecraftClient.getInstance().player == null)
-            {
-                // WTF?
-                return 1;
-            }
-
-            MinecraftClient.getInstance().player.sendMessage(new TranslatableText("command.cache.list.amount", HBPCore.UPL.getCacheSize()), false);
-
-            List<LiteralText> texts = new ArrayList<>();
-            HBPCore.UPL.getCache().keySet().stream().sorted().forEach((key) -> texts.add(new LiteralText(Util.getHotbarFilename(key))));
-            Text joined = Texts.join(texts, (text) -> text);
-
-            MinecraftClient.getInstance().player.sendMessage(new TranslatableText("command.cache.list.entries", joined), false);
-            return 1;
-        }
-
-        static <Z> ListCommandLegacy<Z> impl()
-        {
-            return new ListCommandLegacy<Z>() {};
-        }
-    }
-
     interface ClearCommand<T> extends Command<T>
     {
         @Override
-        default int run(CommandContext<T> context) throws CommandSyntaxException
+        default int run(CommandContext<T> context)
         {
             if (MinecraftClient.getInstance().player == null)
             {
@@ -100,7 +70,7 @@ public interface CacheCommand
 
             HBPCore.UPL.getCache().clear();
 
-            MinecraftClient.getInstance().player.sendMessage(new TranslatableText("command.cache.clear.success", HBPCore.UPL.getCacheSize()), false);
+            Util.msg(Component.translatable("command.cache.clear.success"));
             return 1;
         }
 

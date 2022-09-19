@@ -17,13 +17,20 @@
 
 package me.videogamesm12.hotbarsplus.api.util;
 
+import com.google.gson.JsonElement;
+import me.videogamesm12.hotbarsplus.core.HBPCore;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.text.Text;
 
 import java.io.File;
 import java.math.BigInteger;
 
 public class Util
 {
+    private static final GsonComponentSerializer kyori = GsonComponentSerializer.builder().build();
+    
     public static File getHotbarFolder()
     {
         File folder = new File(MinecraftClient.getInstance().runDirectory, "hotbars");
@@ -36,16 +43,43 @@ public class Util
         return folder;
     }
 
+    public static File getHotbarFolderForPage(BigInteger page)
+    {
+        return page.equals(BigInteger.ZERO) ? MinecraftClient.getInstance().runDirectory : getHotbarFolder();
+    }
+
     public static File getHotbarFile(BigInteger page)
     {
-        return new File(
-                page.equals(BigInteger.ZERO) ? MinecraftClient.getInstance().runDirectory : getHotbarFolder(),
-                getHotbarFilename(page)
-        );
+        return new File(getHotbarFolderForPage(page), getHotbarFilename(page));
     }
 
     public static String getHotbarFilename(BigInteger page)
     {
         return page.equals(BigInteger.ZERO) ? "hotbar.nbt" : "hotbar." + page + ".nbt";
+    }
+
+    /**
+     * Uses GSON magic to convert Adventure components to native Minecraft components.
+     * @param component Component
+     * @return          Text
+     */
+    public static Text advToNative(Component component)
+    {
+        JsonElement element = kyori.serializeToTree(component);
+
+        if (HBPCore.VHOOKS != null)
+            return HBPCore.VHOOKS.convertFromJson(element);
+        else
+            return Text.Serializer.fromJson(element);
+    }
+
+    public static void msg(Component component)
+    {
+        if (MinecraftClient.getInstance().player == null)
+        {
+            return;
+        }
+
+        MinecraftClient.getInstance().player.sendMessage(advToNative(component), false);
     }
 }
