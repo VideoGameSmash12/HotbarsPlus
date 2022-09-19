@@ -8,7 +8,8 @@ The mod works by hijacking the saved hotbar system Minecraft uses to use a diffe
 The requirements depend on the version of Minecraft you're using. To help guide you, here's a table:
 
 | Version         | Fabric Loader | Fabric API | Cotton Client Commands |
-| --------------- | ------------- | ---------- | ---------------------- |
+|-----------------| ------------- | ---------- | ---------------------- |
 | 1.14.x - 1.15.x | Yes           | Yes        | Yes                    |
 | 1.16.x          | Yes           | Yes        | No                     |
 | 1.17.x - 1.18.2 | Yes           | Yes        | No                     |
+| 1.19.x          | Yes           | Yes        | No                     |
