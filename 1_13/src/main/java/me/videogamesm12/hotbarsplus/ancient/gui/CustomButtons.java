@@ -15,30 +15,40 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package me.videogamesm12.hotbarsplus.api.event.failures;
+package me.videogamesm12.hotbarsplus.ancient.gui;
 
-import net.fabricmc.fabric.api.event.Event;
-import net.fabricmc.fabric.api.event.EventFactory;
-import net.minecraft.util.ActionResult;
+import me.videogamesm12.hotbarsplus.core.HBPCore;
+import net.minecraft.client.gui.widget.ButtonWidget;
 
-public interface BackupFailEvent
+/**
+ * <b>CustomButtons</b>
+ * <p>Custom buttons for the mod specific to 1.14.x.</p>
+ * --
+ * @implNote This is here because 1.14 doesn't support custom fonts in text components.
+ */
+public class CustomButtons
 {
-    Event<BackupFailEvent> EVENT = EventFactory.createArrayBacked(BackupFailEvent.class,
-        (listeners) -> (ex) ->
+    public static class BackupButton extends ButtonWidget
+    {
+        public BackupButton(int x, int y)
         {
-            for (BackupFailEvent listener : listeners)
-            {
-                ActionResult result = listener.onBackupFailure(ex);
-
-                if (result != ActionResult.PASS)
-                {
-                    return result;
-                }
-            }
-
-            return ActionResult.SUCCESS;
+            super(976, x, y, 16, 12, "✍");
         }
-    );
+    }
 
-    ActionResult onBackupFailure(Exception ex);
+    public static class NextButton extends ButtonWidget
+    {
+        public NextButton(int x, int y)
+        {
+            super(977, x, y, 16, 12, "→");
+        }
+    }
+
+    public static class PreviousButton extends ButtonWidget
+    {
+        public PreviousButton(int x, int y)
+        {
+            super(978, x, y, 16, 12, "←");
+        }
+    }
 }

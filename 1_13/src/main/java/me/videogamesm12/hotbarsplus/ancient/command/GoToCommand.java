@@ -15,32 +15,23 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package me.videogamesm12.hotbarsplus.api.event.success;
+package me.videogamesm12.hotbarsplus.ancient.command;
 
-import net.fabricmc.fabric.api.event.Event;
-import net.fabricmc.fabric.api.event.EventFactory;
-import net.minecraft.util.ActionResult;
+import me.videogamesm12.hotbarsplus.core.HBPCore;
+import net.legacyfabric.fabric.api.command.v2.lib.sponge.CommandException;
+import net.legacyfabric.fabric.api.command.v2.lib.sponge.CommandResult;
+import net.legacyfabric.fabric.api.command.v2.lib.sponge.args.CommandContext;
+import net.legacyfabric.fabric.api.command.v2.lib.sponge.spec.CommandExecutor;
+import net.legacyfabric.fabric.api.permission.v1.PermissibleCommandSource;
 
-import java.io.File;
+import java.math.BigInteger;
 
-public interface BackupSuccessEvent
+public class GoToCommand implements CommandExecutor
 {
-    Event<BackupSuccessEvent> EVENT = EventFactory.createArrayBacked(BackupSuccessEvent.class,
-        (listeners) -> (from, to) ->
-        {
-            for (BackupSuccessEvent listener : listeners)
-            {
-                ActionResult result = listener.onBackupSuccess(from, to);
-
-                if (result != ActionResult.PASS)
-                {
-                    return result;
-                }
-            }
-
-            return ActionResult.SUCCESS;
-        }
-    );
-
-    ActionResult onBackupSuccess(File from, File to);
+    @Override
+    public CommandResult execute(PermissibleCommandSource src, CommandContext args) throws CommandException
+    {
+        HBPCore.UPL.goToPage((BigInteger) args.getOne("page").get());
+        return CommandResult.success();
+    }
 }

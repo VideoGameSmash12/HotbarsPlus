@@ -15,28 +15,32 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package me.videogamesm12.hotbarsplus.legacy;
+package me.videogamesm12.hotbarsplus.ancient;
 
 import com.google.common.eventbus.Subscribe;
+import me.videogamesm12.hotbarsplus.ancient.manager.HCommandManager;
+import me.videogamesm12.hotbarsplus.ancient.mixin.CreativeInvScreenMixin;
 import me.videogamesm12.hotbarsplus.api.event.navigation.NHotbarNavigateEvent;
 import me.videogamesm12.hotbarsplus.core.HBPCore;
-import me.videogamesm12.hotbarsplus.legacy.manager.CommandManager;
-import me.videogamesm12.hotbarsplus.legacy.manager.KeybindManager;
-import me.videogamesm12.hotbarsplus.legacy.mixin.CreativeInvScreenMixin;
+import me.videogamesm12.hotbarsplus.ancient.manager.KeybindManager;
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.CreativeInventoryScreen;
-import net.minecraft.item.ItemGroup;
+import net.minecraft.item.itemgroup.ItemGroup;
 
 public class HotbarsPlus implements ClientModInitializer
 {
+    public static HCommandManager COMMANDS = null;
+
     @Override
     public void onInitializeClient()
     {
         HBPCore.KEYBINDS = new KeybindManager();
-        HBPCore.COMMANDS = new CommandManager();
-        HBPCore.VHOOKS = new FourteenHooks();
+        HBPCore.COMMANDS = null; // Pre-Brigadier
+        HBPCore.VHOOKS = new ThirteenHooks();
+        //--
+        COMMANDS = new HCommandManager();
         //--
         HBPCore.EVENTS.register(this);
     }
@@ -49,9 +53,9 @@ public class HotbarsPlus implements ClientModInitializer
         {
             Screen screen = MinecraftClient.getInstance().currentScreen;
 
-            if (((CreativeInvScreenMixin.CISAccessor) screen).getSelectedTab() == ItemGroup.HOTBAR.getIndex())
+            if (((CreativeInvScreenMixin.CISAccessor) screen).getSelectedTab() == ItemGroup.field_15657.getIndex())
             {
-                ((CreativeInvScreenMixin.CISAccessor) screen).setSelectedTab(ItemGroup.HOTBAR);
+                ((CreativeInvScreenMixin.CISAccessor) screen).setSelectedTab(ItemGroup.field_15657);
             }
         }
     }

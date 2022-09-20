@@ -1,0 +1,6 @@
+hotbarsplus.command.backup.description=Back up the currently selected hotbar page.
+hotbarsplus.command.cache.clear.description=Clear the hotbar page cache.
+hotbarsplus.command.cache.description=Manage the hotbar page cache.
+hotbarsplus.command.cache.list.description=View the list of currently-cached hotbar pages.
+hotbarsplus.command.description=Manage Hotbars+ through a command!
+hotbarsplus.command.goto.description=Go to a specific hotbar page.

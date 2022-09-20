@@ -15,26 +15,21 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package me.videogamesm12.hotbarsplus.v1_19.manager;
+package me.videogamesm12.hotbarsplus.ancient.manager;
 
 import me.videogamesm12.hotbarsplus.api.IKeybindManager;
 import me.videogamesm12.hotbarsplus.api.event.keybind.NBindPressEvent;
 import me.videogamesm12.hotbarsplus.core.HBPCore;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.legacyfabric.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.legacyfabric.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.util.InputUtil;
-import org.lwjgl.glfw.GLFW;
+import net.minecraft.client.options.KeyBinding;
 
 public class KeybindManager implements IKeybindManager<KeyBinding>, ClientTickEvents.EndTick
 {
-    public KeyBinding backup = new KeyBinding("key.hotbarsplus.backup", InputUtil.Type.KEYSYM,
-            GLFW.GLFW_KEY_UNKNOWN, "category.hotbarsplus.navigation");
-    public KeyBinding next = new KeyBinding("key.hotbarsplus.next", InputUtil.Type.KEYSYM,
-            GLFW.GLFW_KEY_RIGHT_BRACKET, "category.hotbarsplus.navigation");
-    public KeyBinding previous = new KeyBinding("key.hotbarsplus.previous", InputUtil.Type.KEYSYM,
-            GLFW.GLFW_KEY_LEFT_BRACKET, "category.hotbarsplus.navigation");
+    public KeyBinding backup = new KeyBinding("key.hotbarsplus.backup", 0, "category.hotbarsplus.navigation");
+    public KeyBinding next = new KeyBinding("key.hotbarsplus.next", 27, "category.hotbarsplus.navigation");
+    public KeyBinding previous = new KeyBinding("key.hotbarsplus.previous", 26, "category.hotbarsplus.navigation");
     //--
     private boolean nextPressedLastTick = false;
     private boolean previousPressedLastTick = false;

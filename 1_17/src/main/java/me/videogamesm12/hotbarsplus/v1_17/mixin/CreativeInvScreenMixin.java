@@ -17,9 +17,7 @@
 
 package me.videogamesm12.hotbarsplus.v1_17.mixin;
 
-import me.videogamesm12.hotbarsplus.api.event.keybind.BackupBindPressEvent;
-import me.videogamesm12.hotbarsplus.api.event.keybind.NextBindPressEvent;
-import me.videogamesm12.hotbarsplus.api.event.keybind.PreviousBindPressEvent;
+import me.videogamesm12.hotbarsplus.api.event.keybind.NBindPressEvent;
 import me.videogamesm12.hotbarsplus.core.HBPCore;
 import me.videogamesm12.hotbarsplus.core.gui.CustomButtons;
 import me.videogamesm12.hotbarsplus.v1_17.manager.KeybindManager;
@@ -112,19 +110,19 @@ public abstract class CreativeInvScreenMixin extends AbstractInventoryScreen<Cre
 
             if (manager.next.matchesKey(keyCode, scanCode))
             {
-                NextBindPressEvent.EVENT.invoker().onNextPress();
+                HBPCore.EVENTS.post(new NBindPressEvent(NBindPressEvent.Bind.NEXT));
                 ignoreTypedCharacter = true;
                 cir.setReturnValue(true);
             }
             else if (manager.backup.matchesKey(keyCode, scanCode))
             {
-                BackupBindPressEvent.EVENT.invoker().onBackupPress();
+                HBPCore.EVENTS.post(new NBindPressEvent(NBindPressEvent.Bind.BACKUP));
                 ignoreTypedCharacter = true;
                 cir.setReturnValue(true);
             }
             else if (manager.previous.matchesKey(keyCode, scanCode))
             {
-                PreviousBindPressEvent.EVENT.invoker().onPreviousPress();
+                HBPCore.EVENTS.post(new NBindPressEvent(NBindPressEvent.Bind.PREVIOUS));
                 ignoreTypedCharacter = true;
                 cir.setReturnValue(true);
             }

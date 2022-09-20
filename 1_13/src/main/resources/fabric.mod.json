@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "hotbarsplus",
+  "id": "hotbarsplus-ancient",
   "version": "${version}",
-  "name": "Hotbars+",
-  "description": "Get more use out of your saved hotbars!",
+  "name": "Ancient Hooks",
+  "description": "Hooks specific to 1.12.x for Hotbars+.",
   "authors": ["videogamesm12"],
   "contact": {
     "issues": "https://github.com/VideoGameSmash12/HotbarsPlus/issues",
@@ -11,21 +11,21 @@
     "sources": "https://github.com/VideoGameSmash12/HotbarsPlus"
   },
   "license": "MIT",
-  "icon": "assets/hotbarsplus/icon.png",
+  "icon": "assets/hotbarsplus-ancient/icon.png",
   "environment": "client",
   "entrypoints": {
     "client": [
-      "me.videogamesm12.hotbarsplus.core.HBPCore"
+      "me.videogamesm12.hotbarsplus.ancient.HotbarsPlus"
     ]
   },
   "mixins": [
-    "hotbarsplus.mixin.json"
+    "hotbarsplus.legacy.mixins.json"
   ],
   "depends": {
-    "minecraft": ">=1.12.2"
+    "minecraft": ["1.12.x"]
   },
-  "accessWidener": "hotbarsplus.accesswidener",
-  "breaks": {
-    "multihotbar": "*"
+  "custom": {
+    "modmenu:api": true,
+    "modmenu:parent": "hotbarsplus"
   }
 }

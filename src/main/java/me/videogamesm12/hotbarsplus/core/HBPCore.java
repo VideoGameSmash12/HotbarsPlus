@@ -17,6 +17,7 @@
 
 package me.videogamesm12.hotbarsplus.core;
 
+import com.google.common.eventbus.EventBus;
 import me.videogamesm12.hotbarsplus.api.ICommandManager;
 import me.videogamesm12.hotbarsplus.api.IKeybindManager;
 import me.videogamesm12.hotbarsplus.api.IVersionHook;
@@ -38,6 +39,7 @@ public class HBPCore implements ClientModInitializer
 {
     // UTILITIES
     public static Logger LOGGER = LogManager.getLogger("Hotbars+");
+    public static EventBus EVENTS = new EventBus();
 
     // VERSION SPECIFIC
     public static IKeybindManager<?> KEYBINDS = null;

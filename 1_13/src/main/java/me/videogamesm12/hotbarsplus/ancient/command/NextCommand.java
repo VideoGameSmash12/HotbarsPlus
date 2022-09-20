@@ -15,32 +15,21 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package me.videogamesm12.hotbarsplus.api.event.navigation;
+package me.videogamesm12.hotbarsplus.ancient.command;
 
-import net.fabricmc.fabric.api.event.Event;
-import net.fabricmc.fabric.api.event.EventFactory;
-import net.minecraft.util.ActionResult;
+import me.videogamesm12.hotbarsplus.core.HBPCore;
+import net.legacyfabric.fabric.api.command.v2.lib.sponge.CommandException;
+import net.legacyfabric.fabric.api.command.v2.lib.sponge.CommandResult;
+import net.legacyfabric.fabric.api.command.v2.lib.sponge.args.CommandContext;
+import net.legacyfabric.fabric.api.command.v2.lib.sponge.spec.CommandExecutor;
+import net.legacyfabric.fabric.api.permission.v1.PermissibleCommandSource;
 
-import java.math.BigInteger;
-
-public interface HotbarNavigateEvent
+public class NextCommand implements CommandExecutor
 {
-    Event<HotbarNavigateEvent> EVENT = EventFactory.createArrayBacked(HotbarNavigateEvent.class,
-        (listeners) -> (page) ->
-        {
-            for (HotbarNavigateEvent listener : listeners)
-            {
-                ActionResult result = listener.onNavigate(page);
-
-                if (result != ActionResult.PASS)
-                {
-                    return result;
-                }
-            }
-
-            return ActionResult.SUCCESS;
-        }
-    );
-
-    ActionResult onNavigate(BigInteger page);
+    @Override
+    public CommandResult execute(PermissibleCommandSource src, CommandContext args) throws CommandException
+    {
+        HBPCore.UPL.incrementPage();
+        return CommandResult.success();
+    }
 }

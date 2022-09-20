@@ -15,22 +15,18 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package me.videogamesm12.hotbarsplus.api.event.keybind;
+package me.videogamesm12.hotbarsplus.ancient.mixin;
 
-import net.fabricmc.fabric.api.event.Event;
-import net.fabricmc.fabric.api.event.EventFactory;
+import net.minecraft.client.gui.screen.ingame.HandledScreen;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.gen.Accessor;
 
-public interface NextBindPressEvent
+@Mixin(HandledScreen.class)
+public interface CSAccessor
 {
-    Event<NextBindPressEvent> EVENT = EventFactory.createArrayBacked(NextBindPressEvent.class,
-        (listeners) -> () ->
-        {
-            for (NextBindPressEvent listener : listeners)
-            {
-                listener.onNextPress();
-            }
-        }
-    );
+    @Accessor("x")
+    int getX();
 
-    void onNextPress();
+    @Accessor("y")
+    int getY();
 }

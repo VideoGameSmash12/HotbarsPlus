@@ -17,7 +17,8 @@
 
 package me.videogamesm12.hotbarsplus.v1_16;
 
-import me.videogamesm12.hotbarsplus.api.event.navigation.HotbarNavigateEvent;
+import com.google.common.eventbus.Subscribe;
+import me.videogamesm12.hotbarsplus.api.event.navigation.NHotbarNavigateEvent;
 import me.videogamesm12.hotbarsplus.core.HBPCore;
 import me.videogamesm12.hotbarsplus.v1_16.manager.CommandManager;
 import me.videogamesm12.hotbarsplus.v1_16.manager.KeybindManager;
@@ -27,11 +28,8 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.CreativeInventoryScreen;
 import net.minecraft.item.ItemGroup;
-import net.minecraft.util.ActionResult;
 
-import java.math.BigInteger;
-
-public class HotbarsPlus implements ClientModInitializer, HotbarNavigateEvent
+public class HotbarsPlus implements ClientModInitializer
 {
     @Override
     public void onInitializeClient()
@@ -39,11 +37,11 @@ public class HotbarsPlus implements ClientModInitializer, HotbarNavigateEvent
         HBPCore.KEYBINDS = new KeybindManager();
         HBPCore.COMMANDS = new CommandManager();
         //--
-        HotbarNavigateEvent.EVENT.register(this);
+        HBPCore.EVENTS.register(this);
     }
 
-    @Override
-    public ActionResult onNavigate(BigInteger page)
+    @Subscribe
+    public void onNavigate(NHotbarNavigateEvent event)
     {
         // Refreshes the menu if it is currently open;
         if (MinecraftClient.getInstance().currentScreen instanceof CreativeInventoryScreen)
@@ -55,7 +53,5 @@ public class HotbarsPlus implements ClientModInitializer, HotbarNavigateEvent
                 ((CreativeInvScreenMixin.CISAccessor) screen).setSelectedTab(ItemGroup.HOTBAR);
             }
         }
-
-        return ActionResult.PASS;
     }
 }

@@ -1,0 +1,24 @@
+group 'me.videogamesm12'
+
+loom {
+    setIntermediaryUrl('https://maven.legacyfabric.net/net/legacyfabric/intermediary/%1$s/intermediary-%1$s-v2.jar')
+}
+
+repositories {
+    maven {
+        name = "legacy-fabric"
+        url = "https://maven.legacyfabric.net"
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:1.13.2"
+    mappings "net.legacyfabric:yarn:1.13.2+build.398:v2"
+    modImplementation "net.fabricmc:fabric-loader:0.14.9"
+    
+    // Legacy-Fabric API
+    modImplementation "net.legacyfabric.legacy-fabric-api:legacy-fabric-api:1.8.0+1.13.2"
+
+    // Adventure
+    implementation "net.kyori:adventure-api:4.9.3"
+}

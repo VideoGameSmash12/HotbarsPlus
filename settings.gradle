@@ -8,6 +8,7 @@ pluginManagement {
     }
 }
 rootProject.name = 'Hotbars+'
+include '1_13'
 include '1_14'
 include '1_16'
 include '1_17'

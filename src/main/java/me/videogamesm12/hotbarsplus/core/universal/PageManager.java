@@ -17,9 +17,10 @@
 
 package me.videogamesm12.hotbarsplus.core.universal;
 
-import me.videogamesm12.hotbarsplus.api.event.keybind.NextBindPressEvent;
-import me.videogamesm12.hotbarsplus.api.event.keybind.PreviousBindPressEvent;
-import me.videogamesm12.hotbarsplus.api.event.navigation.HotbarNavigateEvent;
+import com.google.common.eventbus.Subscribe;
+import me.videogamesm12.hotbarsplus.api.event.keybind.NBindPressEvent;
+import me.videogamesm12.hotbarsplus.api.event.navigation.NHotbarNavigateEvent;
+import me.videogamesm12.hotbarsplus.core.HBPCore;
 import me.videogamesm12.hotbarsplus.core.HotbarsPlusStorage;
 import me.videogamesm12.hotbarsplus.core.mixin.HotbarStorageMixin;
 import net.minecraft.client.MinecraftClient;
@@ -33,33 +34,32 @@ import java.util.Map;
  * <b>PageManager</b>
  * <p>Version-independent storage for the current page number in Hotbars+.</p>
  */
-public class PageManager implements NextBindPressEvent, PreviousBindPressEvent
+public class PageManager
 {
     private final Map<BigInteger, HotbarStorage> cache = new HashMap<>();
     private BigInteger currentPage = BigInteger.valueOf(0);
 
     public PageManager()
     {
-        NextBindPressEvent.EVENT.register(this);
-        PreviousBindPressEvent.EVENT.register(this);
+        HBPCore.EVENTS.register(this);
     }
 
     public void decrementPage()
     {
         currentPage = currentPage.subtract(BigInteger.ONE);
-        HotbarNavigateEvent.EVENT.invoker().onNavigate(currentPage);
+        HBPCore.EVENTS.post(new NHotbarNavigateEvent(currentPage));
     }
 
     public void incrementPage()
     {
         currentPage = currentPage.add(BigInteger.ONE);
-        HotbarNavigateEvent.EVENT.invoker().onNavigate(currentPage);
+        HBPCore.EVENTS.post(new NHotbarNavigateEvent(currentPage));
     }
 
     public void goToPage(BigInteger page)
     {
         currentPage = page;
-        HotbarNavigateEvent.EVENT.invoker().onNavigate(currentPage);
+        HBPCore.EVENTS.post(new NHotbarNavigateEvent(currentPage));
     }
 
     public Map<BigInteger, HotbarStorage> getCache()
@@ -102,15 +102,16 @@ public class PageManager implements NextBindPressEvent, PreviousBindPressEvent
         return ((HotbarStorageMixin.HSAccessor) getHotbarPage()).getFile().exists();
     }
 
-    @Override
-    public void onNextPress()
+    @Subscribe
+    public void onBindPress(NBindPressEvent event)
     {
-        incrementPage();
-    }
-
-    @Override
-    public void onPreviousPress()
-    {
-        decrementPage();
+        if (event.getBind() == NBindPressEvent.Bind.NEXT)
+        {
+            incrementPage();
+        }
+        else if (event.getBind() == NBindPressEvent.Bind.PREVIOUS)
+        {
+            decrementPage();
+        }
     }
 }

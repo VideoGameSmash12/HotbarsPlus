@@ -17,9 +17,10 @@
 
 package me.videogamesm12.hotbarsplus.core.universal;
 
-import me.videogamesm12.hotbarsplus.api.event.failures.BackupFailEvent;
-import me.videogamesm12.hotbarsplus.api.event.keybind.BackupBindPressEvent;
-import me.videogamesm12.hotbarsplus.api.event.success.BackupSuccessEvent;
+import com.google.common.eventbus.Subscribe;
+import me.videogamesm12.hotbarsplus.api.event.failures.NBackupFailEvent;
+import me.videogamesm12.hotbarsplus.api.event.keybind.NBindPressEvent;
+import me.videogamesm12.hotbarsplus.api.event.success.NBackupSuccessEvent;
 import me.videogamesm12.hotbarsplus.api.util.Util;
 import me.videogamesm12.hotbarsplus.core.HBPCore;
 import me.videogamesm12.hotbarsplus.core.mixin.HotbarStorageMixin;
@@ -29,7 +30,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class BackupManager extends Thread implements BackupBindPressEvent
+public class BackupManager extends Thread
 {
     private final SimpleDateFormat FORMAT =  new SimpleDateFormat("yyyy-MM-dd 'at' HH.mm.ss z");
 
@@ -41,13 +42,16 @@ public class BackupManager extends Thread implements BackupBindPressEvent
     @Override
     public void run()
     {
-        BackupBindPressEvent.EVENT.register(this);
+        HBPCore.EVENTS.register(this);
     }
 
-    @Override
-    public synchronized void onBackupPress()
+    @Subscribe
+    public synchronized void onBackupPress(NBindPressEvent event)
     {
-        backupHotbar();
+        if (event.getBind() == NBindPressEvent.Bind.BACKUP)
+        {
+            backupHotbar();
+        }
     }
 
     public synchronized void backupHotbar(File file)
@@ -60,12 +64,12 @@ public class BackupManager extends Thread implements BackupBindPressEvent
         {
             FileUtils.copyFile(file, destination);
 
-            BackupSuccessEvent.EVENT.invoker().onBackupSuccess(file, destination);
+            HBPCore.EVENTS.post(new NBackupSuccessEvent(file, destination));
         }
         // Well shit that didn't work. Call the event that indicates the failure
         catch (Exception ex)
         {
-            BackupFailEvent.EVENT.invoker().onBackupFailure(ex);
+            HBPCore.EVENTS.post(new NBackupFailEvent(ex));
 
             HBPCore.LOGGER.error("Failed to backup hotbar file");
             HBPCore.LOGGER.error(ex);

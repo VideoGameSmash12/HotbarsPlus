@@ -17,18 +17,16 @@
 
 package me.videogamesm12.hotbarsplus.core.universal;
 
-import me.videogamesm12.hotbarsplus.api.event.failures.BackupFailEvent;
-import me.videogamesm12.hotbarsplus.api.event.navigation.HotbarNavigateEvent;
-import me.videogamesm12.hotbarsplus.api.event.success.BackupSuccessEvent;
+import com.google.common.eventbus.Subscribe;
+import me.videogamesm12.hotbarsplus.api.event.failures.NBackupFailEvent;
+import me.videogamesm12.hotbarsplus.api.event.navigation.NHotbarNavigateEvent;
+import me.videogamesm12.hotbarsplus.api.event.success.NBackupSuccessEvent;
 import me.videogamesm12.hotbarsplus.api.util.Util;
 import me.videogamesm12.hotbarsplus.core.HBPCore;
 import me.videogamesm12.hotbarsplus.core.notifications.ActionBarNotification;
 import net.kyori.adventure.text.Component;
 import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
 
-import java.io.File;
-import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -91,56 +89,45 @@ public class NotificationManager
         boolean isEnabled();
     }
 
-    public class EventListener implements BackupFailEvent, BackupSuccessEvent, HotbarNavigateEvent
+    public class EventListener
     {
         public EventListener()
         {
-            BackupFailEvent.EVENT.register(this);
-            BackupSuccessEvent.EVENT.register(this);
-            HotbarNavigateEvent.EVENT.register(this);
+            HBPCore.EVENTS.register(this);
         }
 
-        @Override
-        public ActionResult onNavigate(BigInteger page)
-        {
-            showNotification(
-                    Component.translatable("notif.hotbarsplus.navigation.selected"),
-                    Component.text(Util.getHotbarFilename(page)),
-                    Component.translatable("notif.hotbarsplus.navigation.selected.mini",
-                            Component.text(Util.getHotbarFilename(page)))
-            );
-
-            return ActionResult.PASS;
-        }
-
-        /********** FAILURES **********/
-
-        @Override
-        public ActionResult onBackupFailure(Exception ex)
+        @Subscribe
+        public void onBackupFailure(NBackupFailEvent event)
         {
             showNotification(
                     Component.translatable("notif.hotbarsplus.backup.failed"),
-                    Component.text(ex.getLocalizedMessage()),
+                    Component.text(event.getException().getLocalizedMessage()),
                     Component.translatable("notif.hotbarsplus.backup.failed.mini",
-                            Component.text(ex.getClass().getSimpleName()))
+                            Component.text(event.getException().getClass().getSimpleName()))
             );
-
-            return ActionResult.PASS;
         }
 
-        /********** SUCCESSES **********/
-
-        @Override
-        public ActionResult onBackupSuccess(File from, File to)
+        @Subscribe
+        public void onBackupSuccess(NBackupSuccessEvent event)
         {
             showNotification(
                     Component.translatable("notif.hotbarsplus.backup.success"),
-                    Component.text(to.getName()),
+                    Component.text(event.getTo().getName()),
                     Component.translatable("notif.hotbarsplus.backup.success.mini",
-                            Component.text(from.getName()),
-                            Component.text(to.getName()))
+                            Component.text(event.getFrom().getName()),
+                            Component.text(event.getTo().getName()))
             );
-            return ActionResult.PASS;
+        }
+
+        @Subscribe
+        public void onNavigate(NHotbarNavigateEvent event)
+        {
+            showNotification(
+                    Component.translatable("notif.hotbarsplus.navigation.selected"),
+                    Component.text(Util.getHotbarFilename(event.getPage())),
+                    Component.translatable("notif.hotbarsplus.navigation.selected.mini",
+                            Component.text(Util.getHotbarFilename(event.getPage())))
+            );
         }
     }
 }

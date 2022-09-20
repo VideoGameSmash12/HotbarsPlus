@@ -15,22 +15,21 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package me.videogamesm12.hotbarsplus.api.event.keybind;
+package me.videogamesm12.hotbarsplus.ancient.command;
 
-import net.fabricmc.fabric.api.event.Event;
-import net.fabricmc.fabric.api.event.EventFactory;
+import me.videogamesm12.hotbarsplus.core.HBPCore;
+import net.legacyfabric.fabric.api.command.v2.lib.sponge.CommandException;
+import net.legacyfabric.fabric.api.command.v2.lib.sponge.CommandResult;
+import net.legacyfabric.fabric.api.command.v2.lib.sponge.args.CommandContext;
+import net.legacyfabric.fabric.api.command.v2.lib.sponge.spec.CommandExecutor;
+import net.legacyfabric.fabric.api.permission.v1.PermissibleCommandSource;
 
-public interface BackupBindPressEvent
+public class PreviousCommand implements CommandExecutor
 {
-    Event<BackupBindPressEvent> EVENT = EventFactory.createArrayBacked(BackupBindPressEvent.class,
-        (listeners) -> () ->
-        {
-            for (BackupBindPressEvent listener : listeners)
-            {
-                listener.onBackupPress();
-            }
-        }
-    );
-
-    void onBackupPress();
+    @Override
+    public CommandResult execute(PermissibleCommandSource src, CommandContext args) throws CommandException
+    {
+        HBPCore.UPL.decrementPage();
+        return CommandResult.success();
+    }
 }
