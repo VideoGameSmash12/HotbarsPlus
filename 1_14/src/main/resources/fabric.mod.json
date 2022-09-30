@@ -14,9 +14,7 @@
   "icon": "assets/hotbarsplus-legacy/icon.png",
   "environment": "client",
   "entrypoints": {
-    "client": [
-      "me.videogamesm12.hotbarsplus.legacy.HotbarsPlus"
-    ],
+    "client": ["me.videogamesm12.hotbarsplus.legacy.HotbarsPlus"],
     "cotton-client-commands": ["me.videogamesm12.hotbarsplus.legacy.manager.CommandManager"]
   },
   "mixins": [

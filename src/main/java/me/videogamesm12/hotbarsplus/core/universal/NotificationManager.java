@@ -19,6 +19,7 @@ package me.videogamesm12.hotbarsplus.core.universal;
 
 import me.videogamesm12.hotbarsplus.api.event.failures.BackupFailEvent;
 import me.videogamesm12.hotbarsplus.api.event.navigation.HotbarNavigateEvent;
+import me.videogamesm12.hotbarsplus.api.event.notification.NotificationTypeRegistered;
 import me.videogamesm12.hotbarsplus.api.event.success.BackupSuccessEvent;
 import me.videogamesm12.hotbarsplus.api.util.Util;
 import me.videogamesm12.hotbarsplus.core.HBPCore;
@@ -26,6 +27,8 @@ import me.videogamesm12.hotbarsplus.core.notifications.ActionBarNotification;
 import net.kyori.adventure.text.Component;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.math.BigInteger;
@@ -53,6 +56,10 @@ public class NotificationManager
      */
     public void showNotification(Component title, Component description, Component miniature)
     {
+        // Don't show notifications if they are disabled
+        if (!HBPCore.UCL.getConfig().getNotificationConfig().isEnabled())
+            return;
+
         types.values().stream().filter(NotificationType::isEnabled).forEach((type) ->
                 type.display(Util.advToNative(title), Util.advToNative(description), Util.advToNative(miniature)));
     }
@@ -65,7 +72,10 @@ public class NotificationManager
     {
         try
         {
-            types.put(typeClass, typeClass.getDeclaredConstructor().newInstance());
+            NotificationType type = typeClass.getDeclaredConstructor().newInstance();
+            types.put(typeClass, type);
+            //--
+            NotificationTypeRegistered.EVENT.invoker().onTypeRegistered(type);
         }
         catch (Exception ex)
         {
@@ -85,10 +95,20 @@ public class NotificationManager
         void display(Text... text);
 
         /**
+         * Returns an ID unique to this notification type.
+         * @return  String
+         */
+        @NotNull
+        Identifier getId();
+
+        /**
          * Returns the current status of the Notification type.
          * @return  boolean
          */
-        boolean isEnabled();
+        default boolean isEnabled()
+        {
+            return HBPCore.UCL.getConfig().getNotificationConfig().isTypeEnabled(getId());
+        }
     }
 
     public class EventListener implements BackupFailEvent, BackupSuccessEvent, HotbarNavigateEvent

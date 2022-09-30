@@ -19,6 +19,11 @@ package me.videogamesm12.hotbarsplus.api;
 
 import com.mojang.brigadier.tree.LiteralCommandNode;
 
+/**
+ * <h1>ICommandManager</h1>
+ * <p>Interface for version-specific implementations of client commands.</p>
+ * @param <T>   Instance of CommandSource, such as FabricClientCommandSource
+ */
 public interface ICommandManager<T>
 {
     void register();

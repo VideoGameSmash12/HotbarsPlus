@@ -25,5 +25,9 @@ import java.math.BigInteger;
  */
 public interface IHotbarsPlusStorage
 {
+    /**
+     * Gets the page number that the instance belongs to.
+     * @return  BigInteger
+     */
     BigInteger getPage();
 }

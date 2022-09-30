@@ -20,6 +20,8 @@ package me.videogamesm12.hotbarsplus.core.notifications;
 import me.videogamesm12.hotbarsplus.core.universal.NotificationManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.NotNull;
 
 public class ActionBarNotification implements NotificationManager.NotificationType
 {
@@ -53,8 +55,8 @@ public class ActionBarNotification implements NotificationManager.NotificationTy
     }
 
     @Override
-    public boolean isEnabled()
+    public @NotNull Identifier getId()
     {
-        return true;
+        return new Identifier("hotbarsplus", "actionbar");
     }
 }

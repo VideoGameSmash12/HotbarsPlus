@@ -57,7 +57,7 @@ public class HBPCore implements ClientModInitializer
         //------------------------------------------------------------------------
         UNL.register(ActionBarNotification.class);      // Action bar notification
         //------------------------------------------------------------------------
-        if (UCL.getConfig().isTrayEnabled())            // System tray integration
+        if (UCL.getConfig().getIntegrationConfig().isTrayIntegrationEnabled())   // System tray integration
             UNL.register(TrayNotification.class);
         //------------------------------------------------------------------------
     }

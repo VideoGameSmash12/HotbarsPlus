@@ -26,8 +26,10 @@ import me.videogamesm12.hotbarsplus.core.HBPCore;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.minecraft.client.MinecraftClient;
 
+import javax.naming.ConfigurationException;
 import java.io.FileReader;
-import java.nio.file.Files;
+import java.io.FileWriter;
+import java.io.Writer;
 
 /**
  * <b>ConfigurationManager</b>
@@ -47,12 +49,16 @@ public class ConfigurationManager implements ClientLifecycleEvents.ClientStoppin
 
     public void load()
     {
-        HBPCore.LOGGER.info("Loading configuration from disk...");
-
         // Try loading the configuration from disk.
         try
         {
             config = gson.fromJson(new FileReader(Configuration.getLocation()), Configuration.class);
+
+            // Just for good measure...
+            if (config == null)
+            {
+                throw new ConfigurationException("The configuration that was loaded in ended up being blank");
+            }
         }
         // Failed to read the configuration. Oh well, we tried.
         catch (Exception ex)
@@ -62,7 +68,12 @@ public class ConfigurationManager implements ClientLifecycleEvents.ClientStoppin
             {
                 config = new Configuration();
             }
+
+            // Saves the new copy of the configuration.
+            save();
         }
+
+        ClientLifecycleEvents.CLIENT_STOPPING.register(this);
     }
 
     public void save()
@@ -72,7 +83,9 @@ public class ConfigurationManager implements ClientLifecycleEvents.ClientStoppin
         // Try to save the configuration to disk
         try
         {
-            gson.toJson(config, Files.newBufferedWriter(Configuration.getLocation().toPath()));
+            Writer wtf = new FileWriter(Configuration.getLocation());
+            gson.toJson(config, wtf);
+            wtf.close();
         }
         catch (Exception ex)
         {

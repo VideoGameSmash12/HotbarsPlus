@@ -20,6 +20,8 @@ package me.videogamesm12.hotbarsplus.core.notifications;
 import me.videogamesm12.hotbarsplus.core.HBPCore;
 import me.videogamesm12.hotbarsplus.core.universal.NotificationManager;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 
@@ -67,9 +69,16 @@ public class TrayNotification implements NotificationManager.NotificationType
     }
 
     @Override
+    public @NotNull Identifier getId()
+    {
+        return new Identifier("hotbarsplus", "systemtray");
+    }
+
+    @Override
     public boolean isEnabled()
     {
-        return HBPCore.UCL.getConfig().isTrayEnabled();
+        return HBPCore.UCL.getConfig().getIntegrationConfig().isTrayIntegrationEnabled()
+                && HBPCore.UCL.getConfig().getNotificationConfig().isTypeEnabled(getId());
     }
 
     public static class HPopupMenu extends PopupMenu

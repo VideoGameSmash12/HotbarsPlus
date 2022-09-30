@@ -25,10 +25,5 @@
   "notif.hotbarsplus.save.failed.mini": "Save failed",
 
   "notif.hotbarsplus.navigation.selected": "Page selected",
-  "notif.hotbarsplus.navigation.selected.mini": "Page selected: %s",
-
-  "text.autoconfig.hotbarsplus.option.notifications": "Notifications",
-  "text.autoconfig.hotbarsplus.option.notifications.actionBarNotifications": "Action Bar",
-  "text.autoconfig.hotbarsplus.option.notifications.systemTrayIntegration": "System Tray",
-  "text.autoconfig.hotbarsplus.title": "Configure Hotbars+"
+  "notif.hotbarsplus.navigation.selected.mini": "Page selected: %s"
 }

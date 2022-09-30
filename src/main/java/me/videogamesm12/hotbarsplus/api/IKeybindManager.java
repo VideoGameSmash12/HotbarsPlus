@@ -17,7 +17,15 @@
 
 package me.videogamesm12.hotbarsplus.api;
 
+/**
+ * <h1>IKeybindManager</h1>
+ * <p>Interface for version-specific keybind management.</p>
+ * @param <T>   KeyBinding
+ */
 public interface IKeybindManager<T>
 {
+    /**
+     * Registers all the various keybinds.
+     */
     void registerKeybinds();
 }

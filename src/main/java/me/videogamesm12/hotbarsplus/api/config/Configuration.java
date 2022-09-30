@@ -19,9 +19,14 @@ package me.videogamesm12.hotbarsplus.api.config;
 
 import lombok.Getter;
 import lombok.Setter;
+import me.videogamesm12.hotbarsplus.api.event.notification.NotificationTypeRegistered;
+import me.videogamesm12.hotbarsplus.core.universal.NotificationManager;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.util.Identifier;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * <b>Configuration</b>
@@ -33,10 +38,41 @@ public class Configuration
     private static final File location = new File(FabricLoader.getInstance().getConfigDir().toFile(), "hotbarsplus.json");
 
     @Getter
-    @Setter
-    private boolean notifsEnabled;
+    private Integrations integrationConfig = new Integrations();
+
+    @Getter
+    private Notifications notificationConfig = new Notifications();
+
+    @Getter
+    public static class Notifications implements NotificationTypeRegistered
+    {
+        public Notifications()
+        {
+            NotificationTypeRegistered.EVENT.register(this);
+        }
+
+        @Setter
+        private boolean enabled = true;
+
+        private Map<String, Boolean> types = new HashMap<>();
+
+        public boolean isTypeEnabled(Identifier id)
+        {
+            return types.getOrDefault(id.toString(), true);
+        }
+
+        @Override
+        public void onTypeRegistered(NotificationManager.NotificationType type)
+        {
+            if (!types.containsKey(type.getId().toString()))
+                types.put(type.getId().toString(), true);
+        }
+    }
 
     @Getter
     @Setter
-    private boolean trayEnabled;
+    public static class Integrations
+    {
+        private boolean trayIntegrationEnabled = true;
+    }
 }

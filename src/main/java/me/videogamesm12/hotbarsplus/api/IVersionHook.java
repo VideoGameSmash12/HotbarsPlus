@@ -21,10 +21,15 @@ import com.google.gson.JsonElement;
 import net.minecraft.text.Text;
 
 /**
- * <b>IVersionHook</b>
- * <p>Interface for version-specific code that aren't available in 1.14.4 but is available for in .17.1</p>
+ * <h1>IVersionHook</h1>
+ * <p>Interface for version-specific code that aren't available in one version but is available in another.</p>
  */
 public interface IVersionHook
 {
+    /**
+     * Converts JsonElement instances from Adventure components to native Minecraft components.
+     * @param tree  JsonElement
+     * @return      Text
+     */
     Text convertFromJson(JsonElement tree);
 }
