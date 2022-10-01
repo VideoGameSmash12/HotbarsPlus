@@ -25,7 +25,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 
-public class TrayNotification implements NotificationManager.NotificationType
+public class TrayNotification implements NotificationManager.NotificationRoute
 {
     private SystemTray tray = null;
     private TrayIcon icon = null;
@@ -63,7 +63,7 @@ public class TrayNotification implements NotificationManager.NotificationType
     }
 
     @Override
-    public void display(Text... text)
+    public void display(NotificationManager.NotificationType type, Text... text)
     {
         icon.displayMessage(text[0].getString(), text[1].getString(), TrayIcon.MessageType.INFO);
     }

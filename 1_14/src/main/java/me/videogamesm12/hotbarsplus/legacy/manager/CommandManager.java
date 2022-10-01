@@ -23,7 +23,7 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.github.cottonmc.clientcommands.ArgumentBuilders;
 import io.github.cottonmc.clientcommands.ClientCommandPlugin;
 import io.github.cottonmc.clientcommands.CottonClientCommandSource;
-import me.videogamesm12.hotbarsplus.api.ICommandManager;
+import me.videogamesm12.hotbarsplus.api.manager.ICommandManager;
 import me.videogamesm12.hotbarsplus.core.commands.*;
 
 public class CommandManager implements ICommandManager<CottonClientCommandSource>, ClientCommandPlugin

@@ -11,5 +11,5 @@ public interface NotificationTypeRegistered
     Event<NotificationTypeRegistered> EVENT = EventFactory.createArrayBacked(NotificationTypeRegistered.class,
             (listeners) -> (type) -> Arrays.stream(listeners).forEach(listener -> listener.onTypeRegistered(type)));
 
-    void onTypeRegistered(NotificationManager.NotificationType type);
+    void onTypeRegistered(NotificationManager.NotificationRoute type);
 }

@@ -22,7 +22,7 @@
     "hotbarsplus.1_17.mixins.json"
   ],
   "depends": {
-    "minecraft": ">=1.17"
+    "minecraft": ["1.17.x", "1.18.x"]
   },
   "custom": {
     "modmenu": {

@@ -23,10 +23,10 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-public class ActionBarNotification implements NotificationManager.NotificationType
+public class ActionBarNotification implements NotificationManager.NotificationRoute
 {
     @Override
-    public void display(Text... text)
+    public void display(NotificationManager.NotificationType type, Text... text)
     {
         if (MinecraftClient.getInstance().player == null)
         {

@@ -62,7 +62,7 @@ public class Configuration
         }
 
         @Override
-        public void onTypeRegistered(NotificationManager.NotificationType type)
+        public void onTypeRegistered(NotificationManager.NotificationRoute type)
         {
             if (!types.containsKey(type.getId().toString()))
                 types.put(type.getId().toString(), true);

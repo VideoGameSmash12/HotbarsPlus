@@ -20,7 +20,7 @@ package me.videogamesm12.hotbarsplus.v1_19.manager;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.LongArgumentType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
-import me.videogamesm12.hotbarsplus.api.ICommandManager;
+import me.videogamesm12.hotbarsplus.api.manager.ICommandManager;
 import me.videogamesm12.hotbarsplus.core.commands.*;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;

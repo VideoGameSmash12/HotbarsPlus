@@ -17,7 +17,7 @@
 
 package me.videogamesm12.hotbarsplus.v1_19.manager;
 
-import me.videogamesm12.hotbarsplus.api.IKeybindManager;
+import me.videogamesm12.hotbarsplus.api.manager.IKeybindManager;
 import me.videogamesm12.hotbarsplus.api.event.keybind.BackupBindPressEvent;
 import me.videogamesm12.hotbarsplus.api.event.keybind.NextBindPressEvent;
 import me.videogamesm12.hotbarsplus.api.event.keybind.PreviousBindPressEvent;

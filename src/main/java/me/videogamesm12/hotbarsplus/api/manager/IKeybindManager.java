@@ -15,7 +15,7 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package me.videogamesm12.hotbarsplus.api;
+package me.videogamesm12.hotbarsplus.api.manager;
 
 /**
  * <h1>IKeybindManager</h1>

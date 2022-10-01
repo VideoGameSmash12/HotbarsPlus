@@ -17,6 +17,8 @@
 
 package me.videogamesm12.hotbarsplus.core.universal;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import me.videogamesm12.hotbarsplus.api.event.failures.BackupFailEvent;
 import me.videogamesm12.hotbarsplus.api.event.navigation.HotbarNavigateEvent;
 import me.videogamesm12.hotbarsplus.api.event.notification.NotificationTypeRegistered;
@@ -40,7 +42,7 @@ import java.util.Map;
  */
 public class NotificationManager
 {
-    private final Map<Class<? extends NotificationType>, NotificationType> types = new HashMap<>();
+    private final Map<Class<? extends NotificationRoute>, NotificationRoute> types = new HashMap<>();
     private final EventListener listener = new EventListener();
 
     public NotificationManager()
@@ -54,25 +56,25 @@ public class NotificationManager
      * @param description   Component
      * @param miniature     Component
      */
-    public void showNotification(Component title, Component description, Component miniature)
+    public void showNotification(Component title, Component description, Component miniature, NotificationType type)
     {
         // Don't show notifications if they are disabled
         if (!HBPCore.UCL.getConfig().getNotificationConfig().isEnabled())
             return;
 
-        types.values().stream().filter(NotificationType::isEnabled).forEach((type) ->
-                type.display(Util.advToNative(title), Util.advToNative(description), Util.advToNative(miniature)));
+        types.values().stream().filter(NotificationRoute::isEnabled).forEach((route) ->
+                route.display(type, Util.advToNative(title), Util.advToNative(description), Util.advToNative(miniature)));
     }
 
     /**
      * Registers a NotificationType.
      * @param typeClass A class that implements NotificationType.
      */
-    public void register(Class<? extends NotificationType> typeClass)
+    public void register(Class<? extends NotificationRoute> typeClass)
     {
         try
         {
-            NotificationType type = typeClass.getDeclaredConstructor().newInstance();
+            NotificationRoute type = typeClass.getDeclaredConstructor().newInstance();
             types.put(typeClass, type);
             //--
             NotificationTypeRegistered.EVENT.invoker().onTypeRegistered(type);
@@ -84,15 +86,28 @@ public class NotificationManager
         }
     }
 
-    public interface NotificationType
+    @AllArgsConstructor
+    @Getter
+    public enum NotificationType
+    {
+        GENERAL(0xFFFF00),
+        GENERAL_ERROR(0xFF0000),
+        BACKUP(0xFFFF00),
+        BACKUP_FAILED(0xFF0000);
+
+        private int color;
+    }
+
+    public interface NotificationRoute
     {
         /**
          * Display the notification in-game.
          * @param text  A series of text components to display depending on the type of notification.
          *              The first component is the title, the second component is the description, and the third
          *              component is a miniature combination of the first two.
+         * @param type  The notification's type
          */
-        void display(Text... text);
+        void display(NotificationType type, Text... text);
 
         /**
          * Returns an ID unique to this notification type.
@@ -127,7 +142,8 @@ public class NotificationManager
                     Component.translatable("notif.hotbarsplus.navigation.selected"),
                     Component.text(Util.getHotbarFilename(page)),
                     Component.translatable("notif.hotbarsplus.navigation.selected.mini",
-                            Component.text(Util.getHotbarFilename(page)))
+                            Component.text(Util.getHotbarFilename(page))),
+                    NotificationType.GENERAL
             );
 
             return ActionResult.PASS;
@@ -142,7 +158,8 @@ public class NotificationManager
                     Component.translatable("notif.hotbarsplus.backup.failed"),
                     Component.text(ex.getLocalizedMessage()),
                     Component.translatable("notif.hotbarsplus.backup.failed.mini",
-                            Component.text(ex.getClass().getSimpleName()))
+                            Component.text(ex.getClass().getSimpleName())),
+                    NotificationType.BACKUP_FAILED
             );
 
             return ActionResult.PASS;
@@ -158,7 +175,8 @@ public class NotificationManager
                     Component.text(to.getName()),
                     Component.translatable("notif.hotbarsplus.backup.success.mini",
                             Component.text(from.getName()),
-                            Component.text(to.getName()))
+                            Component.text(to.getName())),
+                    NotificationType.BACKUP
             );
             return ActionResult.PASS;
         }

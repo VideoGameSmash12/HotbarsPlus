@@ -20,6 +20,7 @@ package me.videogamesm12.hotbarsplus.v1_19;
 import me.videogamesm12.hotbarsplus.api.event.navigation.HotbarNavigateEvent;
 import me.videogamesm12.hotbarsplus.core.HBPCore;
 import me.videogamesm12.hotbarsplus.v1_19.manager.CommandManager;
+import me.videogamesm12.hotbarsplus.v1_19.manager.CustomToastManager;
 import me.videogamesm12.hotbarsplus.v1_19.manager.KeybindManager;
 import me.videogamesm12.hotbarsplus.v1_19.mixin.CreativeInvScreenMixin;
 import net.fabricmc.api.ClientModInitializer;
@@ -38,6 +39,7 @@ public class HotbarsPlus implements ClientModInitializer, HotbarNavigateEvent
     {
         HBPCore.COMMANDS = new CommandManager();
         HBPCore.KEYBINDS = new KeybindManager();
+        HBPCore.TOASTS = new CustomToastManager();
         //--
         HotbarNavigateEvent.EVENT.register(this);
     }
