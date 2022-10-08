@@ -18,8 +18,7 @@
 package me.videogamesm12.hotbarsplus.v1_19.mixin;
 
 import me.videogamesm12.hotbarsplus.core.HBPCore;
-//import me.videogamesm12.hotbarsplus.v1_19.gui.CustomButtons;
-import me.videogamesm12.hotbarsplus.core.gui.CustomButtons;
+import me.videogamesm12.hotbarsplus.v1_19.gui.CustomButtons;
 import net.minecraft.client.gui.screen.ingame.AbstractInventoryScreen;
 import net.minecraft.client.gui.screen.ingame.CreativeInventoryScreen;
 import net.minecraft.entity.player.PlayerInventory;
