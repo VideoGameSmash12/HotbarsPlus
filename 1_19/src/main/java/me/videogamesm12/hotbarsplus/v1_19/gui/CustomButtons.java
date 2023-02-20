@@ -29,14 +29,14 @@ public class CustomButtons
 {
     public static class BackupButton extends ButtonWidget
     {
-        public static Text label = Util.advToNative(Component.text("\uD83D\uDCBE").style(Style.style().font(
+        private static final Text label = Util.advToNative(Component.text("\uD83D\uDCBE").style(Style.style().font(
                 Key.key("hotbarsplus", "default")).build()));
 
         public BackupButton(int x, int y)
         {
             super(x, y, 16, 12, label,
-                    (button) -> HBPCore.UBL.backupHotbar(),
-                    (button, stack, mx, my) -> Util.advToNative(Component.translatable("gui.hotbarsplus.cis.backup_button.tooltip")));
+                    button -> HBPCore.UBL.backupHotbar(),
+                    supplier -> Util.advToNative(Component.translatable("gui.hotbarsplus.cis.backup_button.tooltip")).copy());
         }
     }
 
@@ -44,8 +44,9 @@ public class CustomButtons
     {
         public NextButton(int x, int y)
         {
-            super(x, y, 16, 12, Util.advToNative(Component.text("→")), (button) -> HBPCore.UPL.incrementPage(),
-                    (button, stack, mx, my) -> Util.advToNative(Component.translatable("gui.hotbarsplus.cis.next_button.tooltip")));
+            super(x, y, 16, 12, Util.advToNative(Component.text("→")),
+                    button -> HBPCore.UPL.incrementPage(),
+                    supplier -> Util.advToNative(Component.translatable("gui.hotbarsplus.cis.next_button.tooltip")).copy());
         }
     }
 
@@ -53,8 +54,9 @@ public class CustomButtons
     {
         public PreviousButton(int x, int y)
         {
-            super(x, y, 16, 12, Util.advToNative(Component.text("←")), (button) -> HBPCore.UPL.decrementPage(),
-                    (button, stack, mx, my) -> Util.advToNative(Component.translatable("gui.hotbarsplus.cis.previous_button.tooltip")));
+            super(x, y, 16, 12, Util.advToNative(Component.text("←")),
+                    button -> HBPCore.UPL.decrementPage(),
+                    supplier -> Util.advToNative(Component.translatable("gui.hotbarsplus.cis.previous_button.tooltip")).copy());
         }
     }
 }

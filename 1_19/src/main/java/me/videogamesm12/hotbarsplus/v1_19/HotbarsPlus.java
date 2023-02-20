@@ -22,12 +22,13 @@ import me.videogamesm12.hotbarsplus.core.HBPCore;
 import me.videogamesm12.hotbarsplus.v1_19.manager.CommandManager;
 import me.videogamesm12.hotbarsplus.v1_19.manager.CustomToastManager;
 import me.videogamesm12.hotbarsplus.v1_19.manager.KeybindManager;
-import me.videogamesm12.hotbarsplus.v1_19.mixin.CreativeInvScreenMixin;
+import me.videogamesm12.hotbarsplus.v1_19.mixin.CreativeInvScreenAccessor;
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.CreativeInventoryScreen;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemGroups;
 import net.minecraft.util.ActionResult;
 
 import java.math.BigInteger;
@@ -47,17 +48,29 @@ public class HotbarsPlus implements ClientModInitializer, HotbarNavigateEvent
     @Override
     public ActionResult onNavigate(BigInteger page)
     {
-        // Refreshes the menu if it is currently open;
-        if (MinecraftClient.getInstance().currentScreen instanceof CreativeInventoryScreen)
-        {
-            Screen screen = MinecraftClient.getInstance().currentScreen;
+        MinecraftClient client = MinecraftClient.getInstance();
+        Screen openScreen = client.currentScreen;
 
-            if (((CreativeInventoryScreen) screen).getSelectedTab() == ItemGroup.HOTBAR.getIndex())
-            {
-                ((CreativeInvScreenMixin.CISAccessor) screen).setSelectedTab(ItemGroup.HOTBAR);
-            }
+        if (openScreen == null)
+        {
+            return ActionResult.PASS;
         }
 
+        // Refreshes the menu if it is currently open;
+        if (!(openScreen instanceof CreativeInventoryScreen)) {
+            return ActionResult.PASS;
+        }
+
+        CreativeInventoryScreen creativeScreen = (CreativeInventoryScreen) openScreen;
+        CreativeInvScreenAccessor accessor = (CreativeInvScreenAccessor) creativeScreen;
+        ItemGroup currentTab = accessor.getSelectedTab();
+
+        if (currentTab != ItemGroups.HOTBAR) {
+            return ActionResult.PASS;
+        }
+
+        accessor.invokeSetSelectedTab(ItemGroups.HOTBAR);
+        
         return ActionResult.PASS;
     }
 }
