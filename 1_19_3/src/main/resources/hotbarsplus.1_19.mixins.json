@@ -4,11 +4,13 @@
   "package": "me.videogamesm12.hotbarsplus.v1_19.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "CreativeInvScreenMixin",
-    "CreativeInvScreenMixin$CISAccessor",
-    "HSAccessor"
+    "CreativeInvScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1
-  }
+  },
+  "client": [
+    "CreativeInvScreenAccessor",
+    "HandledScreenAccessor"
+  ]
 }
