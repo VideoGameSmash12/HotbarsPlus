@@ -89,8 +89,7 @@ public class ConfigurationManager implements ClientLifecycleEvents.ClientStoppin
         }
         catch (Exception ex)
         {
-            HBPCore.LOGGER.error("Failed to save configuration");
-            HBPCore.LOGGER.error(ex);
+            HBPCore.LOGGER.error("Failed to save configuration", ex);
         }
     }
 

@@ -29,6 +29,7 @@ public class TrayNotification implements NotificationManager.NotificationRoute
 {
     private SystemTray tray = null;
     private TrayIcon icon = null;
+    private boolean failed = false;
 
     public TrayNotification()
     {
@@ -57,8 +58,8 @@ public class TrayNotification implements NotificationManager.NotificationRoute
         }
         catch (Exception ex)
         {
-            HBPCore.LOGGER.error("Failed to set up the System Tray integration");
-            HBPCore.LOGGER.error(ex);
+            HBPCore.LOGGER.error("Failed to set up the System Tray integration", ex);
+            failed = true;
         }
     }
 
@@ -78,7 +79,8 @@ public class TrayNotification implements NotificationManager.NotificationRoute
     public boolean isEnabled()
     {
         return HBPCore.UCL.getConfig().getIntegrationConfig().isTrayIntegrationEnabled()
-                && HBPCore.UCL.getConfig().getNotificationConfig().isTypeEnabled(getId());
+                && HBPCore.UCL.getConfig().getNotificationConfig().isTypeEnabled(getId())
+                && !failed;
     }
 
     public static class HPopupMenu extends PopupMenu

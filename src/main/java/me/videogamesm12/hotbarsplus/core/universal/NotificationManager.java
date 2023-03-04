@@ -81,8 +81,7 @@ public class NotificationManager
         }
         catch (Exception ex)
         {
-            HBPCore.LOGGER.error("Failed to register notification type");
-            HBPCore.LOGGER.error(ex);
+            HBPCore.LOGGER.error("Failed to register notification type", ex);
         }
     }
 

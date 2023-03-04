@@ -67,8 +67,7 @@ public class BackupManager extends Thread implements BackupBindPressEvent
         {
             BackupFailEvent.EVENT.invoker().onBackupFailure(ex);
 
-            HBPCore.LOGGER.error("Failed to backup hotbar file");
-            HBPCore.LOGGER.error(ex);
+            HBPCore.LOGGER.error("Failed to backup hotbar file", ex);
         }
     }
 
