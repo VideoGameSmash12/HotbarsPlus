@@ -73,6 +73,7 @@ public class Configuration
     @Setter
     public static class Integrations
     {
-        private boolean trayIntegrationEnabled = true;
+        @Deprecated
+        private boolean trayIntegrationEnabled = false;
     }
 }
