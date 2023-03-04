@@ -23,7 +23,6 @@ import me.videogamesm12.hotbarsplus.api.IVersionHook;
 import me.videogamesm12.hotbarsplus.api.manager.IToastManager;
 import me.videogamesm12.hotbarsplus.core.notifications.ActionBarNotification;
 import me.videogamesm12.hotbarsplus.core.notifications.ToastNotification;
-import me.videogamesm12.hotbarsplus.core.notifications.TrayNotification;
 import me.videogamesm12.hotbarsplus.core.universal.BackupManager;
 import me.videogamesm12.hotbarsplus.core.universal.ConfigurationManager;
 import me.videogamesm12.hotbarsplus.core.universal.NotificationManager;
@@ -60,8 +59,15 @@ public class HBPCore implements ClientModInitializer
         //------------------------------------------------------------------------
         UNL.register(ActionBarNotification.class);      // Action bar notification
         //------------------------------------------------------------------------
-        if (UCL.getConfig().getIntegrationConfig().isTrayIntegrationEnabled())   // System tray integration
-            UNL.register(TrayNotification.class);
+        if (UCL.getConfig().getIntegrationConfig().isTrayIntegrationEnabled())   // System tray removal notification
+        {
+            LOGGER.warn("If you are seeing this message, then that means you previously ran a version of Hotbars+ that "
+                    + "integrated with your operating system's system tray and you left it enabled. As of v2.0-pre7, "
+                    + "this has been completely removed due to complaints of it being annoying and also because I "
+                    + "myself found it pointless.");
+            LOGGER.warn("This message will not appear again.");
+            UCL.getConfig().getIntegrationConfig().setTrayIntegrationEnabled(false);
+        }
         //------------------------------------------------------------------------
         UNL.register(ToastNotification.class);
     }
