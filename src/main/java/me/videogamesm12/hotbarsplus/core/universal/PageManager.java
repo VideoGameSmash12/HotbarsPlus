@@ -62,6 +62,11 @@ public class PageManager implements NextBindPressEvent, PreviousBindPressEvent
         HotbarNavigateEvent.EVENT.invoker().onNavigate(currentPage);
     }
 
+    public void goToPageQuietly(BigInteger page)
+    {
+        currentPage = page;
+    }
+
     public Map<BigInteger, HotbarStorage> getCache()
     {
         return cache;

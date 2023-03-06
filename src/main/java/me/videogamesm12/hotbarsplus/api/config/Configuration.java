@@ -19,12 +19,16 @@ package me.videogamesm12.hotbarsplus.api.config;
 
 import lombok.Getter;
 import lombok.Setter;
+import me.videogamesm12.hotbarsplus.api.event.navigation.HotbarNavigateEvent;
 import me.videogamesm12.hotbarsplus.api.event.notification.NotificationTypeRegistered;
+import me.videogamesm12.hotbarsplus.core.HBPCore;
 import me.videogamesm12.hotbarsplus.core.universal.NotificationManager;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
 
 import java.io.File;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,6 +43,9 @@ public class Configuration
 
     @Getter
     private Notifications notificationConfig = new Notifications();
+
+    @Getter
+    private LastHotbarPage lastHotbarPage = new LastHotbarPage();
 
     @Getter
     public static class Notifications implements NotificationTypeRegistered
@@ -63,6 +70,31 @@ public class Configuration
         {
             if (!types.containsKey(type.getId().toString()))
                 types.put(type.getId().toString(), true);
+        }
+    }
+
+    @Getter
+    @Setter
+    public static class LastHotbarPage implements HotbarNavigateEvent
+    {
+        private boolean enabled = true;
+
+        private BigInteger page = HBPCore.UPL.getCurrentPage();
+
+        public LastHotbarPage()
+        {
+            HotbarNavigateEvent.EVENT.register(this);
+        }
+
+        @Override
+        public ActionResult onNavigate(BigInteger page)
+        {
+            if (isEnabled())
+            {
+                this.page = page;
+            }
+
+            return ActionResult.PASS;
         }
     }
 }

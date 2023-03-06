@@ -59,5 +59,10 @@ public class HBPCore implements ClientModInitializer
         //------------------------------------------------------------------------
         UNL.register(ActionBarNotification.class);      // Action bar notification
         UNL.register(ToastNotification.class);          // Toast notification
+
+        // LAST HOTBAR PAGE TRACKING
+        //------------------------------------------------------------------------
+        if (UCL.getConfig().getLastHotbarPage().isEnabled())
+            UPL.goToPageQuietly(UCL.getConfig().getLastHotbarPage().getPage());
     }
 }
