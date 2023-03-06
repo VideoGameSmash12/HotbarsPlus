@@ -38,9 +38,6 @@ public class Configuration
     private static final File location = new File(FabricLoader.getInstance().getConfigDir().toFile(), "hotbarsplus.json");
 
     @Getter
-    private Integrations integrationConfig = new Integrations();
-
-    @Getter
     private Notifications notificationConfig = new Notifications();
 
     @Getter
@@ -67,13 +64,5 @@ public class Configuration
             if (!types.containsKey(type.getId().toString()))
                 types.put(type.getId().toString(), true);
         }
-    }
-
-    @Getter
-    @Setter
-    public static class Integrations
-    {
-        @Deprecated
-        private boolean trayIntegrationEnabled = false;
     }
 }

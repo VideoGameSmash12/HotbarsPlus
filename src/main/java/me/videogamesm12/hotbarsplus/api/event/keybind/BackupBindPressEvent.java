@@ -20,16 +20,16 @@ package me.videogamesm12.hotbarsplus.api.event.keybind;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 
+import java.util.Arrays;
+
+/**
+ * <h1>BackupBindPressEvent</h1>
+ * <p>An event that is called when the player presses the keybind for making a backup of the current page.</p>
+ */
 public interface BackupBindPressEvent
 {
     Event<BackupBindPressEvent> EVENT = EventFactory.createArrayBacked(BackupBindPressEvent.class,
-        (listeners) -> () ->
-        {
-            for (BackupBindPressEvent listener : listeners)
-            {
-                listener.onBackupPress();
-            }
-        }
+        (listeners) -> () -> Arrays.stream(listeners).forEach(BackupBindPressEvent::onBackupPress)
     );
 
     void onBackupPress();

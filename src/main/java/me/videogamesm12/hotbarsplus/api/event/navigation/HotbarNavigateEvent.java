@@ -23,6 +23,10 @@ import net.minecraft.util.ActionResult;
 
 import java.math.BigInteger;
 
+/**
+ * <h1>HotbarNavigateEvent</h1>
+ * <p>An event that is called when the player navigates to another hotbar page.</p>
+ */
 public interface HotbarNavigateEvent
 {
     Event<HotbarNavigateEvent> EVENT = EventFactory.createArrayBacked(HotbarNavigateEvent.class,

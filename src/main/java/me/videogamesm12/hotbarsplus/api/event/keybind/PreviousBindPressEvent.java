@@ -20,16 +20,16 @@ package me.videogamesm12.hotbarsplus.api.event.keybind;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 
+import java.util.Arrays;
+
+/**
+ * <h1>PreviousBindPressEvent</h1>
+ * <p>An event that is called when the player presses the keybind for going to the previous hotbar page.</p>
+ */
 public interface PreviousBindPressEvent
 {
     Event<PreviousBindPressEvent> EVENT = EventFactory.createArrayBacked(PreviousBindPressEvent.class,
-        (listeners) -> () ->
-        {
-            for (PreviousBindPressEvent listener : listeners)
-            {
-                listener.onPreviousPress();
-            }
-        }
+        (listeners) -> () -> Arrays.stream(listeners).forEach(PreviousBindPressEvent::onPreviousPress)
     );
 
     void onPreviousPress();

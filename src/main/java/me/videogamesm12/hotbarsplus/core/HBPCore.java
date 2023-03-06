@@ -58,17 +58,6 @@ public class HBPCore implements ClientModInitializer
         // NOTIFICATION TYPES
         //------------------------------------------------------------------------
         UNL.register(ActionBarNotification.class);      // Action bar notification
-        //------------------------------------------------------------------------
-        if (UCL.getConfig().getIntegrationConfig().isTrayIntegrationEnabled())   // System tray removal notification
-        {
-            LOGGER.warn("If you are seeing this message, then that means you previously ran a version of Hotbars+ that "
-                    + "integrated with your operating system's system tray and you left it enabled. As of v2.0-pre7, "
-                    + "this has been completely removed due to complaints of it being annoying and also because I "
-                    + "myself found it pointless.");
-            LOGGER.warn("This message will not appear again.");
-            UCL.getConfig().getIntegrationConfig().setTrayIntegrationEnabled(false);
-        }
-        //------------------------------------------------------------------------
-        UNL.register(ToastNotification.class);
+        UNL.register(ToastNotification.class);          // Toast notification
     }
 }

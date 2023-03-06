@@ -21,6 +21,10 @@ import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.util.ActionResult;
 
+/**
+ * <h1>BackupFailEvent</h1>
+ * <p>An event that is called when the backup process for a given hotbar page fails.</p>
+ */
 public interface BackupFailEvent
 {
     Event<BackupFailEvent> EVENT = EventFactory.createArrayBacked(BackupFailEvent.class,

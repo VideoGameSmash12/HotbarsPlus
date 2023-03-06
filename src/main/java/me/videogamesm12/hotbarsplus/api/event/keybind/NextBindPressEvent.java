@@ -20,16 +20,16 @@ package me.videogamesm12.hotbarsplus.api.event.keybind;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 
+import java.util.Arrays;
+
+/**
+ * <h1>NextBindPressEvent</h1>
+ * <p>An event that is called when the player presses the keybind for going to the next hotbar page.</p>
+ */
 public interface NextBindPressEvent
 {
     Event<NextBindPressEvent> EVENT = EventFactory.createArrayBacked(NextBindPressEvent.class,
-        (listeners) -> () ->
-        {
-            for (NextBindPressEvent listener : listeners)
-            {
-                listener.onNextPress();
-            }
-        }
+        (listeners) -> () -> Arrays.stream(listeners).forEach(NextBindPressEvent::onNextPress)
     );
 
     void onNextPress();

@@ -23,6 +23,10 @@ import net.minecraft.util.ActionResult;
 
 import java.io.File;
 
+/**
+ * <h1>BackupSuccessEvent</h1>
+ * <p>An event that is called when a backup is successful.</p>
+ */
 public interface BackupSuccessEvent
 {
     Event<BackupSuccessEvent> EVENT = EventFactory.createArrayBacked(BackupSuccessEvent.class,
