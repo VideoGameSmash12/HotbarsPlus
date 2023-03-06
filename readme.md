@@ -12,4 +12,4 @@ The requirements depend on the version of Minecraft you're using. To help guide 
 | 1.14.x - 1.15.x    | Yes           | Yes        | Yes                    |
 | 1.16.x             | Yes           | Yes        | No                     |
 | 1.17.x - 1.18.2    | Yes           | Yes        | No                     |
-| 1.19 - 1.19.4-pre4 | Yes           | Yes        | No                     |
+| 1.19 - 1.19.4-pre3 | Yes           | Yes        | No                     |
