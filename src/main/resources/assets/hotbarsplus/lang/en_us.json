@@ -18,10 +18,10 @@
   "notif.hotbarsplus.backup.success": "Backup complete",
   "notif.hotbarsplus.backup.success.mini": "Backed up %s to %s",
   "notif.hotbarsplus.load.failed": "Load failed",
-  "notif.hotbarsplus.load.failed.body": "Check the logs for more information.",
+  "notif.hotbarsplus.load.failed.body": "Check the logs.",
   "notif.hotbarsplus.load.failed.mini": "Load failed",
   "notif.hotbarsplus.save.failed": "Save failed",
-  "notif.hotbarsplus.save.failed.body": "Check the logs for more information.",
+  "notif.hotbarsplus.save.failed.body": "Check the logs.",
   "notif.hotbarsplus.save.failed.mini": "Save failed",
 
   "notif.hotbarsplus.navigation.selected": "Page selected",

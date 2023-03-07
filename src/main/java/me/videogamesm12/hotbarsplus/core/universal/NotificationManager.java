@@ -19,6 +19,8 @@ package me.videogamesm12.hotbarsplus.core.universal;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import me.videogamesm12.hotbarfaildetector.api.HotbarLoadFailedEvent;
+import me.videogamesm12.hotbarfaildetector.api.HotbarSaveFailedEvent;
 import me.videogamesm12.hotbarsplus.api.event.failures.BackupFailEvent;
 import me.videogamesm12.hotbarsplus.api.event.navigation.HotbarNavigateEvent;
 import me.videogamesm12.hotbarsplus.api.event.notification.NotificationTypeRegistered;
@@ -125,13 +127,16 @@ public class NotificationManager
         }
     }
 
-    public class EventListener implements BackupFailEvent, BackupSuccessEvent, HotbarNavigateEvent
+    public class EventListener implements BackupFailEvent, BackupSuccessEvent, HotbarNavigateEvent,
+            HotbarLoadFailedEvent, HotbarSaveFailedEvent
     {
         public EventListener()
         {
             BackupFailEvent.EVENT.register(this);
             BackupSuccessEvent.EVENT.register(this);
             HotbarNavigateEvent.EVENT.register(this);
+            HotbarLoadFailedEvent.EVENT.register(this);
+            HotbarSaveFailedEvent.EVENT.register(this);
         }
 
         @Override
@@ -162,6 +167,28 @@ public class NotificationManager
             );
 
             return ActionResult.PASS;
+        }
+
+        @Override
+        public void onLoadFailure()
+        {
+            showNotification(
+                    Component.translatable("notif.hotbarsplus.load.failed"),
+                    Component.translatable("notif.hotbarsplus.load.failed.body"),
+                    Component.translatable("notif.hotbarsplus.load.failed.mini"),
+                    NotificationType.GENERAL_ERROR
+            );
+        }
+
+        @Override
+        public void onSaveFailure()
+        {
+            showNotification(
+                    Component.translatable("notif.hotbarsplus.save.failed"),
+                    Component.translatable("notif.hotbarsplus.save.failed.body"),
+                    Component.translatable("notif.hotbarsplus.save.failed.mini"),
+                    NotificationType.GENERAL_ERROR
+            );
         }
 
         /********** SUCCESSES **********/

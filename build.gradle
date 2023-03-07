@@ -9,6 +9,7 @@ version '2.0-pre9'
 repositories {
     mavenCentral()
     maven { url "https://maven.terraformersmc.com/releases/" }
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {
@@ -22,6 +23,8 @@ dependencies {
     include("net.kyori:adventure-api:4.9.3")
     include("net.kyori:adventure-key:4.9.3")
     include("net.kyori:examination-api:1.3.0")
+
+    implementation include("com.github.VideoGameSmash12:HotbarFailDetector:893ee75648fb6bc34b88708bfc8d177a5b145b03")
 
     subprojects.each {
         include project("${it.name}:")
@@ -50,6 +53,9 @@ allprojects {
         }
         maven {
             url "https://maven.terraformersmc.com/releases/"
+        }
+        maven {
+            url "https://jitpack.io"
         }
     }
 
@@ -88,4 +94,15 @@ subprojects {
 
 subprojects.each {
     remapJar.dependsOn("${it.path}:remapJar")
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId rootProject.group
+            artifactId rootProject.name
+            version rootProject.version
+            from components.java
+        }
+    }
 }
