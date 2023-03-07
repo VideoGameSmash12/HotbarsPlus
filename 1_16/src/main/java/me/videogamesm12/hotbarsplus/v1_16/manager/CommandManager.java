@@ -49,11 +49,9 @@ public class CommandManager implements ICommandManager<FabricClientCommandSource
                     )
             ).then(
                     ClientCommandManager.literal("cache").then(
-                            ClientCommandManager.literal("list").executes(
-                                    CacheCommand.ListCommand.impl()
-                            ).then(
-                                    ClientCommandManager.literal("clear").executes(CacheCommand.ClearCommand.impl())
-                            )
+                            ClientCommandManager.literal("list").executes(CacheCommand.ListCommand.impl())
+                    ).then(
+                            ClientCommandManager.literal("clear").executes(CacheCommand.ClearCommand.impl())
                     )
             )
         );
