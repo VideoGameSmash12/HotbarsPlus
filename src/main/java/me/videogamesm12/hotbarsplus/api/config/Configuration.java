@@ -50,11 +50,6 @@ public class Configuration
     @Getter
     public static class Notifications implements NotificationTypeRegistered
     {
-        public Notifications()
-        {
-            NotificationTypeRegistered.EVENT.register(this);
-        }
-
         @Setter
         private boolean enabled = true;
 
@@ -80,11 +75,6 @@ public class Configuration
         private boolean enabled = true;
 
         private BigInteger page = HBPCore.UPL.getCurrentPage();
-
-        public LastHotbarPage()
-        {
-            HotbarNavigateEvent.EVENT.register(this);
-        }
 
         @Override
         public ActionResult onNavigate(BigInteger page)

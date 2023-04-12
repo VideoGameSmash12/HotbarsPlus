@@ -22,6 +22,8 @@ import com.google.gson.GsonBuilder;
 import lombok.Getter;
 
 import me.videogamesm12.hotbarsplus.api.config.Configuration;
+import me.videogamesm12.hotbarsplus.api.event.navigation.HotbarNavigateEvent;
+import me.videogamesm12.hotbarsplus.api.event.notification.NotificationTypeRegistered;
 import me.videogamesm12.hotbarsplus.core.HBPCore;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.minecraft.client.MinecraftClient;
@@ -74,6 +76,10 @@ public class ConfigurationManager implements ClientLifecycleEvents.ClientStoppin
         }
 
         ClientLifecycleEvents.CLIENT_STOPPING.register(this);
+
+        // This is a hack to get both of these things working.
+        HotbarNavigateEvent.EVENT.register(config.getLastHotbarPage());
+        NotificationTypeRegistered.EVENT.register(config.getNotificationConfig());
     }
 
     public void save()

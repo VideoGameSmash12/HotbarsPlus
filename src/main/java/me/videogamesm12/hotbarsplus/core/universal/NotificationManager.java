@@ -25,9 +25,11 @@ import me.videogamesm12.hotbarsplus.api.event.failures.BackupFailEvent;
 import me.videogamesm12.hotbarsplus.api.event.navigation.HotbarNavigateEvent;
 import me.videogamesm12.hotbarsplus.api.event.notification.NotificationTypeRegistered;
 import me.videogamesm12.hotbarsplus.api.event.success.BackupSuccessEvent;
+import me.videogamesm12.hotbarsplus.api.provider.INotificationRouteProvider;
 import me.videogamesm12.hotbarsplus.api.util.Util;
 import me.videogamesm12.hotbarsplus.core.HBPCore;
 import me.videogamesm12.hotbarsplus.core.notifications.ActionBarNotification;
+import net.fabricmc.loader.api.FabricLoader;
 import net.kyori.adventure.text.Component;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
@@ -49,7 +51,9 @@ public class NotificationManager
 
     public NotificationManager()
     {
-        register(ActionBarNotification.class);
+        // Routes are now registered in this fashion.
+        FabricLoader.getInstance().getEntrypointContainers("hotbarsplus", INotificationRouteProvider.class)
+                .forEach(container -> container.getEntrypoint().getNotificationRoutes().forEach(this::register));
     }
 
     /**
@@ -69,9 +73,10 @@ public class NotificationManager
     }
 
     /**
-     * Registers a NotificationType.
+     * Registers a NotificationType. As of Hotbars+ v2.0-pre10 this method is considered internal and should not be used.
      * @param typeClass A class that implements NotificationType.
      */
+    @Deprecated
     public void register(Class<? extends NotificationRoute> typeClass)
     {
         try

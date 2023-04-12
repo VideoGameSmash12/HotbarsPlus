@@ -16,6 +16,9 @@
   "entrypoints": {
     "client": [
       "me.videogamesm12.hotbarsplus.core.HBPCore"
+    ],
+    "hotbarsplus": [
+      "me.videogamesm12.hotbarsplus.core.provider.NotificationRouteProvider"
     ]
   },
   "mixins": [

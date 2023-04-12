@@ -55,11 +55,6 @@ public class HBPCore implements ClientModInitializer
     @Override
     public void onInitializeClient()
     {
-        // NOTIFICATION TYPES
-        //------------------------------------------------------------------------
-        UNL.register(ActionBarNotification.class);      // Action bar notification
-        UNL.register(ToastNotification.class);          // Toast notification
-
         // LAST HOTBAR PAGE TRACKING
         //------------------------------------------------------------------------
         if (UCL.getConfig().getLastHotbarPage().isEnabled())
