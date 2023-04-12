@@ -55,6 +55,11 @@ public class Configuration
 
         private Map<String, Boolean> types = new HashMap<>();
 
+        /**
+         * Returns whether a given notification route is enabled
+         * @param id    Identifier
+         * @return      True if the notification route is enabled
+         */
         public boolean isTypeEnabled(Identifier id)
         {
             return types.getOrDefault(id.toString(), true);

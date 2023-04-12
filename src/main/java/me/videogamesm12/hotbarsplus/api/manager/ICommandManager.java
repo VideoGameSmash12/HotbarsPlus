@@ -26,6 +26,9 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
  */
 public interface ICommandManager<T>
 {
+    /**
+     * Registers all the mod's commands.
+     */
     void register();
 
     LiteralCommandNode<T> getCommandNode();
