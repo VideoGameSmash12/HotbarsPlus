@@ -9,8 +9,8 @@ The requirements depend on the version of Minecraft you're using. To help guide 
 
 | Version            | Fabric Loader | Fabric API | Cotton Client Commands |
 |--------------------| ------------- | ---------- | ---------------------- |
-| 1.14.x - 1.15.x    | Yes           | Yes        | Optional*              |
-| 1.16 - 1.16.4      | Yes           | Yes        | Optional*              |
+| 1.14.4 - 1.15.x    | Yes           | Yes        | Optional*              |
+| 1.16.1 - 1.16.4    | Yes           | Yes        | Optional*              |
 | 1.16.5             | Yes           | Yes        | No                     |
 | 1.17.x - 1.18.2    | Yes           | Yes        | No                     |
 | 1.19 - 1.19.4      | Yes           | Yes        | No                     |
