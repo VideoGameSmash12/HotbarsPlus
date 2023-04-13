@@ -16,6 +16,9 @@
   "entrypoints": {
     "client": [
       "me.videogamesm12.hotbarsplus.v1_16.HotbarsPlus"
+    ],
+    "cotton-client-commands": [
+      "me.videogamesm12.hotbarsplus.v1_16.manager.FallbackCommandManager"
     ]
   },
   "mixins": [

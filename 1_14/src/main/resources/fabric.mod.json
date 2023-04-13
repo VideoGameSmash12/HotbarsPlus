@@ -21,8 +21,7 @@
     "hotbarsplus.legacy.mixins.json"
   ],
   "depends": {
-    "minecraft": ["1.14.x", "1.15.x"],
-    "cotton-client-commands": "*"
+    "minecraft": ["1.14.x", "1.15.x"]
   },
   "custom": {
     "modmenu:api": true,

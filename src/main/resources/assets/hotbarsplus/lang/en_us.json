@@ -1,6 +1,7 @@
 {
   "category.hotbarsplus.navigation": "Hotbars+",
 
+  "command.backup.file_does_not_exist": "The currently selected hotbar page does not exist.",
   "command.cache.clear.success": "Cache cleared.",
   "command.cache.list.amount": "There are currently %d hotbar pages cached in memory.",
   "command.cache.list.entries": "Cached pages: %s",

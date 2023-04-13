@@ -24,6 +24,7 @@ import me.videogamesm12.hotbarsplus.legacy.manager.CustomToastManager;
 import me.videogamesm12.hotbarsplus.legacy.manager.KeybindManager;
 import me.videogamesm12.hotbarsplus.legacy.mixin.CreativeInvScreenMixin;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.CreativeInventoryScreen;
@@ -38,7 +39,16 @@ public class HotbarsPlus implements ClientModInitializer, HotbarNavigateEvent
     public void onInitializeClient()
     {
         HBPCore.KEYBINDS = new KeybindManager();
-        HBPCore.COMMANDS = new CommandManager();
+        //--
+        if (FabricLoader.getInstance().isModLoaded("cotton-client-commands"))
+        {
+            HBPCore.COMMANDS = new CommandManager();
+        }
+        else
+        {
+            HBPCore.LOGGER.warn("Cotton Client Commands was not found. In-game commands will not work.");
+        }
+        //--
         HBPCore.TOASTS = new CustomToastManager();
         HBPCore.VHOOKS = new FourteenHooks();
         //--

@@ -19,13 +19,22 @@ package me.videogamesm12.hotbarsplus.core.commands;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
+import me.videogamesm12.hotbarsplus.api.util.Util;
 import me.videogamesm12.hotbarsplus.core.HBPCore;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 
 public interface BackupCommand<T> extends Command<T>
 {
     @Override
     default int run(CommandContext<T> context)
     {
+        if (!HBPCore.UPL.hotbarPageExists())
+        {
+            Util.msg(Component.translatable("command.backup.file_does_not_exist", NamedTextColor.RED));
+            return 1;
+        }
+
         HBPCore.UBL.backupHotbar();
         return 1;
     };

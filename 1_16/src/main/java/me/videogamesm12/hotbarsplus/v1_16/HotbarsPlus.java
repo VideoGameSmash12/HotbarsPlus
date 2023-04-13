@@ -21,9 +21,11 @@ import me.videogamesm12.hotbarsplus.api.event.navigation.HotbarNavigateEvent;
 import me.videogamesm12.hotbarsplus.core.HBPCore;
 import me.videogamesm12.hotbarsplus.v1_16.manager.CommandManager;
 import me.videogamesm12.hotbarsplus.v1_16.manager.CustomToastManager;
+import me.videogamesm12.hotbarsplus.v1_16.manager.FallbackCommandManager;
 import me.videogamesm12.hotbarsplus.v1_16.manager.KeybindManager;
 import me.videogamesm12.hotbarsplus.v1_16.mixin.CreativeInvScreenMixin;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.CreativeInventoryScreen;
@@ -38,7 +40,32 @@ public class HotbarsPlus implements ClientModInitializer, HotbarNavigateEvent
     public void onInitializeClient()
     {
         HBPCore.KEYBINDS = new KeybindManager();
-        HBPCore.COMMANDS = new CommandManager();
+        //--
+        /*
+            So the issue here is that there was a period of time when both Cotton Client Commands and Fabric API's
+            client command API were available for 1.16. However, Fabric API's client command API was only available for
+            1.16.5. Cotton Client Commands was available for 1.16 - 1.16.4, but probably worked on 1.16.5 too.
+            --
+            This is a compromise solution that allows both to work.
+         */
+        if (FabricLoader.getInstance().isModLoaded("cotton-client-commands"))
+        {
+            // Cotton Client Commands
+            HBPCore.COMMANDS = new FallbackCommandManager();
+        }
+        else
+        {
+            // Fabric API
+            try
+            {
+                HBPCore.COMMANDS = new CommandManager();
+            }
+            catch (Throwable ex)
+            {
+                HBPCore.LOGGER.warn("Neither a sufficient version of the Fabric API nor Cotton Client Commands were found. No in-game commands will work.");
+            }
+        }
+        //--
         HBPCore.TOASTS = new CustomToastManager();
         //--
         HotbarNavigateEvent.EVENT.register(this);

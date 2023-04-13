@@ -47,6 +47,11 @@ public class BackupManager extends Thread implements BackupBindPressEvent
     @Override
     public synchronized void onBackupPress()
     {
+        if (!HBPCore.UPL.hotbarPageExists())
+        {
+            return;
+        }
+
         backupHotbar();
     }
 
