@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "hotbarsplus-1_19_3",
+  "id": "hotbarsplus-1_20",
   "version": "${version}",
-  "name": "Hooks for 1.19.3+",
-  "description": "Hooks specific to 1.19.3 - 1.19.4 for Hotbars+.",
+  "name": "Hooks for 1.20+",
+  "description": "Hooks specific to 1.20+ for Hotbars+.",
   "authors": ["videogamesm12"],
   "contact": {
     "issues": "https://github.com/VideoGameSmash12/HotbarsPlus/issues",
@@ -15,15 +15,15 @@
   "environment": "client",
   "entrypoints": {
     "client": [
-      "me.videogamesm12.hotbarsplus.v1_19.HotbarsPlus"
+      "me.videogamesm12.hotbarsplus.v1_20.HotbarsPlus"
     ]
   },
   "mixins": [
-    "hotbarsplus.1_19.mixins.json"
+    "hotbarsplus.1_20.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.12.12",
-    "minecraft": ["1.19.3", "1.19.4"]
+    "minecraft": ">=1.20"
   },
   "breaks": {
     "multihotbar": "*"

@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "me.videogamesm12.hotbarsplus.v1_20.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": [
+    "CreativeInvScreenAccessor",
+    "HandledScreenAccessor",
+    "CreativeInvScreenMixin"
+  ]
+}
