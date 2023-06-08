@@ -14,5 +14,6 @@ The requirements depend on the version of Minecraft you're using. To help guide 
 | 1.16.5             | Yes           | Yes        | No                     |
 | 1.17.x - 1.18.2    | Yes           | Yes        | No                     |
 | 1.19 - 1.19.4      | Yes           | Yes        | No                     |
+| 1.20               | Yes           | Yes        | No                     |
 
 \* = The mod will still launch without it, but you won't be able to run client-side commands like /hotbars+.
