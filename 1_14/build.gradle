@@ -1,9 +1,16 @@
 group 'me.videogamesm12'
 
 repositories {
-    maven {
-        name = 'CottonMC'
-        url = 'https://server.bbkr.space/artifactory/libs-release'
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Modrinth"
+                url = "https://api.modrinth.com/maven"
+            }
+        }
+        filter {
+            includeGroup "maven.modrinth"
+        }
     }
 }
 
@@ -16,5 +23,5 @@ dependencies {
     //  when the Fabric API developers decided a client command API was necessary. Thing is, they never back-ported it
     //  change to 1.14 nor 1.15's versions of the Fabric API, so I have to rely on an ancient archived mod to do the
     //  trick. Fucking shit!
-    modImplementation "io.github.cottonmc:cotton-client-commands:1.0.1+1.16-rc1"
+    modImplementation "maven.modrinth:cotton-client-commands:1.0.1"
 }
