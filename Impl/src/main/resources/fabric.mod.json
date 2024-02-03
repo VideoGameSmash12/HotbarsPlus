@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "hotbarsplus-impl",
+  "version": "${version}",
+  "name": "Hotbars+ Implementation",
+  "description": "Hotbars+'s original implementation for 1.14 to 1.20.2.",
+  "authors": ["videogamesm12"],
+  "contact": {
+    "issues": "https://github.com/VideoGameSmash12/HotbarsPlus/issues",
+    "homepage": "https://github.com/VideoGameSmash12/HotbarsPlus",
+    "sources": "https://github.com/VideoGameSmash12/HotbarsPlus"
+  },
+  "license": "MIT",
+  "icon": "assets/hotbarsplus/icon.png",
+  "environment": "client",
+  "mixins": [
+    "hotbarsplus.impl.mixins.json"
+  ],
+  "depends": {
+    "minecraft": "<1.20.3"
+  },
+  "breaks": {
+    "multihotbar": "*"
+  },
+  "custom": {
+    "modmenu": {
+      "badges": ["library"],
+      "parent": "hotbarsplus"
+    }
+  }
+}

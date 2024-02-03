@@ -15,30 +15,46 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package me.videogamesm12.hotbarsplus.core;
+package java.me.videogamesm12.hotbarsplus.impl.mixin;
 
-import lombok.Getter;
-import me.videogamesm12.hotbarsplus.api.IHotbarsPlusStorage;
-import me.videogamesm12.hotbarsplus.api.util.Util;
-import net.minecraft.client.MinecraftClient;
+import com.mojang.datafixers.DataFixer;
+import me.videogamesm12.hotbarsplus.core.HotbarsPlusStorage;
 import net.minecraft.client.option.HotbarStorage;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.gen.Accessor;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.math.BigInteger;
+import java.io.File;
 import java.nio.file.Path;
 
-public class HotbarsPlusStorage extends HotbarStorage implements IHotbarsPlusStorage
+/**
+ * <b>HotbarStorageMixin</b>
+ * <p>Controls where hotbar files are stored.</p>
+ */
+@Mixin(HotbarStorage.class)
+public class HotbarStorageMixin
 {
-    @Getter
-    private BigInteger page;
-
-    public HotbarsPlusStorage(BigInteger page)
+    /**
+     * <p>Hijacks what is used as the location by HotbarStorage on initialization.</p>
+     * @param ci        CallbackInfo
+     * @param dataFixer DataFixer
+     * @param file      File
+     */
+    @Inject(method = "<init>", at = @At(value = "TAIL"))
+    private void inject(Path file, DataFixer dataFixer, CallbackInfo ci)
     {
-        super(Util.getHotbarFile(page), MinecraftClient.getInstance().getDataFixer());
+        if (HotbarsPlusStorage.class.isAssignableFrom(getClass()))
+        {
+            ((HSAccessor) this).setFile(file);
+        }
     }
 
-    @Override
-    public Path getLocation()
+    @Mixin(HotbarStorage.class)
+    public interface HSAccessor
     {
-        return Util.getHotbarFile(page).toPath();
+        @Accessor
+        void setFile(Path file);
     }
 }

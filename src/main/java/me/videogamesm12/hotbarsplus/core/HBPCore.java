@@ -18,6 +18,7 @@
 package me.videogamesm12.hotbarsplus.core;
 
 import me.videogamesm12.hotbarsplus.api.manager.ICommandManager;
+import me.videogamesm12.hotbarsplus.api.manager.IHotbarConstructor;
 import me.videogamesm12.hotbarsplus.api.manager.IKeybindManager;
 import me.videogamesm12.hotbarsplus.api.IVersionHook;
 import me.videogamesm12.hotbarsplus.api.manager.IToastManager;
@@ -45,6 +46,7 @@ public class HBPCore implements ClientModInitializer
     public static ICommandManager<?> COMMANDS = null;
     public static IToastManager TOASTS = null;
     public static IVersionHook VHOOKS = null;
+    public static IHotbarConstructor CONSTRUCTOR = null;
 
     // UNIVERSAL
     public static PageManager UPL = new PageManager();

@@ -18,6 +18,7 @@
 package me.videogamesm12.hotbarsplus.api;
 
 import java.math.BigInteger;
+import java.nio.file.Path;
 
 /**
  * <h1>IHotbarsPlusStorage</h1>
@@ -30,4 +31,6 @@ public interface IHotbarsPlusStorage
      * @return  BigInteger
      */
     BigInteger getPage();
+
+    Path getLocation();
 }
