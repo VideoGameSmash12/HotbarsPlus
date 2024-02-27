@@ -88,7 +88,7 @@ public class PageManager implements NextBindPressEvent, PreviousBindPressEvent
         if (!cache.containsKey(page))
         {
             HotbarStorage storage = page.equals(BigInteger.ZERO) ?
-                    new HotbarStorage(MinecraftClient.getInstance().runDirectory, MinecraftClient.getInstance().getDataFixer()) :
+                    new HotbarStorage(MinecraftClient.getInstance().runDirectory.toPath(), MinecraftClient.getInstance().getDataFixer()) :
                     new HotbarsPlusStorage(page);
 
             cache.put(page, storage);
@@ -104,7 +104,7 @@ public class PageManager implements NextBindPressEvent, PreviousBindPressEvent
 
     public boolean hotbarPageExists()
     {
-        return ((HotbarStorageMixin.HSAccessor) getHotbarPage()).getFile().exists();
+        return ((HotbarStorageMixin.HSAccessor) getHotbarPage()).getFile().toFile().exists();
     }
 
     @Override

@@ -32,6 +32,6 @@ public class HotbarsPlusStorage extends HotbarStorage implements IHotbarsPlusSto
 
     public HotbarsPlusStorage(BigInteger page)
     {
-        super(Util.getHotbarFile(page), MinecraftClient.getInstance().getDataFixer());
+        super(Util.getHotbarFile(page).toPath(), MinecraftClient.getInstance().getDataFixer());
     }
 }

@@ -26,6 +26,7 @@ import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.io.File;
+import java.nio.file.Path;
 
 /**
  * <b>HotbarStorageMixin</b>
@@ -41,7 +42,7 @@ public class HotbarStorageMixin
      * @param file      File
      */
     @Inject(method = "<init>", at = @At(value = "TAIL"))
-    private void inject(File file, DataFixer dataFixer, CallbackInfo ci)
+    private void inject(Path file, DataFixer dataFixer, CallbackInfo ci)
     {
         if (HotbarsPlusStorage.class.isAssignableFrom(getClass()))
         {
@@ -53,9 +54,9 @@ public class HotbarStorageMixin
     public interface HSAccessor
     {
         @Accessor
-        File getFile();
+        Path getFile();
 
         @Accessor
-        void setFile(File file);
+        void setFile(Path file);
     }
 }

@@ -78,7 +78,7 @@ public class BackupManager extends Thread implements BackupBindPressEvent
 
     public synchronized void backupHotbar()
     {
-        backupHotbar(((HotbarStorageMixin.HSAccessor) HBPCore.UPL.getHotbarPage()).getFile());
+        backupHotbar(((HotbarStorageMixin.HSAccessor) HBPCore.UPL.getHotbarPage()).getFile().toFile());
     }
 
     public File getBackupFolder()
