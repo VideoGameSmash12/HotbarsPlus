@@ -32,17 +32,17 @@ public interface BackupFailEvent
         {
             for (BackupFailEvent listener : listeners)
             {
-                ActionResult result = listener.onBackupFailure(ex);
+                Boolean result = listener.onBackupFailure(ex);
 
-                if (result != ActionResult.PASS)
+                if (result != null)
                 {
                     return result;
                 }
             }
 
-            return ActionResult.SUCCESS;
+            return true;
         }
     );
 
-    ActionResult onBackupFailure(Exception ex);
+    Boolean onBackupFailure(Exception ex);
 }

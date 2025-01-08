@@ -23,6 +23,8 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class ActionBarNotification implements NotificationManager.NotificationRoute
 {
     @Override
@@ -57,6 +59,6 @@ public class ActionBarNotification implements NotificationManager.NotificationRo
     @Override
     public @NotNull Identifier getId()
     {
-        return new Identifier("hotbarsplus", "actionbar");
+        return Objects.requireNonNull(Identifier.of("hotbarsplus", "actionbar"));
     }
 }

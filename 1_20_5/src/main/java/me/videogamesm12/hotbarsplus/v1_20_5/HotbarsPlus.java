@@ -15,14 +15,14 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package me.videogamesm12.hotbarsplus.v1_20;
+package me.videogamesm12.hotbarsplus.v1_20_5;
 
 import me.videogamesm12.hotbarsplus.api.event.navigation.HotbarNavigateEvent;
 import me.videogamesm12.hotbarsplus.core.HBPCore;
-import me.videogamesm12.hotbarsplus.v1_20.manager.CommandManager;
-import me.videogamesm12.hotbarsplus.v1_20.manager.CustomToastManager;
-import me.videogamesm12.hotbarsplus.v1_20.manager.KeybindManager;
-import me.videogamesm12.hotbarsplus.v1_20.mixin.CreativeInvScreenAccessor;
+import me.videogamesm12.hotbarsplus.v1_20_5.manager.CommandManager;
+import me.videogamesm12.hotbarsplus.v1_20_5.manager.CustomToastManager;
+import me.videogamesm12.hotbarsplus.v1_20_5.manager.KeybindManager;
+import me.videogamesm12.hotbarsplus.v1_20_5.mixin.CreativeInvScreenAccessor;
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
@@ -42,6 +42,8 @@ public class HotbarsPlus implements ClientModInitializer, HotbarNavigateEvent
         HBPCore.COMMANDS = new CommandManager();
         HBPCore.KEYBINDS = new KeybindManager();
         HBPCore.TOASTS = new CustomToastManager();
+        //--
+        HBPCore.VHOOKS = new TwentyPointFiveHooks();
         //--
         HotbarNavigateEvent.EVENT.register(this);
     }

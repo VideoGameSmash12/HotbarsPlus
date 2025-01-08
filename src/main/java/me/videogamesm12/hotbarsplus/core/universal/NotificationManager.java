@@ -96,12 +96,14 @@ public class NotificationManager
     @Getter
     public enum NotificationType
     {
-        GENERAL(0xFFFF00),
-        GENERAL_ERROR(0xFF0000),
-        BACKUP(0xFFFF00),
-        BACKUP_FAILED(0xFF0000);
+        GENERAL(0xFFFF00, Identifier.of("hotbarsplus", "toasts/general")),
+        GENERAL_ERROR(0xFF0000, Identifier.of("hotbarsplus", "toasts/general_error")),
+        BACKUP(0xFFFF00, Identifier.of("hotbarsplus", "toasts/backup")),
+        BACKUP_FAILED(0xFF0000, Identifier.of("hotbarsplus", "toasts/backup"));
 
         private int color;
+
+        private Identifier icon;
     }
 
     public interface NotificationRoute
@@ -145,7 +147,7 @@ public class NotificationManager
         }
 
         @Override
-        public ActionResult onNavigate(BigInteger page)
+        public Boolean onNavigate(BigInteger page)
         {
             showNotification(
                     Component.translatable("notif.hotbarsplus.navigation.selected"),
@@ -155,13 +157,13 @@ public class NotificationManager
                     NotificationType.GENERAL
             );
 
-            return ActionResult.PASS;
+            return null;
         }
 
         /********** FAILURES **********/
 
         @Override
-        public ActionResult onBackupFailure(Exception ex)
+        public Boolean onBackupFailure(Exception ex)
         {
             showNotification(
                     Component.translatable("notif.hotbarsplus.backup.failed"),
@@ -171,7 +173,7 @@ public class NotificationManager
                     NotificationType.BACKUP_FAILED
             );
 
-            return ActionResult.PASS;
+            return null;
         }
 
         @Override
@@ -199,7 +201,7 @@ public class NotificationManager
         /********** SUCCESSES **********/
 
         @Override
-        public ActionResult onBackupSuccess(File from, File to)
+        public Boolean onBackupSuccess(File from, File to)
         {
             showNotification(
                     Component.translatable("notif.hotbarsplus.backup.success"),
@@ -209,7 +211,8 @@ public class NotificationManager
                             Component.text(to.getName())),
                     NotificationType.BACKUP
             );
-            return ActionResult.PASS;
+
+            return null;
         }
     }
 }

@@ -27,7 +27,7 @@ import net.minecraft.util.Identifier;
  */
 public interface IToastManager
 {
-    Identifier TEXTURE = new Identifier("hotbarsplus", "textures/toasts.png");
+    Identifier TEXTURE = Identifier.of("hotbarsplus", "textures/toasts.png");
 
     IHotbarToast getToastFrom(NotificationManager.NotificationType type, Text... texts);
 

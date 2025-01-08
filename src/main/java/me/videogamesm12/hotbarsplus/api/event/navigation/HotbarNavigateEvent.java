@@ -34,17 +34,17 @@ public interface HotbarNavigateEvent
         {
             for (HotbarNavigateEvent listener : listeners)
             {
-                ActionResult result = listener.onNavigate(page);
+                Boolean result = listener.onNavigate(page);
 
-                if (result != ActionResult.PASS)
+                if (result != null)
                 {
                     return result;
                 }
             }
 
-            return ActionResult.SUCCESS;
+            return true;
         }
     );
 
-    ActionResult onNavigate(BigInteger page);
+    Boolean onNavigate(BigInteger page);
 }

@@ -82,14 +82,14 @@ public class Configuration
         private BigInteger page = HBPCore.UPL.getCurrentPage();
 
         @Override
-        public ActionResult onNavigate(BigInteger page)
+        public Boolean onNavigate(BigInteger page)
         {
             if (isEnabled())
             {
                 this.page = page;
             }
 
-            return ActionResult.PASS;
+            return null;
         }
     }
 }

@@ -6,6 +6,8 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class ToastNotification implements NotificationManager.NotificationRoute
 {
     @Override
@@ -18,6 +20,6 @@ public class ToastNotification implements NotificationManager.NotificationRoute
     @Override
     public @NotNull Identifier getId()
     {
-        return new Identifier("hotbarsplus", "toast");
+        return Objects.requireNonNull(Identifier.of("hotbarsplus", "toast"));
     }
 }

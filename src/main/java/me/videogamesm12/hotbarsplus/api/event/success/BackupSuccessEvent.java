@@ -34,17 +34,17 @@ public interface BackupSuccessEvent
         {
             for (BackupSuccessEvent listener : listeners)
             {
-                ActionResult result = listener.onBackupSuccess(from, to);
+                Boolean result = listener.onBackupSuccess(from, to);
 
-                if (result != ActionResult.PASS)
+                if (result != null)
                 {
                     return result;
                 }
             }
 
-            return ActionResult.SUCCESS;
+            return true;
         }
     );
 
-    ActionResult onBackupSuccess(File from, File to);
+    Boolean onBackupSuccess(File from, File to);
 }
