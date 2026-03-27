@@ -1,3 +1,7 @@
+# Use [Librarian](https://github.com/VideoGameSmash12/Librarian) instead
+Hotbars+ has been discontinued in favor of [Librarian](https://github.com/VideoGameSmash12/Librarian), its successor. It will still work, but you should seriously consider migrating since Librarian has more features and is a drop-in replacement for Hotbars+.
+
+# Original Readme
 ## Hotbars+
 Hotbars+ (also known as "MultiHotbar" in earlier versions) is a mod for Minecraft that dramatically increases how many hotbars can be saved by paginating the vanilla hotbar storage system.
 
