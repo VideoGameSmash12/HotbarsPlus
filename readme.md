@@ -1,5 +1,5 @@
 # Use [Librarian](https://github.com/VideoGameSmash12/Librarian) instead
-Hotbars+ has been discontinued in favor of [Librarian](https://github.com/VideoGameSmash12/Librarian), its successor. It will still work, but you should seriously consider migrating since Librarian has more features and is a drop-in replacement for Hotbars+.
+Hotbars+ has been discontinued in favor of [Librarian](https://github.com/VideoGameSmash12/Librarian), its successor. It will still work, but you should seriously consider migrating since Librarian has more features, supports newer versions of the game as well as older versions, and is a drop-in replacement for Hotbars+.
 
 # Original Readme
 ## Hotbars+
